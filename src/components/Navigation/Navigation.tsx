@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import { Bars3Icon as MenuIcon } from "@heroicons/react/24/solid";
+import React, { useMemo } from "react";
+import { ComputerDesktopIcon, Bars3Icon as MenuIcon } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import { HomeIcon } from "@heroicons/react/24/solid";
-import { UserIcon } from "@heroicons/react/24/solid";
-import { BriefcaseIcon } from "@heroicons/react/24/solid";
-import { EnvelopeIcon } from "@heroicons/react/24/solid";
+import NavigationItem from "./NavigationItem";
+import { twMerge } from "tailwind-merge";
+import { useNavigationCtx } from "@/contexts/NavigationCtx";
+import NAVIGATION from "@/configs/NAVIGATION";
 
 /**
  * A sticky header navigation that shows:
@@ -16,35 +15,54 @@ import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
 function Navigation() {
   // Sidebar state
-  const [isOpen, setIsOpen] = React.useState(false);
+  const { isOpen, setIsOpen } = useNavigationCtx();
+
+  // Sidebar styles
+  const sidebarStyles = useMemo(
+    () =>
+      twMerge(
+        "fixed top-0 left-0 z-50 bg-white w-full h-full md:hidden transition-all duration-300 ease-in-out",
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      ),
+    [isOpen]
+  );
 
   return (
     <div>
-      {/** Navigation Items */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent p-8">
-        <div className="hidden md:flex space-x-8 px-8">
-          <HomeIcon className="h-12 w-12" />
-          <UserIcon className="h-12 w-12" />
-          <BriefcaseIcon className="h-12 w-12" />
-          <EnvelopeIcon className="h-12 w-12" />
+      {/** Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent p-8 container mx-auto">
+        <div className="hidden md:flex space-x-16 px-4 w-full justify-evenly">
+          {NAVIGATION.items.map((navigationItem, index) => (
+            <NavigationItem key={index} navigationItem={navigationItem} />
+          ))}
         </div>
-        <MenuIcon className="md:hidden h-12 w-12" onClick={() => setIsOpen(!isOpen)} />
+        <MenuIcon
+          className="md:hidden h-16 w-16 shrink-0 text-gray-800"
+          onClick={() => setIsOpen(!isOpen)}
+        />
       </nav>
       {/** Sidebar */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 bg-white p-8 w-4/5 h-full ${
-          isOpen ? "block" : "hidden"
-        }`}
-      >
-        <div className="flex justify-between mb-4">
-          <h2 className="text-3xl font-bold">Calvin Ellis</h2>
-          <XCircleIcon className="h-12 w-12" onClick={() => setIsOpen(!isOpen)} />
+      <div className={sidebarStyles}>
+        {/** Sidebar Header */}
+        <div className="flex justify-between p-8 mb-2 bg-gray-100 shadow-md">
+          <div>
+            <h2 className="text-[2.5rem] font-bold">Calvin Ellis</h2>
+            <p className="text-2xl">Software Engineer</p>
+          </div>
+          <XCircleIcon
+            className="h-16 w-16 shrink-0"
+            onClick={() => setIsOpen(!isOpen)}
+          />
         </div>
-        <div className="flex flex-col space-y-8">
-          <HomeIcon className="h-12 w-12" />
-          <UserIcon className="h-12 w-12" />
-          <BriefcaseIcon className="h-12 w-12" />
-          <EnvelopeIcon className="h-12 w-12" />
+        {/** Sidebar Main */}
+        <div className="flex flex-col space-y-16 h-full p-8">
+          {NAVIGATION.items.map((navigationItem, index) => (
+            <NavigationItem
+              key={index}
+              navigationItem={navigationItem}
+              className="w-full"
+            />
+          ))}
         </div>
       </div>
     </div>
