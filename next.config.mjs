@@ -12,6 +12,8 @@ if (!isDev) {
     nextConfig.output = 'export';
     // set output directory to 'docs' for github pages
     nextConfig.distDir = 'docs';
+    // Set assetPrefix to the current directory
+    nextConfig.assetPrefix = '/';
 }
 
 export default nextConfig;
