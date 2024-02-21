@@ -16,5 +16,13 @@ const config: Config = {
     },
   },
   plugins: [],
+  purge: {
+    content: [
+      "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
+    safelist: ["text-blue-500","text-blue-300"],
+  },
 };
 export default config;
