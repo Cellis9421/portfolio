@@ -22,7 +22,7 @@ export default function NavigationItem({
   const classes = useMemo(
     () =>
       twMerge(
-        "flex md:flex-col items-center space-x-8 space-y-2 md:space-x-0 group text-editor.tag",
+        "flex md:flex-col items-center space-x-8 space-y-2 md:space-x-0 group text-editor.tag w-[150px]",
         className
       ),
     [className]
@@ -41,8 +41,8 @@ export default function NavigationItem({
   return (
     <Link href={href || "#"} className={classes}>
       <span className={iconClasses}>{icon}</span>
-      <span className="font-bold text-[2rem] md:text-xl group-hover:border-b-2 border-dotted border-editor.propertyValue/0 transition-all duraton-500">
-        <HTMLText componentName={label} />
+      <span className="font-bold text-[2rem] md:text-xl transition-all duraton-500 ">
+        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-3 group-hover:scale-110 transition-all duration-400"} />
       </span>
       {/* Add hover:underline class */}
     </Link>

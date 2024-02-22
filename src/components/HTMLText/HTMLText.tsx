@@ -13,20 +13,32 @@ const inconsolata = Inconsolata({ subsets: ["latin"], weight: ["400", "500"] });
 function HTMLText({
   className,
   componentName,
+  componentNameClassNames,
   propertyNameValuePairs = {},
 }: {
-  componentName: string;
   className?: string;
+  componentName: string;
+  componentNameClassNames?: string;
   propertyNameValuePairs?: { [key: string]: string | Array<string | number> };
 }) {
   const wrapperClasses = useMemo(
-    () => twMerge(inconsolata.className, "flex space-x-1 flex-wrap justify-center", className),
+    () =>
+      twMerge(
+        inconsolata.className,
+        "flex space-x-1 flex-wrap justify-center",
+        className
+      ),
     [className]
+  );
+
+  const componentNameClasses = useMemo(
+    () => twMerge(componentNameClassNames, "text-editor.component"),
+    [componentNameClassNames]
   );
   return (
     <span className={wrapperClasses}>
       <span className="text-editor.tag">{"<"}</span>
-      <span className="text-editor.component">{componentName}</span>
+      <span className={componentNameClasses}>{componentName}</span>
       {Object.keys(propertyNameValuePairs).map((key) => {
         const value = propertyNameValuePairs[key];
         return (
