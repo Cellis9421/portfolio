@@ -31,7 +31,7 @@ function Navigation() {
     <div>
       {/** Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent p-8 container mx-auto">
-        <div className="hidden md:flex space-x-16 px-4 w-full justify-evenly">
+        <div className="hidden md:flex space-x-8 lg:space-x-16 px-4 w-full justify-evenly">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem key={index} navigationItem={navigationItem} />
           ))}
@@ -44,7 +44,7 @@ function Navigation() {
       {/** Sidebar */}
       <div className={sidebarStyles}>
         {/** Sidebar Header */}
-        <div className="flex justify-between p-8 mb-2 bg-gray-100 shadow-md">
+        <div className="flex justify-between p-8 bg-editor.background text-white shadow-md">
           <div>
             <h2 className="text-[2.5rem] font-bold">Calvin Ellis</h2>
             <p className="text-2xl">Software Engineer</p>
@@ -55,7 +55,7 @@ function Navigation() {
           />
         </div>
         {/** Sidebar Main */}
-        <div className="flex flex-col space-y-16 h-full p-8">
+        <div className="flex flex-col space-y-16 h-full p-8 bg-editor.background">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem
               key={index}
