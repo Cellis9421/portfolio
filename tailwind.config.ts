@@ -20,6 +20,9 @@ const config: Config = {
         "editor.tag": "#7A7269",
         "editor.property": "#8fe3fc",
         "editor.propertyValue": "#279df7",
+        "editor.backgroundMedium": "#252526",
+        "editor.backgroundLight": "#333333",
+        "editor.comment": "#6A9955",
         /** End VSCode Colors */
       },
     },

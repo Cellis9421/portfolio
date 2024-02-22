@@ -1,4 +1,5 @@
 "use client";
+import CWindow, { CWindowAboutMe, CWindowExample } from "@/components/CWindows/CWindows";
 import HTMLText from "@/components/HTMLText/HTMLText";
 import Header from "@/components/Header/Header";
 import { TypeAnimation } from "react-type-animation";
@@ -32,6 +33,7 @@ const ROLES = [
   2000,
 ];
 
+
 export default function Home() {
   return (
     <>
@@ -49,10 +51,11 @@ export default function Home() {
         sequence={ROLES}
         wrapper="p"
         speed={15}
-        style={{  }}
+        style={{}}
         repeat={Infinity}
         className="text-3xl md:hidden text-editor.propertyValue"
       />
+      <CWindowAboutMe />
     </>
   );
 }
