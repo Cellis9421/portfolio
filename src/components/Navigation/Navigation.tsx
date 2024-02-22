@@ -37,7 +37,7 @@ function Navigation() {
           ))}
         </div>
         <MenuIcon
-          className="md:hidden h-16 w-16 shrink-0 text-gray-800"
+          className="md:hidden h-16 w-16 shrink-0 text-editor.tag"
           onClick={() => setIsOpen(!isOpen)}
         />
       </nav>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Work_Sans } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import NavigationProvider from "@/contexts/NavigationCtx";
@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <NavigationProvider>
-        <body className={workSans.className}>
+        <body className={`${workSans.className} bg-editor.background text-editor.text`}>
           <Navigation />
-          <main className="flex min-h-screen flex-col items-center justify-center p-24 container mx-auto">
+          <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-12 xl:p-24 container mx-auto">
             {children}
           </main>
         </body>
