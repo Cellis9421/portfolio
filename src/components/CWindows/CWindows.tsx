@@ -11,16 +11,18 @@ function CWindow({
   title,
   children,
   onClose,
+  defaultOpen = false,
 }: Readonly<{
   title: string;
   children: React.ReactNode;
   onClose?: () => void;
+  defaultOpen?: boolean;
 }>) {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 40, y: 150 });
   const windowRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const moveTo = (x: number, y: number) => {
     // clamp to the following to keep the window within the viewport:
@@ -28,31 +30,29 @@ function CWindow({
     // y >= 150
     // x <= window.innerWidth - windowRef.current.clientWidth
     // y <= window.innerHeight - windowRef.current.clientHeight
+    const clampedX = Math.max(
+      0,
+      Math.min(x, window.innerWidth - (windowRef?.current?.clientWidth || 0))
+    );
+    const clampedY = Math.max(
+      150,
+      Math.min(y, window.innerHeight - (windowRef?.current?.clientHeight || 0))
+    );
     setPosition({
-      x: Math.max(
-        0,
-        Math.min(x, window.innerWidth - (windowRef?.current?.clientWidth || 0))
-      ),
-      y: Math.max(
-        150,
-        Math.min(
-          y,
-          window.innerHeight - (windowRef?.current?.clientHeight || 0)
-        )
-      ),
+      x: clampedX,
+      y: clampedY,
     });
   };
 
-  // On mount move to the bottom center of the screen
+  // On mount open in the center of the screen account for the width of the window and the width of the screen
   useEffect(() => {
-    if (!isOpen) {
-      setPosition({
-        x: window.innerWidth / 2 - (windowRef?.current?.clientWidth || 0) / 2,
-        y: window.innerHeight / 2 - (windowRef?.current?.clientHeight || 0) - 150,
-      });
-      setIsOpen(true);
-    }
-  }, []);
+    const newX =
+      window.innerWidth / 2 - (windowRef?.current?.clientWidth || 0) / 2;
+    const newY =
+      window.innerHeight / 2 - (windowRef?.current?.clientHeight || 0) / 2;
+    moveTo(newX, newY);
+    setIsOpen(defaultOpen);
+  }, [defaultOpen]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent | TouchEvent) => {
@@ -204,8 +204,8 @@ const me: Me = {
 /**
  * Welcome to my portfolio! 🥳
  */
-export const CWindowAboutMe = () => (
-  <CWindow title="About Calvin Ellis">
+export const CWindowAboutMe = ({ defaultOpen }: { defaultOpen: boolean }) => (
+  <CWindow title="About Calvin Ellis" defaultOpen={defaultOpen}>
     <code className="code">
       <p className="flex flex-col">
         <span className="text-editor.comment">{`/**`}</span>

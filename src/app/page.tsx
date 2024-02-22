@@ -45,7 +45,7 @@ export default function Home() {
         propertyNameValuePairs={{
           role: ROLES,
         }}
-        className="text-3xl hidden md:flex"
+        className="text-xl hidden md:text-3xl sm:flex"
       />
       <TypeAnimation
         sequence={ROLES}
@@ -53,9 +53,8 @@ export default function Home() {
         speed={15}
         style={{}}
         repeat={Infinity}
-        className="text-3xl md:hidden text-editor.propertyValue"
+        className="text-xl sm:hidden text-editor.propertyValue"
       />
-      <CWindowAboutMe />
     </>
   );
 }

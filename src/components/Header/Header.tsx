@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 const defaultClasses = {
@@ -21,7 +21,10 @@ export default function Header({
   children: React.ReactNode;
   id?: string;
 }) {
-  const classes = twMerge(defaultClasses[HTag], className);
+  const classes = useMemo(
+    () => twMerge("text-white", defaultClasses[HTag], className),
+    [HTag, className]
+  );
   return (
     <HTag id={id || ""} className={classes}>
       {children}
