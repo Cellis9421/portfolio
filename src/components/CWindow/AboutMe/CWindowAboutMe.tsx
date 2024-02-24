@@ -60,7 +60,7 @@ export const CWindowAboutMe = () => (
             "I have a passion for problem-solving and creating efficient,",
             "scalable solutions through code and infrastructure.",
             " ",
-            "Some of my favorite tech I've worked with professionally include:",
+            "Some of my favorite tech I've worked with professionally includes:",
             "Typescript, React, Java, Next.js, TailwindCSS, PHP, Python,",
             "Node.js, PostgreSQL, Kubernetes, GCP, and Firebase.",
             " ",
