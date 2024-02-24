@@ -30,7 +30,7 @@ function Navigation() {
   return (
     <div>
       {/** Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent p-8 container mx-auto">
+      <nav className="fixed top-0 left-0 right-0 z-50 p-4 mx-auto bg-editor.background/95 shadow-current rounded-b-2xl">
         <div className="hidden md:flex space-x-8 lg:space-x-16 px-4 w-full justify-evenly">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem key={index} navigationItem={navigationItem} />

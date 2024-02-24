@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 const defaultClasses = {
-  h1: "text-4xl font-black lg:text-5xl",
+  h1: "text-5xl font-black",
   h2: "text-2xl font-black",
   h3: "text-lg font-bold",
   h4: "font-semibold",
