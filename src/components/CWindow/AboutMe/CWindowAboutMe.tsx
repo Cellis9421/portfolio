@@ -56,16 +56,14 @@ export const CWindowAboutMe = () => (
             " ",
             "I am a Software Engineer with over 10 years experience building",
             "full-stack solutions in the cybersecurity/e-commerce domains.",
-            " ",
             "I have a passion for problem-solving and creating efficient,",
             "scalable solutions through code and infrastructure.",
+            "I enjoy collaborating with teams on difficult problems,",
+            "learning new technologies, and staying up-to-date with trends.",
             " ",
             "Some of my favorite tech I've worked with professionally includes:",
             "Typescript, React, Java, Next.js, TailwindCSS, PHP, Python,",
             "Node.js, PostgreSQL, Kubernetes, GCP, and Firebase.",
-            " ",
-            "I enjoy collaborating with teams on difficult problems,",
-            "learning new technologies, and staying up-to-date with trends.",
             " ",
             <span className="flex space-x-2" key="name">
               {" "}
