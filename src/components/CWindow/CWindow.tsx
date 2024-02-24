@@ -82,7 +82,6 @@ function CWindow({
     };
 
     if (isDragging) {
-      console.log("Adding event listeners");
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("touchmove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
@@ -90,7 +89,6 @@ function CWindow({
     }
 
     return () => {
-      console.log("Removing event listeners");
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
