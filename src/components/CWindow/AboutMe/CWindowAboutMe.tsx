@@ -38,10 +38,10 @@ const JSComments = ({
   </div>
 );
 
-export const CWindowAboutMe = ({ defaultOpen }: { defaultOpen: boolean }) => (
+export const CWindowAboutMe = () => (
   <CWindow
     title="About Calvin Ellis"
-    defaultOpen={defaultOpen}
+    defaultOpen={true}
     inline
     isCloseable={false}
   >
