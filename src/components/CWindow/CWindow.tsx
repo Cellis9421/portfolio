@@ -11,12 +11,16 @@ function CWindow({
   title,
   children,
   onClose,
+  isCloseable = true,
   defaultOpen = false,
+  inline = false,
 }: Readonly<{
   title: string;
   children: React.ReactNode;
   onClose?: () => void;
+  isCloseable?: boolean;
   defaultOpen?: boolean;
+  inline?: boolean;
 }>) {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -44,7 +48,6 @@ function CWindow({
     });
   };
 
-  // On mount open in the center of the screen account for the width of the window and the width of the screen
   useEffect(() => {
     const newX =
       window.innerWidth / 2 - (windowRef?.current?.clientWidth || 0) / 2;
@@ -71,6 +74,11 @@ function CWindow({
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      // Remove event listeners when dragging is done
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchend", handleMouseUp);
     };
 
     if (isDragging) {
@@ -92,6 +100,7 @@ function CWindow({
 
   const handleMouseDown = useMemo(
     () => (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      e.preventDefault(); // Prevent scrolling the page
       setIsDragging(true);
       setOffset({
         x: e.clientX - position.x,
@@ -103,6 +112,7 @@ function CWindow({
 
   const handleTouchStart = useMemo(
     () => (e: React.TouchEvent<HTMLDivElement>) => {
+      e.preventDefault(); // Prevent scrolling the page
       setIsDragging(true);
       setOffset({
         x: e.touches[0].clientX - position.x,
@@ -113,15 +123,41 @@ function CWindow({
   );
 
   const handleOnClose = () => {
-    setIsOpen(false);
-    onClose?.();
+    if (isCloseable) {
+      setIsOpen(false);
+      onClose?.();
+    }
   };
+
+  const containerClasses = useMemo(
+    () =>
+      `text-white code-editor md:min-w-[400px] md:max-w-[800px] min-h-[200px] bg-editor.backgroundMedium rounded-lg ${
+        inline ? "" : "absolute"
+      } z-1000 overflow-hidden m-2`,
+    [inline]
+  );
+
+  const buttonClasses = useMemo(
+    () =>
+      `text-white/70 hover:text-white/100 ${
+        !isCloseable ? "cursor-not-allowed" : ""
+      }`,
+    [isCloseable]
+  );
+
+  const headerClasses = useMemo(
+    () =>
+      `${
+        !inline ? "cursor-pointer" : ""
+      } flex items-center justify-between p-2 pl-4 bg-editor.backgroundLight`,
+    [inline]
+  );
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="text-white code-editor md:min-w-[400px] md:max-w-[800px] min-h-[200px] bg-editor.backgroundMedium rounded-lg absolute z-1000 overflow-hidden m-2"
+      className={containerClasses}
       ref={windowRef}
       style={{
         left: position.x,
@@ -130,16 +166,16 @@ function CWindow({
       }}
     >
       <div
-        className="cursor-pointer flex items-center justify-between p-2 pl-4 mb-4 bg-editor.backgroundLight"
+        className={headerClasses}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
         <div style={{ letterSpacing: "1.57px" }}>{title}</div>
-        <button className="pr-2 hover:text-white/70" onClick={handleOnClose}>
+        <button className={buttonClasses} onClick={handleOnClose}>
           X
         </button>
       </div>
-      <div className="editor-content px-4 pb-4">{children}</div>
+      <div className="editor-content">{children}</div>
     </div>
   );
 }
@@ -185,122 +221,6 @@ export const CWindowExample = () => (
         <span>: </span>
         <span className="color-1">8px</span>;
       </p>
-      <span>{`}`}</span>
-    </code>
-  </CWindow>
-);
-type Me = {
-  [key: string]: any;
-};
-
-const me: Me = {
-  currentRole: "Principal Software Engineer",
-  industries: ["E-commerce", "Cybersecurity", "Finance", "Healthcare"],
-  location: "United States (EST)",
-  languages: ["English (Native)"],
-  hobbies: ["Gaming", "Music", "Computers", "Technology", "Learning"],
-};
-
-/**
- * Welcome to my portfolio! 🥳
- */
-export const CWindowAboutMe = ({ defaultOpen }: { defaultOpen: boolean }) => (
-  <CWindow title="About Calvin Ellis" defaultOpen={defaultOpen}>
-    <code className="code">
-      <p className="flex flex-col">
-        <span className="text-editor.comment">{`/**`}</span>
-        <span className="text-editor.comment pl-2">
-          {`* 🥳 Welcome to my portfolio!`}
-        </span>
-        <span className="text-editor.comment pl-2">
-          {`* Here is a short "About Me" to get you started!`}
-        </span>
-        <span className="text-editor.comment pl-2">
-          {`* (You can drag this window around, or close it)`}
-        </span>
-        <span className="text-editor.comment pl-2">{`*/`}</span>
-      </p>
-      <p>
-        <span className="color-0">const </span>
-        <span className="color-2">CALVIN_ELLIS</span> = <span>{`{`}</span>
-      </p>
-
-      {/** Github Link */}
-      <p className="property">
-        <Link
-          href="https://github.com/Cellis9421"
-          target="_blank"
-          className="flex group"
-          title="Cellis9421's GitHub Profile"
-        >
-          <span className="color-2">github</span>
-          <span>: </span>
-          <span className="flex ml-2 space-x-2">
-            <span className="color-4">Cellis9421</span>
-            <span className="text-editor.comment hidden group-hover:flex ">
-              {"// Check out my GitHub!"}
-              <Octocat className="pl-2" />
-            </span>
-          </span>
-        </Link>
-      </p>
-      {/** LinkedIn Link */}
-      <p className="property">
-        <Link
-          href="https://www.linkedin.com/in/calvin-ellis-ma/"
-          target="_blank"
-          className="flex group"
-          title="Cellis9421's LinkedIn Profile"
-        >
-          <span className="color-2">linkedin</span>
-          <span>: </span>
-          <span className="flex ml-2 space-x-2">
-            <span className="color-4">Calvin Ellis</span>
-            <span className="text-editor.comment hidden group-hover:flex ">
-              {"// Connect with me on LinkedIn!"}
-            </span>
-          </span>
-        </Link>
-      </p>
-      {Object.keys(me).map((key: string) => {
-        const value = me[key];
-        let type = typeof value;
-        const isArray = Array.isArray(value);
-        return (
-          <p className="property" key={key}>
-            <span className="color-2">{key}</span>
-            <span>: </span>
-            <span className={`color-${type === "string" ? 1 : 0}`}>
-              {(() => {
-                switch (type) {
-                  case "string":
-                    return <span className="color-1">{`"${value}"`}</span>;
-                  case "boolean":
-                    return <span className="color-3">{String(value)}</span>;
-                  case "number":
-                    return <span className="color-2">{String(value)}</span>;
-                  case "object":
-                    if (isArray) {
-                      return (
-                        <span className="color-4">
-                          {`[`}
-                          <span className="color-1">
-                            {value.map((v: any) => `"${v}"`).join(", ")}
-                          </span>
-                          {`]`}
-                        </span>
-                      );
-                    }
-                    return <span className="color-4">{String(value)}</span>;
-                  default:
-                    return <span className="color-1">{String(value)}</span>;
-                }
-              })()}
-            </span>
-            ,
-          </p>
-        );
-      })}
       <span>{`}`}</span>
     </code>
   </CWindow>
