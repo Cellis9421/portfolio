@@ -12,7 +12,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_checkout.png" alt="Cybrary Checkout" />
     ),
-    tags: ["Paddle", "Chargebee", "React", "SaaS", "E-commerce"],
+    tags: ["Paddle", "Chargebee", "React", "SaaS"],
   },
   {
     title: "Immersive LX",
@@ -23,6 +23,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_immersive.png" alt="Cybrary Immersive" />
     ),
+    tags: ["React", "SaaS", "Cybersecurity", "Virtual Labs"],
   },
   {
     title: "Enterprise Dashboards",
@@ -33,6 +34,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_dashboard.png" alt="Cybrary Dashboard" />
     ),
+    tags: ["React", "SaaS", "Cybersecurity", "Reporting"],
   },
   {
     title: "User Profiles",
@@ -43,6 +45,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_profile.png" alt="Cybrary Profiles" />
     ),
+    tags: ["React", "SaaS", "Cybersecurity", "User Profiles"],
   },
   {
     title: "Forums",
@@ -51,6 +54,7 @@ const PROJECTS: IProject[] = [
       "Built a public and private forums system that allowed users to ask questions, share knowledge, and collaborate with others. The forums were built to serve free, paid, and teams users with different access levels and permissions. Authentication was shared with the main platform for better UX.",
     viewLink: "https://forums.cybrary.it/",
     iconElement: <Screenshot src="cybrary_forums.png" alt="Cybrary Forums" />,
+    tags: ["React", "SaaS", "Cybersecurity", "Forums"],
   },
   {
     title: "Guided Onboarding",
@@ -61,6 +65,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_onboarding.png" alt="Cybrary Onboarding" />
     ),
+    tags: ["React", "SaaS", "Cybersecurity", "Onboarding"],
   },
   {
     title: "Sales Demos",
@@ -71,6 +76,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="cybrary_sales_demo.png" alt="Cybrary Sales Demo" />
     ),
+    tags: ["React", "SaaS", "Cybersecurity", "Sales Demos"],
   },
   /** SGPFL */
   {
@@ -80,6 +86,7 @@ const PROJECTS: IProject[] = [
       "Built a custom e-commerce point-of-sale website on top of Shopify's CMS/Checkout. The system included a user funnel to reduce incorrect orders, product pages optimized for conversion, and resources to make informed purchasing descisions. The website was built to be fast, SEO performant, and easy to use for non-technical users.",
     viewLink: "https://pellet-stove-parts-4less.com/",
     iconElement: <Screenshot src="sgpfl_homepage.png" alt="SGPFL Homepage" />,
+    tags: ["Shopify", "E-commerce", "SSR", "Liquid"],
   },
   {
     title: "CMS",
@@ -87,6 +94,7 @@ const PROJECTS: IProject[] = [
     description:
       "Built a content management system to extend our existing product catalog(s) from Shopify and Finale Inventory in custom ways. The system included a product editor, product list, and product detail pages. It performed basic CRUD operations on data from multiple sources and was built to be fast, reliable, and easy to use for non-technical users.",
     iconElement: <Screenshot src="sgpfl_ac2_app.png" alt="SGPFL AC2 App" />,
+    tags: ["Shopify", "Finale Inventory", "E-commerce", "CMS"],
   },
   {
     title: "Reporting Server",
@@ -96,6 +104,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="sgpfl_ac2_reports.png" alt="SGPFL AC2 Reports" />
     ),
+    tags: ["Shopify", "Finale Inventory", "E-commerce", "Reporting", "GCP", "API", "Google Sheets"],
   },
   {
     title: "Diagnsotics Server",
@@ -105,6 +114,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="sgpfl_ac2_diagnostics.png" alt="SGPFL AC2 Diagnostics" />
     ),
+    tags: ["Shopify", "Finale Inventory", "E-commerce", "Diagnostics", "GCP", "API"],
   },
   {
     title: "Accessibility Compliance",
@@ -118,6 +128,7 @@ const PROJECTS: IProject[] = [
       />
     ),
     viewLink: "https://pellet-stove-parts-4less.com/",
+    tags: ["Shopify", "E-commerce", "WCAG 2.2 AA", "Accessibility"],
   },
   {
     title: "Label Generation Server",
@@ -127,6 +138,7 @@ const PROJECTS: IProject[] = [
     iconElement: (
       <Screenshot src="sgpfl_label_pdf.png" alt="SGPFL Label Server" />
     ),
+    tags: ["Shopify", "Finale Inventory", "E-commerce", "Label Generation", "GCP", "API"],
   },
   /** Portfolio */
   {
@@ -137,6 +149,7 @@ const PROJECTS: IProject[] = [
     codeLink: "https://github.com/Cellis9421/portfolio",
     viewLink: "https://calvinellis.io",
     iconElement: <Screenshot src="portfolio.png" alt="Portfolio" />,
+    tags: ["Next.js", "TailwindCSS", "TypeScript", "Static Site", "Open Source"],
   },
   /** Side Projects */
   {
@@ -146,6 +159,7 @@ const PROJECTS: IProject[] = [
       "Created a process manager to manage long-running processes on a system. The python script starts processes and monitors them for crashes, restarting them as needed. The system was built to be fast, reliable, and easy to use for non-technical users.",
     iconElement: <Screenshot src="process_manager.png" alt="Process Manager" />,
     codeLink: "https://github.com/Cellis9421/HydraMBLauncher/tree/master",
+    tags: ["Python", "Process Manager", "System Administration", "CLI"],
   },
   {
     title: "Website Builder",
@@ -154,6 +168,7 @@ const PROJECTS: IProject[] = [
       "Created a php website builder to generate static websites from a simple JSON configuration. As one of my first projects in PHP, it was a great learning experience and allowed me to build a website for a friend in a fraction of the time it would have taken to build by hand. (That was it's only user)",
     iconElement: <Screenshot src="website_builder.png" alt="Website Builder" />,
     codeLink: "https://github.com/Cellis9421/HydraMBLauncher/tree/master",
+    tags: ["PHP", "Website Builder", "Static Site"],
   },
   {
     title: "Discord AI Bot",
@@ -162,6 +177,8 @@ const PROJECTS: IProject[] = [
       "Created a discord bot to do various things with AI. The bot could generate text, images, and more. It was a good project to learn about AI text generation and how to integrate it into a discord bot. The bot was used in a few small servers and was a fun project to work on.",
     iconElement: <Screenshot src="discord_ai_bot.png" alt="Discord AI Bot" />,
     codeLink: "https://github.com/Cellis9421/discord-ai-bot",
+    tags: ["Discord", "AI", "Bot", "Python", "OpenAI"],
+
   },
   {
     title: "pAInt it",
@@ -170,6 +187,7 @@ const PROJECTS: IProject[] = [
       "Created a web app to generate art using AI. The app could generate art from text. It was a fun project to learn about AI image generation and how to integrate it into a web app. The app was used by a few friends and was a fun project to work on.",
     iconElement: <Screenshot src="paint_it.png" alt="pAInt it App" />,
     codeLink: "https://github.com/Cellis9421/paint-it",
+    tags: ["AI", "OpenAI", "React", "Next.js", "DALL-E"],
   },
 ];
 

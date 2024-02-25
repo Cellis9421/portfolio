@@ -6,7 +6,7 @@ const projectCardColors = [
   "blue-500",
   "red-500",
   "cyan-500",
-  "yellow-500",
+  // "yellow-500",
   "fuchsia-500",
   "orange-500",
   "green-500",
@@ -27,6 +27,7 @@ export default function ProjectCard({
     viewLink,
     codeLink,
     iconElement,
+    tags,
   } = project;
   const color = useMemo(
     () =>
@@ -66,6 +67,17 @@ export default function ProjectCard({
         <h3 className="text-xl font-semibold text-gray-300 hover:text-white">
           {title}
         </h3>
+        {/** Add chips for each tag */}
+        <div className="flex flex-wrap gap-2 mt-2">
+          {tags?.map((tag, index) => (
+            <span
+              key={index}
+              className={`px-2 py-1 bg-${color} text-white text-xs rounded-md`}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
         <p className="mt-3 text-gray-500">{description}</p>
       </div>
       <div className="mt-auto flex border-t divide-x border-editor.backgroundMedium divide-editor.backgroundMedium">
