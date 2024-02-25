@@ -15,7 +15,7 @@ const Screenshot = ({ src, alt }: { src: string; alt: string }) => {
     () =>
       process.env.NODE_ENV === "development"
         ? `../../../screenshots/${src}`
-        : `/screenshots/${src}`,
+        : `https://calvinellis.io/screenshots/${src}`,
     [src]
   );
   return (
