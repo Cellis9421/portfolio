@@ -2,6 +2,7 @@ import Link from "next/link";
 import CWindow from "../CWindow";
 import { Octocat } from "@/app/icons/Octocat";
 import { LinkedInIcon } from "@/app/icons/LinkedInIcon";
+import JSComments from "@/components/JSComments/JSComments";
 
 type Me = {
   [key: string]: any;
@@ -15,29 +16,6 @@ const me: Me = {
   hobbies: ["Gaming", "Music", "Computers", "Technology", "Learning"],
 };
 
-/**
- * For rendering a block of JS comments with a given array of lines of text
- * @param param0
- * @returns
- */
-const JSComments = ({
-  linesOfText,
-}: {
-  linesOfText: (string | JSX.Element)[];
-}) => (
-  <div>
-    <p className="flex flex-col">
-      <span className="text-editor.comment">{`/**`}</span>
-      {linesOfText.map((line, index) => (
-        <span key={index} className="flex text-editor.comment pl-2">
-          *<span className="pl-4">{line}</span>
-        </span>
-      ))}
-      <span className="text-editor.comment pl-2">{`*/`}</span>
-    </p>
-  </div>
-);
-
 export const CWindowAboutMe = () => (
   <CWindow
     title="About Calvin Ellis"
@@ -46,8 +24,9 @@ export const CWindowAboutMe = () => (
     isCloseable={false}
   >
     <code className="code">
-      <div className="p-4">
+      <div className="p-8">
         <JSComments
+          // color="white"
           linesOfText={[
             <span className="group" key="welcome">
               Welcome to my portfolio!
