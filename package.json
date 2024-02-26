@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "npm run compress && next build",
     "compress": "node compressImages.js",
+    "build-compress": "npm run compress && next build",
     "start": "next start",
     "lint": "next lint"
   },

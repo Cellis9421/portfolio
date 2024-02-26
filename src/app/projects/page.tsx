@@ -1,9 +1,7 @@
 import ProjectCard from "@/components/Cards/ProjectCard";
 import Header from "@/components/Header/Header";
-import Screenshot from "@/components/Screenshot/Screenshot";
 import PROJECTS from "@/configs/PROJECTS";
 import Link from "next/link";
-import { LetsConnectWidget } from "../contact/page";
 
 export default function Projects() {
   return (
