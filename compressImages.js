@@ -7,7 +7,7 @@ const sharp = require('sharp');
     console.log('Compressing images...');
     // Normally next/image would handle this, but since we are not using hosting on Vercel, we need to manually compress the images on build
     // recuresively compress all images in the docs/img directory and sub directories
-    const PUBLIC_IMAGES_DIR = './public/img/**/*.{jpg,png}';
+    const PUBLIC_IMAGES_DIR = './public/img/**/*.{jpg,jpeg,png}';
     const OUTPUT_DIR = './public/imgthumb/';
     // Loop over all images in the public directory and sub directories and compress them
 
