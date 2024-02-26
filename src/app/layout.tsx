@@ -22,7 +22,7 @@ export default function RootLayout({
       <NavigationProvider>
         <body className={`${workSans.className} bg-editor.background text-editor.text`}>
           <Navigation />
-          <main className="flex min-h-screen flex-col items-center justify-center mx-auto pt-24 md:pt-36">
+          <main className="flex min-h-dvh flex-col items-center justify-center mx-auto pt-24 md:pt-36">
             {children}
           </main>
         </body>
