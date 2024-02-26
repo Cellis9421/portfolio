@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import Screenshot from "@/components/Screenshot/Screenshot";
 import PROJECTS from "@/configs/PROJECTS";
 import Link from "next/link";
+import { LetsConnectWidget } from "../contact/page";
 
 export default function Projects() {
   return (
@@ -12,13 +13,10 @@ export default function Projects() {
         <p className="text-lg">
           Here are some examples of my personal and professional work.
         </p>
-        <p className="text-gray-300 italic">
-          Not all projects have publicaly available code or hosted examples.
-        </p>
         <p className="text-sm">
           Interested in working with me?{" "}
           <Link href={"/contact"} className="underline" title="Contact me">
-            Contact me here
+            Lets connect!
           </Link>
         </p>
       </div>
