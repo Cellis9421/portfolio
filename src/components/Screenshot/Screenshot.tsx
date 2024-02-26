@@ -26,8 +26,8 @@ const Screenshot = ({ src, alt }: { src: string; alt: string }) => {
       <img
         src={normalizedSrc}
         alt={alt}
-        width={300}
-        height={160}
+        width={500}
+        height={240}
         sizes="100vw"
         style={{ width: "100%", height: "auto", borderRadius: "10px" }}
       />
