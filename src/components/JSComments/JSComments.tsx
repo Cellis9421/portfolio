@@ -18,8 +18,8 @@ const JSComments = ({
       <p className="flex flex-col">
         <span className={textColor}>{`/**`}</span>
         {linesOfText.map((line, index) => (
-          <span key={index} className={`flex pl-2 ${textColor}`}>
-            *<span className="pl-4">{line}</span>
+          <span key={index} className={`flex pl-1 md:pl-2 ${textColor}`}>
+            *<span className="md:pl-4 pl-1">{line}</span>
           </span>
         ))}
         <span className={`${textColor} pl-2`}>{`*/`}</span>

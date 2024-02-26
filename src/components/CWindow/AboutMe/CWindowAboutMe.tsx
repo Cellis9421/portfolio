@@ -24,7 +24,7 @@ export const CWindowAboutMe = () => (
     isCloseable={false}
   >
     <code className="code">
-      <div className="p-8">
+      <div className="p-2 md:p-6 text-xs md:text-sm">
         <JSComments
           // color="white"
           linesOfText={[
@@ -44,34 +44,29 @@ export const CWindowAboutMe = () => (
             "Typescript, React, Java, Next.js, TailwindCSS, PHP, Python,",
             "Node.js, PostgreSQL, Kubernetes, GCP, and Firebase.",
             " ",
-            <span className="flex space-x-2" key="name">
-              {" "}
-              <span>- Calvin Ellis</span>
-              <span>|</span>
-              <span>
-                <Link
-                  href="https://github.com/Cellis9421"
-                  target="_blank"
-                  className="flex group space-x-1"
-                  title="Calvin's GitHub Profile"
-                >
-                  <Octocat />
-                  <span>cellis9421</span>
-                </Link>
-              </span>
-              <span>|</span>
-              <span>
-                <Link
-                  href="https://www.linkedin.com/in/calvin-ellis-ma"
-                  target="_blank"
-                  className="flex group space-x-1"
-                  title="Calvin's LinkedIn Profile"
-                >
-                  <LinkedInIcon />
-                  <span>linkedin.com/in/calvin-ellis-ma</span>
-                </Link>
-              </span>
-            </span>,
+            "- Calvin Ellis",
+            " ",
+            <Link
+              href="https://github.com/Cellis9421"
+              target="_blank"
+              className="flex group space-x-1"
+              title="Calvin's GitHub Profile"
+              key="ghlink"
+            >
+              <Octocat className="w-4" />
+              <span>cellis9421</span>
+            </Link>,
+            " ",
+            <Link
+              href="https://www.linkedin.com/in/calvin-ellis-ma"
+              target="_blank"
+              className="flex group space-x-1"
+              title="Calvin's LinkedIn Profile"
+              key="linkedinlink"
+            >
+              <LinkedInIcon className="w-4" />
+              <span>linkedin.com/in/calvin-ellis-ma</span>
+            </Link>,
           ]}
         />
         <p>

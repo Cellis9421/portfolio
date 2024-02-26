@@ -6,9 +6,9 @@ import { LetsConnectWidget } from "@/components/LetsConnectWidget/LetsConnectWid
 export default function About() {
   return (
     <>
-      <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-screen-xl">
-        <div className="mb-8 lg:mb-0">
-          <Header as="h1" className="mb-4">
+      <div className="flex flex-col lg:flex-row items-center justify-evenly w-full max-w-screen-xl lg:px-4">
+        <div className="mb-8 lg:mb-0 lg:pr-4">
+          <Header as="h1" className="mb-4 text-center">
             About Calvin Ellis
           </Header>
           <LetsConnectWidget />
