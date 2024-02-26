@@ -16,15 +16,21 @@ const Screenshot = ({ src, alt }: { src: string; alt: string }) => {
   const normalizedSrc = useMemo(
     () =>
       process.env.NODE_ENV === "development"
-        ? `../../../imgthumb/screenshots/${src}`
-        : `https://calvinellis.io/imgthumb/screenshots/${src}`,
+        ? `../../../img/screenshots/${src}`
+        : `https://calvinellis.io/img/screenshots/${src}`,
     [src]
+  );
+
+  // Replace "img" with "imgthumb" for the thumbnail
+  const normalizedThumbSrc = useMemo(
+    () => normalizedSrc.replace("/img/", "/imgthumb/"),
+    [normalizedSrc]
   );
 
   return (
     <Link href={normalizedSrc} target="_blank">
       <img
-        src={normalizedSrc}
+        src={normalizedThumbSrc}
         alt={alt}
         width={500}
         height={240}
