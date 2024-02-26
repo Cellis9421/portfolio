@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo } from "react";
 
 /**
@@ -14,19 +16,22 @@ const Screenshot = ({ src, alt }: { src: string; alt: string }) => {
   const normalizedSrc = useMemo(
     () =>
       process.env.NODE_ENV === "development"
-        ? `../../../screenshots/${src}`
-        : `https://calvinellis.io/screenshots/${src}`,
+        ? `../../../imgthumb/screenshots/${src}`
+        : `https://calvinellis.io/imgthumb/screenshots/${src}`,
     [src]
   );
+
   return (
-    <Image
-      src={normalizedSrc}
-      alt={alt}
-      width={0}
-      height={0}
-      sizes="100vw"
-      style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-    />
+    <Link href={normalizedSrc} target="_blank">
+      <img
+        src={normalizedSrc}
+        alt={alt}
+        width={300}
+        height={160}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+      />
+    </Link>
   );
 };
 
