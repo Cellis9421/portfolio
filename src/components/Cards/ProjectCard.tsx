@@ -81,24 +81,24 @@ export default function ProjectCard({
         <p className="mt-3 text-gray-500">{description}</p>
       </div>
       <div className="mt-auto flex border-t divide-x border-editor.backgroundMedium divide-editor.backgroundMedium">
-        <a
-          className={`${linkClasses} ${
-            !!viewLink ? activeLinkClasses : inactiveLinkClasses
-          }`}
-          href={viewLink}
-          target="_blank"
-        >
-          View Project
-        </a>
-        <a
-          className={`${linkClasses} ${
-            !!codeLink ? activeLinkClasses : inactiveLinkClasses
-          }`}
-          href={codeLink}
-          target="_blank"
-        >
-          View Code
-        </a>
+        {viewLink && (
+          <a
+            className={`${linkClasses} ${activeLinkClasses}`}
+            href={viewLink}
+            target="_blank"
+          >
+            View Project
+          </a>
+        )}
+        {codeLink && (
+          <a
+            className={`${linkClasses} ${activeLinkClasses}`}
+            href={codeLink}
+            target="_blank"
+          >
+            View Code
+          </a>
+        )}
       </div>
     </div>
   );
