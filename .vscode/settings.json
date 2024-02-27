@@ -1,12 +1,15 @@
 {
     "npm-scripts.showStartNotification": false,
     "cSpell.words": [
+        "cellis",
         "Chargebee",
         "Cybrary",
         "DALL",
         "googlesheets",
+        "heroicons",
         "Octocat",
         "SGPFL",
+        "tailwindcss",
         "WCAG"
     ]
 }

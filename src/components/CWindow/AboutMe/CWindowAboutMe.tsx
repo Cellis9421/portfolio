@@ -51,7 +51,7 @@ export const CWindowAboutMe = () => (
               target="_blank"
               className="flex group space-x-1"
               title="Calvin's GitHub Profile"
-              key="ghlink"
+              key="gh-link"
             >
               <Octocat className="w-4" />
               <span>cellis9421</span>
@@ -62,7 +62,7 @@ export const CWindowAboutMe = () => (
               target="_blank"
               className="flex group space-x-1"
               title="Calvin's LinkedIn Profile"
-              key="linkedinlink"
+              key="linkedin-link"
             >
               <LinkedInIcon className="w-4" />
               <span>linkedin.com/in/calvin-ellis-ma</span>
