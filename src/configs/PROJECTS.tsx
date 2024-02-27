@@ -83,7 +83,7 @@ const PROJECTS: IProject[] = [
     title: "E-commerce PoS",
     subtitle: "Stove & Grill Parts For Less",
     description:
-      "Built a custom e-commerce point-of-sale website on top of Shopify's CMS/Checkout. The system included a user funnel to reduce incorrect orders, product pages optimized for conversion, and resources to make informed purchasing descisions. The website was built to be fast, SEO performant, and easy to use for non-technical users.",
+      "Built a custom e-commerce point-of-sale website on top of Shopify's CMS/Checkout. The system included a user funnel to reduce incorrect orders, product pages optimized for conversion, and resources to make informed purchasing decisions. The website was built to be fast, SEO performant, and easy to use for non-technical users.",
     viewLink: "https://pellet-stove-parts-4less.com/",
     iconElement: <Screenshot src="sgpfl_homepage.png" alt="SGPFL Homepage" />,
     tags: ["Shopify", "E-commerce", "SSR", "Liquid"],
@@ -100,14 +100,14 @@ const PROJECTS: IProject[] = [
     title: "Reporting Server",
     subtitle: "Stove & Grill Parts For Less",
     description:
-      "Built a custom reporting server to pull data from Shopify, Finale Inventory, and several other third-party services. The system included multiple forms of export, including CSV/PDF via email, direct download, and writing directly to googlesheets. Handled user authentication, filtering, sorting, custom formulas, and more. Hosted on GCP using cloud run and cloud scheduler.",
+      "Built a custom reporting server to pull data from Shopify, Finale Inventory, and several other third-party services. The system included multiple forms of export, including CSV/PDF via email, direct download, and writing directly to Google sheets. Handled user authentication, filtering, sorting, custom formulas, and more. Hosted on GCP using cloud run and cloud scheduler.",
     iconElement: (
       <Screenshot src="sgpfl_ac2_reports.png" alt="SGPFL AC2 Reports" />
     ),
     tags: ["Shopify", "Finale Inventory", "E-commerce", "Reporting", "GCP", "API", "Google Sheets"],
   },
   {
-    title: "Diagnsotics Server",
+    title: "Diagnostics Server",
     subtitle: "Stove & Grill Parts For Less",
     description:
       "Built a custom diagnostics server to monitor the health of our e-commerce catalog. The system included monitoring of product prices, inventory levels, and order statuses. The system was built to be fast, reliable, and issues were surfaced in a way that was easy fix for end users. Hosted on GCP using cloud run and cloud scheduler.",

@@ -41,7 +41,7 @@ export default function NavigationItem({
   return (
     <Link href={href || "#"} className={classes}>
       <span className={iconClasses}>{icon}</span>
-      <span className="font-bold text-[2rem] md:text-xl transition-all duraton-500 ">
+      <span className="font-bold text-[2rem] md:text-xl transition-all duration-500 ">
         <HTMLText componentName={label} componentNameClassNames={"group-hover:px-3 group-hover:scale-110 transition-all duration-400"} />
       </span>
       {/* Add hover:underline class */}
