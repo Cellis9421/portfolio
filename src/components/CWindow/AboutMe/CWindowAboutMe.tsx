@@ -29,7 +29,7 @@ export const CWindowAboutMe = () => (
           // color="white"
           linesOfText={[
             <span className="group" key="welcome">
-              Welcome to my portfolio!
+              Hello, and Welcome to my portfolio!
               <span className="animate-spin">🥳</span>
             </span>,
             " ",
