@@ -67,6 +67,7 @@ export const CWindowAboutMe = () => (
               <LinkedInIcon className="w-4" />
               <span>linkedin.com/in/calvin-ellis-ma</span>
             </Link>,
+            " ",
           ]}
         />
         <p>
