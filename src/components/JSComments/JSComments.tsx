@@ -14,17 +14,15 @@ const JSComments = ({
 }) => {
   const textColor = useMemo(() => `text-${color}`, [color]);
   return (
-    <div>
-      <p className="flex flex-col">
+      <p className="flex flex-col text-lg">
         <span className={textColor}>{`/**`}</span>
         {linesOfText.map((line, index) => (
-          <span key={index} className={`flex pl-1 md:pl-2 ${textColor}`}>
-            <div className="md:pl-2 pl-1 min-h-4">{line}</div>
+          <span key={index} className={`flex pl-1 md:pl-4 ${textColor}`}>
+            <div className="md:pl-4 pl-1 min-h-4">{line}</div>
           </span>
         ))}
-        <span className={`${textColor} pl-2`}>{`*/`}</span>
+        <span className={`${textColor} pl-2 w-full text-right`}>{`*/`}</span>
       </p>
-    </div>
   );
 };
 

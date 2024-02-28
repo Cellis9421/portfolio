@@ -50,9 +50,9 @@ function CWindow({
 
   useEffect(() => {
     const newX =
-      window.innerWidth / 2 - (windowRef?.current?.clientWidth || 0) / 2;
+      window.innerWidth / 3 - (windowRef?.current?.clientWidth || 0) / 3;
     const newY =
-      window.innerHeight / 2 - (windowRef?.current?.clientHeight || 0) / 2;
+      window.innerHeight / 3 - (windowRef?.current?.clientHeight || 0) / 3;
     moveTo(newX, newY);
     setIsOpen(defaultOpen);
   }, [defaultOpen]);
@@ -137,7 +137,7 @@ function CWindow({
 
   const buttonClasses = useMemo(
     () =>
-      `text-white/70 hover:text-white/100 ${
+      `text-white/70 hover:text-white/100 hover:scale-105 ${
         !isCloseable ? "cursor-not-allowed" : ""
       }`,
     [isCloseable]

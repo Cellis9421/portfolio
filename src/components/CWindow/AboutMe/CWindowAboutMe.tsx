@@ -1,8 +1,8 @@
 import Link from "next/link";
 import CWindow from "../CWindow";
 import { Octocat } from "@/app/icons/Octocat";
-import { LinkedInIcon } from "@/app/icons/LinkedInIcon";
-import JSComments from "@/components/JSComments/JSComments";
+import { ABOUT_ME_WINDOW_ID } from "@/configs/constants";
+import { useWindowManagerCtx } from "@/contexts/WindowManagerCtx";
 
 type Me = {
   [key: string]: any;
@@ -16,60 +16,16 @@ const me: Me = {
   hobbies: ["Gaming", "Music", "Computers", "Technology", "Learning"],
 };
 
-export const CWindowAboutMe = () => (
+export const CWindowAboutMe = () => {
+  const { isOpen, close } = useWindowManagerCtx();
+  return (
   <CWindow
     title="About Calvin Ellis"
-    defaultOpen={true}
-    inline
-    isCloseable={false}
+    defaultOpen={isOpen(ABOUT_ME_WINDOW_ID)}
+    onClose={() => close(ABOUT_ME_WINDOW_ID)}
   >
     <code className="code">
       <div className="p-2 md:p-6 text-xs md:text-sm">
-        <JSComments
-          // color="white"
-          linesOfText={[
-            <span className="group" key="welcome">
-              Hello, and Welcome to my portfolio!
-              <span className="animate-spin">🥳</span>
-            </span>,
-            " ",
-            "I am a Software Engineer with over 10 years experience building",
-            "full-stack solutions in the cybersecurity/e-commerce domains.",
-            "I have a passion for problem-solving and creating efficient,",
-            "scalable solutions through code and infrastructure.",
-            "I enjoy collaborating with teams on difficult problems,",
-            "learning new technologies, and staying up-to-date with trends.",
-            " ",
-            "Some of my favorite tech I've worked with professionally includes:",
-            "Typescript, React, Java, Next.js, TailwindCSS, PHP, Python,",
-            "Node.js, PostgreSQL, Kubernetes, GCP, and Firebase.",
-            " ",
-            "- Calvin Ellis",
-            " ",
-            <Link
-              href="https://github.com/Cellis9421"
-              target="_blank"
-              className="flex group space-x-1"
-              title="Calvin's GitHub Profile"
-              key="gh-link"
-            >
-              <Octocat className="w-4" />
-              <span>cellis9421</span>
-            </Link>,
-            " ",
-            <Link
-              href="https://www.linkedin.com/in/calvin-ellis-ma"
-              target="_blank"
-              className="flex group space-x-1"
-              title="Calvin's LinkedIn Profile"
-              key="linkedin-link"
-            >
-              <LinkedInIcon className="w-4" />
-              <span>linkedin.com/in/calvin-ellis-ma</span>
-            </Link>,
-            " ",
-          ]}
-        />
         <p>
           <span className="color-0">const </span>
           <span className="color-2">CALVIN_ELLIS</span> = <span>{`{`}</span>
@@ -155,4 +111,4 @@ export const CWindowAboutMe = () => (
       </div>
     </code>
   </CWindow>
-);
+)};

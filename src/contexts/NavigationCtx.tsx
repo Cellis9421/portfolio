@@ -4,11 +4,10 @@ import React, {
   useMemo,
   useState,
   useContext,
-  use,
   useEffect,
 } from "react";
 import INavigationCtx from "../../@types/INavigationCtx";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // Create the empty context
 const NavigationCtx = createContext<INavigationCtx>({

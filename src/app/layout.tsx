@@ -3,6 +3,7 @@ import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import NavigationProvider from "@/contexts/NavigationCtx";
+import WindowManagerProvider from "@/contexts/WindowManagerCtx";
 
 const workSans = Work_Sans({ subsets: ["latin"], weight: "500" });
 
@@ -20,12 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <NavigationProvider>
+        <WindowManagerProvider>
         <body className={`${workSans.className} bg-editor.background text-editor.text`}>
           <Navigation />
           <main className="flex min-h-dvh flex-col items-center justify-center mx-auto pt-24 md:pt-36">
             {children}
           </main>
         </body>
+        </WindowManagerProvider>
       </NavigationProvider>
     </html>
   );
