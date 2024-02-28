@@ -41,9 +41,9 @@ jobs:
       run: npm run build-compress
 
     - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./docs
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./docs
 
   # Deployment job
   deploy:
