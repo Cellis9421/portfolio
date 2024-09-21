@@ -1,33 +1,20 @@
 # My Profile
 
-My profile is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) (The future backbone of the internet).
+This portfolio is a [Next.js](https://nextjs.org/) project that gets built to a static site and hosted on github pages for 0 cost hosting.
 
-## Getting Started
+## Local testing
 
-First, run the development server:
+1. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Then, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Open [http://localhost:3000](http://localhost:3000) 
 
-My project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Google Fonts.
 
 ## Deployed on GitHub Pages
 
-My portfolio is exported as a static site and hosted on github pages.
+This portfolio gets built and uploaded to github pages on merges to `main`
 
-To publish a new version...
-
-- Push changes to `main`
-- Build `main` with `npm run build`
-- Push Build to `main`
-
-TODO: Reconfigure deployment as a git action to automate the build step
+See [.github/workflows/deploy.yml](.github/workflows/deploy.yml) for more
