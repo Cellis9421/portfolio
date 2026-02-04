@@ -1,0 +1,49 @@
+---
+description: Tech stack versions and syntax rules for Next 16, React 19, Tailwind 3
+alwaysApply: true
+---
+
+# Portfolio Tech Stack
+
+## Pinned Versions (keep in sync with package.json)
+
+| Package | Version | Notes |
+|---------|---------|--------|
+| next | ^16.1.5 | App Router only; static export for GitHub Pages |
+| react / react-dom | ^19.1.5 | Use React 19 APIs only |
+| tailwindcss | ^3.3.x | v3 syntax; content in `src/app`, `src/components` |
+| typescript | ^5 | target ES2017, paths `@/*` → `./src/*` |
+| eslint-config-next | Match next major | Must align with Next version (e.g. 16.x with Next 16) |
+| @types/react / @types/react-dom | ^19 when available | Align with React 19; avoid ^18 with React 19 |
+| tailwind-merge | ^3.0.0 | Use `twMerge()` for conditional classes |
+| @heroicons/react | ^2.1.1 | Named imports; size via className |
+| react-type-animation | ^3.2.0 | Client-only; use inside "use client" |
+
+## Next 16 – Do's and Don'ts
+
+- **Do**: Use App Router only (`src/app/`). Use `layout.tsx`, `page.tsx`, `loading.tsx`, Route Handlers in `route.ts`.
+- **Do**: Export `metadata` from layout/page for SEO; use `next/font/google` for fonts (with `display: 'optional'` if fetch can fail).
+- **Don't**: Use `getServerSideProps`, `getStaticProps`, or `getInitialProps`; use Server Components by default and fetch in components or Route Handlers.
+- **Don't**: Rely on `output: 'export'` with dynamic server features (auth, rewrites, etc.); this project is static export only.
+- **Config**: `next.config.mjs` uses ESM `export default`. `distDir: 'docs'` and `output: 'export'` only when not in dev.
+
+## React 19 – Do's and Don'ts
+
+- **Do**: Use `"use client"` only for components that use hooks, event handlers, or browser APIs; keep everything else Server Components.
+- **Do**: Type props as `Readonly<{ ... }>` for layout/page when appropriate; use explicit return types on exported components.
+- **Don't**: Use default props for default values; use destructuring defaults (e.g. `function Foo({ x = 1 }: Props)`).
+- **Don't**: Use legacy context API patterns; use the same context patterns but ensure providers are client components when they use state.
+
+## Tailwind 3 – Do's and Don'ts
+
+- **Do**: Use `twMerge()` (from `tailwind-merge`) for conditional or composed class names; avoid string concatenation for Tailwind classes.
+- **Do**: Use project custom colors: `editor.background`, `editor.tag`, `editor.property`, `editor.propertyValue`, `editor.component`, `editor.comment` (see `tailwind.config.ts`).
+- **Don't**: Use arbitrary values when a theme value exists; prefer `text-editor.propertyValue` over raw hex in class names.
+- **Don't**: Rely on `@apply` for dynamic or computed classes; use full utility classes in className.
+
+## Syntax Quick Reference
+
+- **Server Component (default)**: No `"use client"`; can be `async`; use `import type { Metadata } from "next"` and `export const metadata` where needed.
+- **Client Component**: First line `"use client"`; then imports; use hooks and event handlers.
+- **Path alias**: Always use `@/` for src (e.g. `@/components/...`, `@/configs/...`).
+- **Fonts**: `next/font/google` returns `{ className }`; apply to a wrapper (e.g. `<body className={workSans.className}>`).

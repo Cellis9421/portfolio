@@ -1,0 +1,27 @@
+---
+description: Portfolio project structure and where to put files
+alwaysApply: true
+---
+
+# Portfolio Project Layout
+
+## Root
+
+- **Next.js 16** App Router. Config: `next.config.mjs` (static export → `docs/` for GitHub Pages).
+- **`@types/`** – Shared TypeScript interfaces (e.g. `IProject`, `INavigation`, `IWindowManagerCtx`). Use these for cross-cutting types.
+- **`public/`** – Static assets. Images live under `public/img/` and `public/imgthumb/`. `CNAME` and `.nojekyll` for GitHub Pages.
+- **`docs/`** – Build output for deployment; do not edit by hand.
+
+## Source (`src/`)
+
+- **`src/app/`** – App Router: `layout.tsx`, `page.tsx`, `globals.css`, and route folders (`about/`, `contact/`, `projects/`). Route-specific assets (e.g. `favicon.ico`, `icons/`) sit under `app/`.
+- **`src/components/`** – UI components. One folder per component (PascalCase), e.g. `Header/Header.tsx`, `Navigation/Navigation.tsx`, `CWindow/CWindow.tsx`. Colocate tests and component-specific rules in the same folder.
+- **`src/configs/`** – Static config and content: `constants.tsx`, `NAVIGATION.tsx`, `PROJECTS.tsx`.
+- **`src/contexts/`** – React context providers: `NavigationCtx.tsx`, `WindowManagerCtx.tsx`.
+
+## Conventions
+
+- New components → `src/components/<ComponentName>/<ComponentName>.tsx`.
+- New pages → `src/app/<route>/page.tsx`.
+- New shared types → `@types/I<Name>.tsx` (or existing type file if it fits).
+- Static assets (images, fonts) → `public/`; reference with paths like `/img/...`.
