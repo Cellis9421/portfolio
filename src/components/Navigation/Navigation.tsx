@@ -20,7 +20,7 @@ function Navigation() {
   const sidebarStyles = useMemo(
     () =>
       twMerge(
-        "fixed top-0 left-0 z-50 bg-white w-full h-full md:hidden transition-all duration-300 ease-in-out",
+        "fixed top-0 left-0 z-50 bg-editor.background w-full h-full md:hidden transition-transform duration-normal ease-in-out motion-reduce:transition-none",
         isOpen ? "translate-x-0" : "-translate-x-full"
       ),
     [isOpen]
@@ -29,32 +29,41 @@ function Navigation() {
   return (
     <div>
       {/** Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 p-4 mx-auto bg-editor.background/95 shadow-current rounded-b-2xl">
-        <div className="hidden md:flex space-x-8 lg:space-x-16 px-4 w-full justify-evenly">
+      <nav className="fixed top-0 left-0 right-0 z-50 p-4 mx-auto bg-section-about shadow-current rounded-b-2xl" aria-label="Main">
+        <div className="hidden md:flex gap-8 lg:gap-16 px-4 w-full justify-evenly">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem key={index} navigationItem={navigationItem} />
           ))}
         </div>
-        <MenuIcon
-          className="md:hidden h-12 w-12 shrink-0 text-editor.tag"
+        <button
+          type="button"
+          className="md:hidden h-12 w-12 min-h-[44px] min-w-[44px] shrink-0 text-editor.tag hover:text-white transition-colors duration-normal focus-ring rounded"
           onClick={() => setIsOpen(!isOpen)}
-        />
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+        >
+          <MenuIcon className="h-12 w-12" />
+        </button>
       </nav>
       {/** Sidebar */}
       <div className={sidebarStyles}>
         {/** Sidebar Header */}
-        <div className="flex justify-between p-8 bg-editor.background text-white shadow-md">
+        <div className="flex justify-between items-center gap-4 p-8 bg-editor.background text-white shadow-md">
           <div>
-            <h2 className="text-[2.5rem] font-bold">Calvin Ellis</h2>
-            <p className="text-2xl">Software Engineer</p>
+            <h2 className="text-2xl md:text-3xl font-bold">Calvin Ellis</h2>
+            <p className="text-lg md:text-xl text-editor.propertyValue">Software Engineer</p>
           </div>
-          <XCircleIcon
-            className="h-12 w-12 shrink-0"
+          <button
+            type="button"
+            className="h-12 w-12 min-h-[44px] min-w-[44px] shrink-0 text-editor.tag hover:text-white transition-colors duration-normal focus-ring rounded"
             onClick={() => setIsOpen(!isOpen)}
-          />
+            aria-label="Close menu"
+          >
+            <XCircleIcon className="h-12 w-12" />
+          </button>
         </div>
         {/** Sidebar Main */}
-        <div className="flex flex-col space-y-16 h-full p-8 bg-editor.background">
+        <div className="flex flex-col gap-12 h-full p-8 bg-editor.background">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem
               key={index}

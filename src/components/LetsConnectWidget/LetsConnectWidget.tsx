@@ -20,59 +20,54 @@ export const LetsConnectWidget = ({
   onlyPhoto?: boolean;
 }) => {
   const { toggle } = useWindowManagerCtx();
+  const iconLinkBase =
+    "group flex flex-1 min-h-[44px] min-w-[44px] items-center justify-center border border-white/20 text-white transition-all duration-normal motion-reduce:transition-none active:scale-95 motion-reduce:active:scale-100 focus-ring";
+
   return (
     <>
-      <div className="relative h-full w-auto flex items-center justify-center mt-8 group">
-        <div className="profileCard_container relative p-8 md:p-16 border-2 border-dashed rounded-full border-spacing-4 border-gray-400/50">
-          <span className={onlyPhoto ? 'hidden' : ''}>
-            {/** Github */}
-            <a
-              href="https://github.com/Cellis9421"
-              target="_blank"
-              aria-label="Connect with me on Github"
-              className="profile_item -left-4 top-20 absolute rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-95 transition-all duration-500"
-            >
-              <span className=" w-[40px] h-[40px] transition-all duration-500 rounded-full z-[2] bg-white p-1 flex items-center justify-center">
-                <Octocat classic />
-              </span>
-            </a>
-
-            {/** LinkedIn */}
-            <a
-              href="https://www.linkedin.com/in/calvin-ellis-ma"
-              target="_blank"
-              aria-label="Connect with me on LinkedIn"
-              className="profile_item -right-4 top-20 absolute rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-95 transition-all duration-500"
-            >
-              <span className="flex items-center justify-center w-[40px] h-[40px] transition-all duration-500 rounded-full z-[2] bg-white p-1">
-                <LinkedInIcon classic />
-              </span>
-            </a>
-
-            {/** Email link to calvin@calvinellis.io */}
-            <a
-              href="mailto:calvin@calvinellis.io"
-              target="_blank"
-              aria-label="Connect with me via Email"
-              className="profile_item right-[40%] -bottom-4 absolute rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-95 transition-all duration-500"
-            >
-              <span className="block w-[40px] h-[40px] transition-all duration-500 rounded-full z-[2] bg-white p-1">
-                <EnvelopeIcon className="w-full h-full" />
-              </span>
-            </a>
-          </span>
-          {/** Profile Image */}
-          <button
-            className="profile_item w-[200px] h-[200px] border-2 rounded-full group-hover:border-gray-400/50 transition-all duration-500 z-0 cursor-pointer group-hover:scale-95"
-            onClick={() => toggle(ABOUT_ME_WINDOW_ID)}
-          >
-            <div className="w-full h-full flex items-center justify-center rounded-full object-cover transition-all duration-500">
-              <img
-                src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png"
-                alt="Calvin Ellis"
-                className="w-full h-full rounded-full object-cover grayscale transition-all duration-500 overflow-hidden"
-              />
+      <div className="flex items-center justify-center">
+        <div className="flex items-center gap-4">
+          {!onlyPhoto && (
+            <div className="flex flex-col h-[200px] w-12 shrink-0 gap-4">
+              <a
+                href="https://github.com/Cellis9421"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Connect with me on Github"
+                className={`${iconLinkBase} bg-purple-500 hover:bg-purple-600 border-purple-400/50`}
+              >
+                <Octocat className="w-6 h-6 shrink-0 transition-transform duration-normal group-hover:scale-110" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/calvin-ellis-ma"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Connect with me on LinkedIn"
+                className={`${iconLinkBase} bg-[#0A66C2] hover:bg-[#004182] border-blue-400/50`}
+              >
+                <LinkedInIcon className="w-6 h-6 shrink-0 transition-transform duration-normal group-hover:scale-110" />
+              </a>
+              <a
+                href="mailto:calvin@calvinellis.io"
+                target="_blank"
+                aria-label="Connect with me via Email"
+                className={`${iconLinkBase} bg-cyan-500 hover:bg-cyan-600 border-cyan-400/50`}
+              >
+                <EnvelopeIcon className="w-6 h-6 shrink-0 transition-transform duration-normal group-hover:scale-110" />
+              </a>
             </div>
+          )}
+          <button
+            type="button"
+            className="w-[200px] h-[200px] min-w-[44px] min-h-[44px] shrink-0 border-2 border-stone-500/50 overflow-hidden transition-colors duration-normal motion-reduce:transition-none hover:border-stone-400/60 active:scale-[0.98] motion-reduce:active:scale-100 cursor-pointer group/btn focus-ring rounded"
+            onClick={() => toggle(ABOUT_ME_WINDOW_ID)}
+            aria-label="Open about me"
+          >
+            <img
+              src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png"
+              alt="Calvin Ellis"
+              className="w-full h-full object-cover"
+            />
           </button>
         </div>
       </div>

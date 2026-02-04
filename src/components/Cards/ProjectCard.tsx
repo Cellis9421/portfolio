@@ -1,16 +1,26 @@
-import React, { ReactElement, useMemo } from "react";
+import { useMemo } from "react";
 import IProject from "../../../@types/IProject";
 
-// Used for alternating colors of project cards
+// Used for alternating colors of project cards (header remains solid)
 const projectCardColors = [
   "blue-500",
   "red-500",
   "cyan-500",
-  // "yellow-500",
   "fuchsia-500",
   "orange-500",
   "green-500",
   "purple-500",
+];
+
+/* Gradient [from, to] hex pairs – same palette as About skill chips */
+const CARD_GRADIENTS: [string, string][] = [
+  ["#3b82f6", "#06b6d4"],
+  ["#ef4444", "#f97316"],
+  ["#06b6d4", "#22c55e"],
+  ["#d946ef", "#a855f7"],
+  ["#f97316", "#ef4444"],
+  ["#22c55e", "#06b6d4"],
+  ["#a855f7", "#d946ef"],
 ];
 
 export default function ProjectCard({
@@ -38,7 +48,7 @@ export default function ProjectCard({
   );
   const headerClasses = useMemo(
     () =>
-      `min-h-44 flex flex-col justify-center items-center bg-${color} rounded-xl p-1`,
+      `min-h-44 flex flex-col justify-center items-center bg-${color} pb-2`,
     [color]
   );
   const subtitleClasses = useMemo(
@@ -47,12 +57,16 @@ export default function ProjectCard({
   );
   const linkClasses = useMemo(
     () =>
-      `w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium first:rounded-bl-xl last:rounded-br-xl shadow-sm border-editor.background focus:outline-none focus:ring-1 focus:ring-gray-600`,
+      "w-full min-h-[44px] py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium shadow-sm border-editor.background focus-ring",
     []
   );
+  const cardGradient = useMemo(
+    () => CARD_GRADIENTS[index % CARD_GRADIENTS.length],
+    [index]
+  );
   const activeLinkClasses = useMemo(
-    () => `cursor-pointer text-white bg-${color} hover:bg-${color}/90`,
-    [color]
+    () => "cursor-pointer text-white border-white/20 hover:opacity-90 transition-opacity duration-normal",
+    []
   );
   const inactiveLinkClasses = useMemo(
     () =>
@@ -60,32 +74,42 @@ export default function ProjectCard({
     []
   );
   return (
-    <div className="group flex flex-col h-full shadow-sm rounded-xl bg-editor.backgroundMedium border-editor.backgroundMedium shadow-slate-700/[.7] hover:scale-[1.01] transition-all duration-500">
+    <div className="group flex flex-col h-full shadow-sm bg-editor.backgroundLight/40 border border-editor.backgroundLight shadow-slate-700/[.7] hover:scale-[1.01] transition-transform duration-normal motion-reduce:transition-none motion-reduce:hover:scale-100">
       <div className={headerClasses}>{iconElement}</div>
-      <div className="p-4 md:p-6 bg-editor.backgroundMedium flex flex-col">
+      <div className="p-4 md:p-6 flex flex-col">
         <span className={subtitleClasses}>{subtitle}</span>
-        <h3 className="text-xl font-semibold text-gray-300 hover:text-white">
+        <h3 className="text-xl font-semibold text-white hover:text-white">
           {title}
         </h3>
         {/** Add chips for each tag */}
         <div className="flex flex-wrap gap-2 mt-2">
-          {tags?.map((tag, index) => (
-            <span
-              key={index}
-              className={`px-2 py-1 bg-${color} text-white text-xs rounded-md`}
-            >
-              {tag}
-            </span>
-          ))}
+          {tags?.map((tag, tagIndex) => {
+            const [from, to] =
+              CARD_GRADIENTS[(index + tagIndex) % CARD_GRADIENTS.length];
+            return (
+              <span
+                key={tagIndex}
+                className="px-2 py-1 text-white text-xs border border-white/20"
+                style={{
+                  background: `linear-gradient(135deg, ${from}, ${to})`,
+                }}
+              >
+                {tag}
+              </span>
+            );
+          })}
         </div>
-        <p className="mt-3 text-gray-500">{description}</p>
+        <p className="mt-3 text-gray-300">{description}</p>
       </div>
-      <div className="mt-auto flex border-t divide-x border-editor.backgroundMedium divide-editor.backgroundMedium">
+      <div className="mt-auto flex border-t divide-x border-editor.backgroundLight divide-editor.backgroundLight">
         {viewLink && (
           <a
             className={`${linkClasses} ${activeLinkClasses}`}
             href={viewLink}
             target="_blank"
+            style={{
+              background: `linear-gradient(135deg, ${cardGradient[0]}, ${cardGradient[1]})`,
+            }}
           >
             View Project
           </a>
@@ -95,6 +119,9 @@ export default function ProjectCard({
             className={`${linkClasses} ${activeLinkClasses}`}
             href={codeLink}
             target="_blank"
+            style={{
+              background: `linear-gradient(135deg, ${cardGradient[0]}, ${cardGradient[1]})`,
+            }}
           >
             View Code
           </a>

@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,78299,t=>{"use strict";var e=t.i(18566),u=t.i(71645);function c(){let t=(0,e.useRouter)();return(0,u.useEffect)(()=>{t.replace("/#contact")},[t]),null}t.s(["default",()=>c])}]);

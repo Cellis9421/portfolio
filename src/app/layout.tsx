@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
-import { Work_Sans } from "next/font/google";
-import "./globals.css";
 import Navigation from "@/components/Navigation/Navigation";
 import NavigationProvider from "@/contexts/NavigationCtx";
 import WindowManagerProvider from "@/contexts/WindowManagerCtx";
+import type { Metadata } from "next";
+import { Work_Sans } from "next/font/google";
+import "./globals.css";
 
 const workSans = Work_Sans({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
-  title: "Calvin Ellis | Protfolio",
+  title: "Calvin Ellis | Portfolio",
   description:
-    "I am a a software engineer based in the United States. I specialize in front-end development, with experience in back-end development and DevOps. I am passionate about creating beautiful, accessible, and performant web applications.",
+    "Software engineer based in the United States. I specialize in front-end development, with experience in back-end development and DevOps. I build accessible, performant web applications.",
 };
 
 export default function RootLayout({
@@ -22,12 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <NavigationProvider>
         <WindowManagerProvider>
-        <body className={`${workSans.className} bg-editor.background text-editor.text`}>
-          <Navigation />
-          <main className="flex flex-col items-center mx-auto pt-24 md:pt-36 w-full">
-            {children}
-          </main>
-        </body>
+          <body className={`${workSans.className} bg-editor.background text-editor.text`}>
+            <Navigation />
+            <main className="flex flex-col items-center w-full pt-24 md:pt-32">
+              {children}
+            </main>
+          </body>
         </WindowManagerProvider>
       </NavigationProvider>
     </html>

@@ -78,7 +78,7 @@ const PROJECTS: IProject[] = [
     ),
     tags: ["React", "SaaS", "Cybersecurity", "Sales Demos"],
   },
-  /** SGPFL */
+  /** SGPFL – ordered by resume relevance (e-commerce lead, report/diagnostic, then CMS, a11y, label) */
   {
     title: "E-commerce PoS",
     subtitle: "Stove & Grill Parts For Less",
@@ -87,14 +87,6 @@ const PROJECTS: IProject[] = [
     viewLink: "https://pellet-stove-parts-4less.com/",
     iconElement: <Screenshot src="sgpfl_homepage.png" alt="SGPFL Homepage" />,
     tags: ["Shopify", "E-commerce", "SSR", "Liquid"],
-  },
-  {
-    title: "CMS",
-    subtitle: "Stove & Grill Parts For Less",
-    description:
-      "Built a content management system to extend our existing product catalog(s) from Shopify and Finale Inventory in custom ways. The system included a product editor, product list, and product detail pages. It performed basic CRUD operations on data from multiple sources and was built to be fast, reliable, and easy to use for non-technical users.",
-    iconElement: <Screenshot src="sgpfl_ac2_app.png" alt="SGPFL AC2 App" />,
-    tags: ["Shopify", "Finale Inventory", "E-commerce", "CMS"],
   },
   {
     title: "Reporting Server",
@@ -115,6 +107,14 @@ const PROJECTS: IProject[] = [
       <Screenshot src="sgpfl_ac2_diagnostics.png" alt="SGPFL AC2 Diagnostics" />
     ),
     tags: ["Shopify", "Finale Inventory", "E-commerce", "Diagnostics", "GCP", "API"],
+  },
+  {
+    title: "CMS",
+    subtitle: "Stove & Grill Parts For Less",
+    description:
+      "Built a content management system to extend our existing product catalog(s) from Shopify and Finale Inventory in custom ways. The system included a product editor, product list, and product detail pages. It performed basic CRUD operations on data from multiple sources and was built to be fast, reliable, and easy to use for non-technical users.",
+    iconElement: <Screenshot src="sgpfl_ac2_app.png" alt="SGPFL AC2 App" />,
+    tags: ["Shopify", "Finale Inventory", "E-commerce", "CMS"],
   },
   {
     title: "Accessibility Compliance",
@@ -151,7 +151,25 @@ const PROJECTS: IProject[] = [
     iconElement: <Screenshot src="portfolio.png" alt="Portfolio" />,
     tags: ["Next.js", "TailwindCSS", "TypeScript", "Static Site", "Open Source"],
   },
-  /** Side Projects */
+  /** Side projects – AI-related first (resume relevance), then other */
+  {
+    title: "Discord AI Bot",
+    subtitle: "Personal Project",
+    description:
+      "Created a discord bot to do various things with AI. The bot could generate text, images, and more. It was a good project to learn about AI text generation and how to integrate it into a discord bot. The bot was used in a few small servers and was a fun project to work on.",
+    iconElement: <Screenshot src="discord_ai_bot.png" alt="Discord AI Bot" />,
+    codeLink: "https://github.com/Cellis9421/discord-ai-bot",
+    tags: ["Discord", "AI", "Bot", "Python", "OpenAI"],
+  },
+  {
+    title: "pAInt it",
+    subtitle: "Personal Project",
+    description:
+      "Created a web app to generate art using AI. The app could generate art from text. It was a fun project to learn about AI image generation and how to integrate it into a web app. The app was used by a few friends and was a fun project to work on.",
+    iconElement: <Screenshot src="paint_it.png" alt="pAInt it App" />,
+    codeLink: "https://github.com/Cellis9421/paint-it",
+    tags: ["AI", "OpenAI", "React", "Next.js", "DALL-E"],
+  },
   {
     title: "Process Manager",
     subtitle: "Personal Project",
@@ -169,25 +187,6 @@ const PROJECTS: IProject[] = [
     iconElement: <Screenshot src="website_builder.png" alt="Website Builder" />,
     codeLink: "https://github.com/Cellis9421/HydraMBLauncher/tree/master",
     tags: ["PHP", "Website Builder", "Static Site"],
-  },
-  {
-    title: "Discord AI Bot",
-    subtitle: "Personal Project",
-    description:
-      "Created a discord bot to do various things with AI. The bot could generate text, images, and more. It was a good project to learn about AI text generation and how to integrate it into a discord bot. The bot was used in a few small servers and was a fun project to work on.",
-    iconElement: <Screenshot src="discord_ai_bot.png" alt="Discord AI Bot" />,
-    codeLink: "https://github.com/Cellis9421/discord-ai-bot",
-    tags: ["Discord", "AI", "Bot", "Python", "OpenAI"],
-
-  },
-  {
-    title: "pAInt it",
-    subtitle: "Personal Project",
-    description:
-      "Created a web app to generate art using AI. The app could generate art from text. It was a fun project to learn about AI image generation and how to integrate it into a web app. The app was used by a few friends and was a fun project to work on.",
-    iconElement: <Screenshot src="paint_it.png" alt="pAInt it App" />,
-    codeLink: "https://github.com/Cellis9421/paint-it",
-    tags: ["AI", "OpenAI", "React", "Next.js", "DALL-E"],
   },
 ];
 

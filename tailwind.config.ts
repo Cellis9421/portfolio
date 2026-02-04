@@ -44,7 +44,7 @@ const config: Config = {
     "bg-orange-500",
     "hover:bg-orange-500/90",
     "text-orange-500",
-    
+
     // Gray
     "bg-gray-500",
     "hover:bg-gray-500/90",
@@ -53,6 +53,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      /* Spacing scale: 4px base → 4,8,12,16,24,32,48,64 (Tailwind 1–16) */
+      transitionDuration: {
+        fast: "200ms",
+        normal: "300ms",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -69,6 +74,13 @@ const config: Config = {
         "editor.backgroundLight": "#333333",
         "editor.comment": "#6A9955",
         /** End VSCode Colors */
+        /** Section backgrounds: alternating shades for contrast (hero = transparent) */
+        section: {
+          about: "#252526",
+          projects: "#1e1e1e",
+          contact: "#252526",
+          footer: "#2d2d2d",
+        },
       },
     },
   },

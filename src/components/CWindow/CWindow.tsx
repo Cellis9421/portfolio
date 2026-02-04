@@ -3,8 +3,6 @@
  * This window can be dragged around the screen by clicking and dragging the title bar.
  */
 
-import { Octocat } from "@/app/icons/Octocat";
-import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 function CWindow({
@@ -29,17 +27,14 @@ function CWindow({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const moveTo = (x: number, y: number) => {
-    // clamp to the following to keep the window within the viewport:
-    // x >= 0
-    // y >= 150
-    // x <= window.innerWidth - windowRef.current.clientWidth
-    // y <= window.innerHeight - windowRef.current.clientHeight
+    // Clamp to viewport so the window stays visible when dragging
+    const minY = 8;
     const clampedX = Math.max(
       0,
       Math.min(x, window.innerWidth - (windowRef?.current?.clientWidth || 0))
     );
     const clampedY = Math.max(
-      150,
+      minY,
       Math.min(y, window.innerHeight - (windowRef?.current?.clientHeight || 0))
     );
     setPosition({
@@ -129,25 +124,22 @@ function CWindow({
 
   const containerClasses = useMemo(
     () =>
-      `text-white code-editor md:min-w-[400px] md:max-w-[800px] min-h-[200px] bg-editor.backgroundMedium rounded-lg ${
-        inline ? "" : "absolute"
-      } z-1000 overflow-hidden m-2`,
+      `text-white code-editor md:min-w-[400px] md:max-w-[800px] min-h-[200px] bg-editor.backgroundMedium ${inline ? "" : "fixed"
+      } z-[9999] overflow-hidden m-2`,
     [inline]
   );
 
   const buttonClasses = useMemo(
     () =>
-      `text-white/70 hover:text-white/100 hover:scale-105 ${
-        !isCloseable ? "cursor-not-allowed" : ""
+      `text-white/70 hover:text-white/100 hover:scale-105 ${!isCloseable ? "cursor-not-allowed" : ""
       }`,
     [isCloseable]
   );
 
   const headerClasses = useMemo(
     () =>
-      `${
-        !inline ? "cursor-pointer" : ""
-      } flex items-center justify-between p-2 pl-4 bg-editor.backgroundLight`,
+      `${!inline ? "cursor-pointer" : ""
+      } flex items-center justify-between py-2 pl-4 pr-4 bg-editor.backgroundLight`,
     [inline]
   );
 

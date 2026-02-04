@@ -8,6 +8,13 @@
   }
 }
 
+/* Focus visible: high-contrast ring for keyboard users; no ring on mouse click */
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-editor.propertyValue focus-visible:ring-offset-2 focus-visible:ring-offset-editor.background;
+  }
+}
+
 /* 
 :root {
   --foreground-rgb: 78, 201, 169;

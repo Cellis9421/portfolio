@@ -4,6 +4,8 @@
  */
 
 import {
+  AcademicCapIcon,
+  BriefcaseIcon,
   FolderIcon,
   IdentificationIcon,
   NewspaperIcon,
@@ -23,6 +25,8 @@ const NAV_ICON_CLASS = "h-14 w-14 md:h-10 md:w-10 shrink-0";
 const NAV_ICONS: Record<string, ComponentType<{ className?: string }>> = {
   home: PowerIcon,
   about: UserCircleIcon,
+  work: BriefcaseIcon,
+  education: AcademicCapIcon,
   projects: FolderIcon,
   blog: NewspaperIcon,
   contact: IdentificationIcon,
@@ -40,7 +44,7 @@ export default function NavigationItem({
   const classes = useMemo(
     () =>
       twMerge(
-        "flex md:flex-col items-center space-x-8 space-y-2 md:space-x-0 group text-editor.tag w-[150px]",
+        "flex md:flex-col items-center gap-6 md:gap-2 group text-editor.tag w-[150px] rounded focus-ring min-h-[44px] md:min-h-0 justify-center md:justify-start",
         className
       ),
     [className]
@@ -52,7 +56,7 @@ export default function NavigationItem({
       twMerge(
         "shrink-0 group-hover:text-white",
         isActive ? "text-white" : "text-editor.text",
-        "transition-colors duration-300"
+        "transition-colors duration-normal motion-reduce:transition-none"
       ),
     [isActive]
   );
@@ -62,7 +66,7 @@ export default function NavigationItem({
         {IconComponent ? <IconComponent className={NAV_ICON_CLASS} /> : null}
       </span>
       <span className="font-bold text-[2rem] md:text-xl transition-all duration-500 whitespace-nowrap">
-        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-1 group-hover:scale-105 transition-all duration-400"} />
+        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-1 group-hover:scale-105 motion-reduce:scale-100 transition-transform duration-normal motion-reduce:transition-none"} />
       </span>
       {/* Add hover:underline class */}
     </Link>

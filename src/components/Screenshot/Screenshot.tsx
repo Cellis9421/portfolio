@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -35,7 +34,7 @@ const Screenshot = ({ src, alt }: { src: string; alt: string }) => {
         width={500}
         height={240}
         sizes="100vw"
-        style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+        style={{ width: "100%", height: "auto" }}
       />
     </Link>
   );
