@@ -1,7 +1,5 @@
 'use client';
 
-import { LinkedInIcon } from '@/app/icons/LinkedInIcon';
-import { Octocat } from '@/app/icons/Octocat';
 import ProjectCard from '@/components/Cards/ProjectCard';
 import CTASection from '@/components/CTASection/CTASection';
 import Header from '@/components/Header/Header';
@@ -16,6 +14,8 @@ import { ROLES } from '@/configs/constants';
 import EDUCATION from '@/configs/EDUCATION';
 import PROJECTS from '@/configs/PROJECTS';
 import WORK_HISTORY from '@/configs/WORK_HISTORY';
+import { LinkedInIcon } from '@/lib/icons/LinkedInIcon';
+import { Octocat } from '@/lib/icons/Octocat';
 import { ArrowRightIcon, BookOpenIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { TypeAnimation } from 'react-type-animation';
@@ -81,8 +81,8 @@ const ABOUT_CHIPS = [
   'Mentoring',
 ];
 
-// Extract unique tags from all projects for Skills section
-const allProjectTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? [])));
+// Extract unique tags from all projects for Skills section (sorted alphabetically)
+const allProjectTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? []))).sort();
 
 export default function Home() {
   return (

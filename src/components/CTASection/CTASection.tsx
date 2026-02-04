@@ -1,6 +1,6 @@
-import Header from "@/components/Header/Header";
-import Link from "next/link";
-import type { ComponentType } from "react";
+import Header from '@/components/Header/Header';
+import Link from 'next/link';
+import type { ComponentType } from 'react';
 
 /**
  * CTA section with title, description, and prominent button.
@@ -15,10 +15,10 @@ export default function CTASection({
   buttonTitle,
   icon: Icon,
   iconAnimation = false,
-  backgroundClass = "bg-section-gradient",
-  target = "_self",
+  backgroundClass = 'bg-section-gradient',
+  target = '_self',
   rel,
-  sectionClassName = "w-full pt-8 pb-16 md:pt-12 md:pb-24",
+  sectionClassName = 'w-full pt-8 pb-16 md:pt-12 md:pb-24',
 }: {
   id?: string;
   title: string;
@@ -29,7 +29,7 @@ export default function CTASection({
   icon: ComponentType<{ className?: string }>;
   iconAnimation?: boolean;
   backgroundClass?: string;
-  target?: "_blank" | "_self";
+  target?: '_blank' | '_self';
   rel?: string;
   sectionClassName?: string;
 }) {
@@ -47,12 +47,7 @@ export default function CTASection({
           className="inline-flex flex-col sm:flex-row items-center justify-center gap-4 px-10 py-5 text-white border-2 border-editor.component bg-editor.component/20 hover:bg-editor.component/40 transition-colors duration-normal focus-ring min-h-[56px] group"
           title={buttonTitle || buttonText}
         >
-          <Icon
-            className={`w-8 h-8 shrink-0 ${iconAnimation
-              ? "group-hover:translate-x-1 transition-transform duration-normal motion-reduce:transition-none"
-              : ""
-              }`}
-          />
+          <Icon className={`w-8 h-8 shrink-0 ${iconAnimation ? 'group-hover:translate-x-1 transition-transform duration-normal motion-reduce:transition-none' : ''}`} />
           <span className="font-bold text-lg">{buttonText}</span>
         </Link>
       </div>

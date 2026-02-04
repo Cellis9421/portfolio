@@ -1,27 +1,21 @@
-"use client";
+'use client';
 /* eslint-disable @next/next/no-img-element */
-import { LinkedInIcon } from "@/app/icons/LinkedInIcon";
-import { Octocat } from "@/app/icons/Octocat";
-import Header from "@/components/Header/Header";
-import { ABOUT_ME_WINDOW_ID } from "@/configs/constants";
-import { useWindowManagerCtx } from "@/contexts/WindowManagerCtx";
-import { EnvelopeIcon } from "@heroicons/react/24/solid";
-import { CWindowAboutMe } from "../CWindow/AboutMe/CWindowAboutMe";
+import Header from '@/components/Header/Header';
+import { ABOUT_ME_WINDOW_ID } from '@/configs/constants';
+import { useWindowManagerCtx } from '@/contexts/WindowManagerCtx';
+import { LinkedInIcon } from '@/lib/icons/LinkedInIcon';
+import { Octocat } from '@/lib/icons/Octocat';
+import { EnvelopeIcon } from '@heroicons/react/24/solid';
+import { CWindowAboutMe } from '../CWindow/AboutMe/CWindowAboutMe';
 
 /**
  * Widget with links to connect with me on Github, LinkedIn, and Email.
  * @returns
  */
-export const LetsConnectWidget = ({
-  showEmail,
-  onlyPhoto,
-}: {
-  showEmail?: boolean;
-  onlyPhoto?: boolean;
-}) => {
+export const LetsConnectWidget = ({ showEmail, onlyPhoto }: { showEmail?: boolean; onlyPhoto?: boolean }) => {
   const { toggle } = useWindowManagerCtx();
   const contactLinkBase =
-    "group flex items-center gap-3 px-4 py-2 min-h-[44px] border border-white/20 text-white transition-all duration-normal motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 focus-ring text-sm";
+    'group flex items-center gap-3 px-4 py-2 min-h-[44px] border border-white/20 text-white transition-all duration-normal motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 focus-ring text-sm';
 
   return (
     <>
@@ -35,11 +29,7 @@ export const LetsConnectWidget = ({
                 onClick={() => toggle(ABOUT_ME_WINDOW_ID)}
                 aria-label="Open about me"
               >
-                <img
-                  src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png"
-                  alt="Calvin Ellis"
-                  className="w-full h-full object-cover"
-                />
+                <img src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png" alt="Calvin Ellis" className="w-full h-full object-cover" />
               </button>
               <div className="flex flex-col justify-between h-[200px] py-4">
                 <a
@@ -51,11 +41,7 @@ export const LetsConnectWidget = ({
                   <LinkedInIcon className="w-6 h-6 shrink-0 transition-transform duration-normal group-hover:scale-110" />
                   <span>calvin-ellis-ma</span>
                 </a>
-                <a
-                  href="mailto:calvin@calvinellis.io"
-                  target="_blank"
-                  className={`${contactLinkBase} bg-cyan-500 hover:bg-cyan-600 border-cyan-400/50`}
-                >
+                <a href="mailto:calvin@calvinellis.io" target="_blank" className={`${contactLinkBase} bg-cyan-500 hover:bg-cyan-600 border-cyan-400/50`}>
                   <EnvelopeIcon className="w-6 h-6 shrink-0 transition-transform duration-normal group-hover:scale-110" />
                   <span>calvin@calvinellis.io</span>
                 </a>
@@ -78,11 +64,7 @@ export const LetsConnectWidget = ({
               onClick={() => toggle(ABOUT_ME_WINDOW_ID)}
               aria-label="Open about me"
             >
-              <img
-                src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png"
-                alt="Calvin Ellis"
-                className="w-full h-full object-cover"
-              />
+              <img src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png" alt="Calvin Ellis" className="w-full h-full object-cover" />
             </button>
           )}
         </div>

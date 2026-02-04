@@ -11,8 +11,8 @@ import { Suspense } from 'react';
 
 const SECTION_CLASS = 'w-full py-16 md:py-24';
 
-// Extract unique tags from all projects
-const allTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? [])));
+// Extract unique tags from all projects (sorted alphabetically)
+const allTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? []))).sort();
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
@@ -30,7 +30,10 @@ function ProjectsContent() {
         </div>
         <p className="text-center text-white/90 text-lg max-w-2xl mx-auto">Examples of my personal and professional work.</p>
         {/* Tag roll-up: all unique tags from projects (clickable filters) */}
-        <SkillChips tags={allTags} selectedTag={selectedTag} />
+        <div className="flex flex-col gap-2 items-center">
+          <p className="text-sm text-white/70 uppercase tracking-wide">Filter by skill</p>
+          <SkillChips tags={allTags} selectedTag={selectedTag} />
+        </div>
         {selectedTag && (
           <div className="flex flex-col items-center gap-2 py-4">
             <p className="text-center text-white/90 text-sm">

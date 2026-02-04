@@ -2,16 +2,16 @@ import Footer from '@/components/Footer/Footer';
 import Navigation from '@/components/Navigation/Navigation';
 import NavigationProvider from '@/contexts/NavigationCtx';
 import WindowManagerProvider from '@/contexts/WindowManagerCtx';
+import '@/lib/styles/globals.css';
 import type { Metadata } from 'next';
 import { Work_Sans } from 'next/font/google';
-import './globals.css';
 
 const workSans = Work_Sans({ subsets: ['latin'], weight: '500' });
 
 export const metadata: Metadata = {
-  title: 'Calvin Ellis | Portfolio',
+  title: 'Portfolio | Calvin Ellis',
   description:
-    'Software engineer based in the United States. I specialize in front-end development, with experience in back-end development and DevOps. I build accessible, performant web applications.',
+    'Calvin Ellis is a principal software engineer with over 15 years of experience based in the United States. He specializes in agentic solutions and building accessible, performant, scalable web applications.',
 };
 
 export default function RootLayout({
