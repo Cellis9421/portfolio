@@ -8,6 +8,16 @@
   }
 }
 
+/* Offset anchor scroll for fixed header (reduced for tighter sections) */
+html {
+  scroll-padding-top: 5rem;
+}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 6rem;
+  }
+}
+
 /* Focus visible: high-contrast ring for keyboard users; no ring on mouse click */
 @layer utilities {
   .focus-ring {
