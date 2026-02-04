@@ -1,41 +1,12 @@
-import {
-  EnvelopeIcon,
-  FolderIcon,
-  HomeIcon,
-  IdentificationIcon,
-  NewspaperIcon,
-  PowerIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
 import INavigation from "../../@types/INavigation";
 
 const NAVIGATION: INavigation = {
   items: [
-    {
-      icon: <PowerIcon className="h-16 w-16 md:h-12 md:w-12" />,
-      label: "Home",
-      href: "/",
-    },
-    {
-      icon: <UserCircleIcon className="h-16 w-16 md:h-12 md:w-12" />,
-      label: "About",
-      href: "/about",
-    },
-    {
-      icon: <FolderIcon className="h-16 w-16 md:h-12 md:w-12" />,
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      icon: <NewspaperIcon className="h-16 w-16 md:h-12 md:w-12" />,
-      label: "Blog",
-      href: "https://blog.calvinellis.io/",
-    },
-    {
-      icon: <IdentificationIcon className="h-16 w-16 md:h-12 md:w-12" />,
-      label: "Contact",
-      href: "/contact",
-    },
+    { iconKey: "home", label: "Home", href: "/" },
+    { iconKey: "about", label: "About", href: "/about" },
+    { iconKey: "projects", label: "Projects", href: "/projects" },
+    { iconKey: "blog", label: "Blog", href: "https://blog.calvinellis.io/" },
+    { iconKey: "contact", label: "Contact", href: "/contact" },
   ],
 };
 

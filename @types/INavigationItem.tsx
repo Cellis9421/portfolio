@@ -1,7 +1,7 @@
 interface INavigationItem {
-    icon: React.ReactNode;
-    label: string;
-    href: string;
-  }
+  iconKey: string;
+  label: string;
+  href: string;
+}
 
-export default INavigationItem
+export default INavigationItem;

@@ -1,11 +1,10 @@
 "use client";
-import React, { useMemo } from "react";
-import { ComputerDesktopIcon, Bars3Icon as MenuIcon } from "@heroicons/react/24/solid";
-import { XCircleIcon } from "@heroicons/react/24/solid";
-import NavigationItem from "./NavigationItem";
-import { twMerge } from "tailwind-merge";
-import { useNavigationCtx } from "@/contexts/NavigationCtx";
 import NAVIGATION from "@/configs/NAVIGATION";
+import { useNavigationCtx } from "@/contexts/NavigationCtx";
+import { Bars3Icon as MenuIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { useMemo } from "react";
+import { twMerge } from "tailwind-merge";
+import NavigationItem from "./NavigationItem";
 
 /**
  * A sticky header navigation that shows:
@@ -37,7 +36,7 @@ function Navigation() {
           ))}
         </div>
         <MenuIcon
-          className="md:hidden h-16 w-16 shrink-0 text-editor.tag"
+          className="md:hidden h-12 w-12 shrink-0 text-editor.tag"
           onClick={() => setIsOpen(!isOpen)}
         />
       </nav>
@@ -50,7 +49,7 @@ function Navigation() {
             <p className="text-2xl">Software Engineer</p>
           </div>
           <XCircleIcon
-            className="h-16 w-16 shrink-0"
+            className="h-12 w-12 shrink-0"
             onClick={() => setIsOpen(!isOpen)}
           />
         </div>

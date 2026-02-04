@@ -1,15 +1,32 @@
 /**
  * @name NavigationItem
- * @description A single item in the navigation consisting of an icon, label, and href
- * @example <NavigationItem icon={<HomeIcon className="h-12 w-12" />} label="Home" href="#" />
+ * @description A single item in the navigation consisting of an icon (by iconKey), label, and href
  */
 
+import {
+  FolderIcon,
+  IdentificationIcon,
+  NewspaperIcon,
+  PowerIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type { ComponentType } from "react";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import INavigationItem from "../../../@types/INavigationItem";
-import { useMemo } from "react";
-import Link from "next/link";
 import HTMLText from "../HTMLText/HTMLText";
-import { usePathname } from "next/navigation";
+
+const NAV_ICON_CLASS = "h-14 w-14 md:h-10 md:w-10 shrink-0";
+
+const NAV_ICONS: Record<string, ComponentType<{ className?: string }>> = {
+  home: PowerIcon,
+  about: UserCircleIcon,
+  projects: FolderIcon,
+  blog: NewspaperIcon,
+  contact: IdentificationIcon,
+};
 
 export default function NavigationItem({
   navigationItem,
@@ -18,7 +35,8 @@ export default function NavigationItem({
   navigationItem: INavigationItem;
   className?: string;
 }) {
-  const { icon, label, href } = navigationItem || {};
+  const { iconKey, label, href } = navigationItem || {};
+  const IconComponent = iconKey ? NAV_ICONS[iconKey] : null;
   const classes = useMemo(
     () =>
       twMerge(
@@ -40,9 +58,11 @@ export default function NavigationItem({
   );
   return (
     <Link href={href || "#"} className={classes}>
-      <span className={iconClasses}>{icon}</span>
-      <span className="font-bold text-[2rem] md:text-xl transition-all duration-500 ">
-        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-3 group-hover:scale-110 transition-all duration-400"} />
+      <span className={iconClasses}>
+        {IconComponent ? <IconComponent className={NAV_ICON_CLASS} /> : null}
+      </span>
+      <span className="font-bold text-[2rem] md:text-xl transition-all duration-500 whitespace-nowrap">
+        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-1 group-hover:scale-105 transition-all duration-400"} />
       </span>
       {/* Add hover:underline class */}
     </Link>
