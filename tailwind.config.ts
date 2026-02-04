@@ -62,6 +62,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "section-gradient": "linear-gradient(to bottom, #1e1e1e, #252526, #1e1e1e)",
       },
       colors: {
         /** VSCode Colors */
@@ -74,12 +75,12 @@ const config: Config = {
         "editor.backgroundLight": "#333333",
         "editor.comment": "#6A9955",
         /** End VSCode Colors */
-        /** Section backgrounds: alternating shades for contrast (hero = transparent) */
+        /** Section backgrounds: sequential light progression (wider steps) */
         section: {
-          about: "#252526",
-          projects: "#1e1e1e",
-          contact: "#252526",
-          footer: "#2d2d2d",
+          dark: "#1a1a1a",
+          light: "#242424",
+          lighter: "#2e2e2e",
+          lightest: "#383838",
         },
       },
     },
