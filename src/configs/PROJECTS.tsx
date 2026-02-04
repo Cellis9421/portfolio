@@ -8,7 +8,7 @@ const PROJECTS: IProject[] = [
     description:
       'Next.js dashboard for team owners to manage users, assign learning, and view reports across multiple Cybrary products. Supports multi-tenant team/group hierarchies, role-based permissions, and persistent team selection. Tech: Next.js 15, TypeScript, Material-UI, TanStack Query.',
     viewLink: 'https://app.cybrary.it/',
-    tags: ['Next.js 15', 'TypeScript', 'Material-UI', 'Multi-Tenancy', 'RBAC', 'Enterprise'],
+    tags: ['Next.js', 'TypeScript', 'Material-UI', 'Multi-Tenancy', 'RBAC', 'Enterprise'],
   },
   {
     title: 'Type-Safe API Client Generator',
