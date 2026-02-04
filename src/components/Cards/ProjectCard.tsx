@@ -74,7 +74,7 @@ export default function ProjectCard({
     []
   );
   return (
-    <div className="group flex flex-col h-full shadow-sm bg-editor.backgroundLight/40 border border-editor.backgroundLight shadow-slate-700/[.7] hover:scale-[1.01] transition-transform duration-normal motion-reduce:transition-none motion-reduce:hover:scale-100">
+    <div className="group flex flex-col h-full shadow-sm bg-section-lighter border border-editor.backgroundLight shadow-slate-700/[.7] hover:scale-[1.01] transition-transform duration-normal motion-reduce:transition-none motion-reduce:hover:scale-100">
       <div className={headerClasses}>{iconElement}</div>
       <div className="p-4 md:p-6 flex flex-col">
         <span className={subtitleClasses}>{subtitle}</span>

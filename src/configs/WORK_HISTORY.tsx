@@ -7,7 +7,7 @@ const WORK_HISTORY: IWorkHistory[] = [
   {
     company: "Cybrary (Cybersecurity Education-as-a-Service)",
     title: "Principal Software Engineer",
-    dates: "September 2022 → February 2025",
+    dates: "September 2022 → February 2026",
     location: "Remote | Washington D.C.",
     bullets: [
       "Rewrote marketing website (Next.js, TS, ISR/SSR, Vercel, Tailwind)",

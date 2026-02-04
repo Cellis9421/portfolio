@@ -20,7 +20,7 @@ import { twMerge } from "tailwind-merge";
 import INavigationItem from "../../../@types/INavigationItem";
 import HTMLText from "../HTMLText/HTMLText";
 
-const NAV_ICON_CLASS = "h-14 w-14 md:h-10 md:w-10 shrink-0";
+const NAV_ICON_CLASS = "h-14 w-14 lg:h-10 lg:w-10 shrink-0";
 
 const NAV_ICONS: Record<string, ComponentType<{ className?: string }>> = {
   home: PowerIcon,
@@ -44,7 +44,7 @@ export default function NavigationItem({
   const classes = useMemo(
     () =>
       twMerge(
-        "flex md:flex-col items-center gap-6 md:gap-2 group text-editor.tag w-[150px] rounded focus-ring min-h-[44px] md:min-h-0 justify-center md:justify-start",
+        "flex lg:flex-col items-center gap-6 lg:gap-2 group text-editor.tag w-[150px] rounded focus-ring min-h-[44px] lg:min-h-0 justify-center lg:justify-start",
         className
       ),
     [className]
@@ -65,8 +65,8 @@ export default function NavigationItem({
       <span className={iconClasses}>
         {IconComponent ? <IconComponent className={NAV_ICON_CLASS} /> : null}
       </span>
-      <span className="font-bold text-[2rem] md:text-xl transition-all duration-500 whitespace-nowrap">
-        <HTMLText componentName={label} componentNameClassNames={"group-hover:px-1 group-hover:scale-105 motion-reduce:scale-100 transition-transform duration-normal motion-reduce:transition-none"} />
+      <span className="font-bold text-[2rem] lg:text-xl transition-all duration-500 whitespace-nowrap shrink-0">
+        <HTMLText componentName={label} className="flex-nowrap" componentNameClassNames={"group-hover:px-1 group-hover:scale-105 motion-reduce:scale-100 transition-transform duration-normal motion-reduce:transition-none"} />
       </span>
       {/* Add hover:underline class */}
     </Link>

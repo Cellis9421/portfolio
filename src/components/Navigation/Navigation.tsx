@@ -20,7 +20,7 @@ function Navigation() {
   const sidebarStyles = useMemo(
     () =>
       twMerge(
-        "fixed top-0 left-0 z-50 bg-editor.background w-full h-full md:hidden transition-transform duration-normal ease-in-out motion-reduce:transition-none",
+        "fixed top-0 left-0 z-50 bg-editor.background w-full h-full lg:hidden transition-transform duration-normal ease-in-out motion-reduce:transition-none",
         isOpen ? "translate-x-0" : "-translate-x-full"
       ),
     [isOpen]
@@ -29,15 +29,15 @@ function Navigation() {
   return (
     <div>
       {/** Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 p-4 mx-auto bg-section-about shadow-current rounded-b-2xl" aria-label="Main">
-        <div className="hidden md:flex gap-8 lg:gap-16 px-4 w-full justify-evenly">
+      <nav className="fixed top-0 left-0 right-0 z-50 p-4 mx-auto bg-section-light shadow-current border-b-2 border-editor.component" aria-label="Main">
+        <div className="hidden lg:flex gap-8 xl:gap-16 px-4 w-full justify-evenly">
           {NAVIGATION.items.map((navigationItem, index) => (
             <NavigationItem key={index} navigationItem={navigationItem} />
           ))}
         </div>
         <button
           type="button"
-          className="md:hidden h-12 w-12 min-h-[44px] min-w-[44px] shrink-0 text-editor.tag hover:text-white transition-colors duration-normal focus-ring rounded"
+          className="lg:hidden h-12 w-12 min-h-[44px] min-w-[44px] shrink-0 text-editor.tag hover:text-white transition-colors duration-normal focus-ring rounded"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
