@@ -7,13 +7,14 @@ import PROJECTS from '@/configs/PROJECTS';
 import { ArrowLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 const SECTION_CLASS = 'w-full py-16 md:py-24';
 
 // Extract unique tags from all projects
 const allTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? [])));
 
-export default function ProjectsPage() {
+function ProjectsContent() {
   const searchParams = useSearchParams();
   const selectedTag = searchParams.get('tag');
 
@@ -74,5 +75,13 @@ export default function ProjectsPage() {
         </Link>
       </div>
     </section>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={<div className="w-full min-h-screen flex items-center justify-center text-white">Loading projects...</div>}>
+      <ProjectsContent />
+    </Suspense>
   );
 }
