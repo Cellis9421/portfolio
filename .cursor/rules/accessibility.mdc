@@ -1,0 +1,217 @@
+---
+description: WCAG AA accessibility requirements for compliant, usable interfaces
+alwaysApply: true
+---
+
+# Accessibility Standards (WCAG AA)
+
+Use this rule when building or reviewing UI to ensure WCAG 2.1/2.2 AA compliance.
+
+---
+
+## 1. Color Contrast
+
+**WCAG AA minimum contrast ratios:**
+
+- **Normal text (< 18pt or < 14pt bold):** 4.5:1
+- **Large text (≥ 18pt or ≥ 14pt bold):** 3:1
+- **UI components and graphical objects:** 3:1
+
+**Do:**
+- Test contrast with browser DevTools or online tools (WebAIM Contrast Checker)
+- Use dark text on light backgrounds or light text on dark backgrounds
+- Ensure links have sufficient contrast against their background (not just hover state)
+
+**Don't:**
+- Use low-contrast gray text for critical content or primary actions
+- Rely on color alone to convey meaning (pair with icon, text, or pattern)
+
+---
+
+## 2. Keyboard Navigation
+
+**Do:**
+- Ensure all interactive elements are keyboard-accessible (links, buttons, form controls, custom widgets)
+- Support Tab (forward), Shift+Tab (backward), Enter/Space (activate), Esc (close modals/dialogs)
+- Maintain logical tab order (follows visual/reading order)
+- Provide keyboard shortcuts for primary actions when helpful (document them)
+
+**Don't:**
+- Create keyboard traps (focus must be able to move away from any element)
+- Hide or disable focus indicators (see Focus Visible below)
+- Require mouse-only interactions for critical tasks
+
+---
+
+## 3. Focus Visible
+
+**Do:**
+- Use visible focus indicators (outline, ring, border, background change) with at least 3:1 contrast
+- Use `:focus-visible` to show focus for keyboard but not mouse clicks (if framework supports)
+- Ensure focus states are consistent (same style for all interactive elements)
+
+**Don't:**
+- Use `outline: none` without a replacement focus indicator
+- Make focus indicators too subtle (1px dotted outline is often insufficient)
+
+**Example:**
+```css
+/* Good: visible ring for keyboard, no ring for mouse */
+.focus-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
+}
+```
+
+---
+
+## 4. Semantic HTML
+
+**Do:**
+- Use semantic elements: `<nav>`, `<main>`, `<header>`, `<footer>`, `<section>`, `<article>`, `<aside>`
+- Use heading hierarchy (`<h1>` → `<h2>` → `<h3>`) without skipping levels
+- Use `<button>` for actions, `<a>` for navigation
+- Use native form controls (`<input>`, `<select>`, `<textarea>`) when possible
+
+**Don't:**
+- Use `<div>` or `<span>` for interactive elements (use `<button>` or `<a>`)
+- Skip heading levels (e.g. `<h1>` → `<h3>`)
+- Use generic containers when semantic elements fit
+
+---
+
+## 5. ARIA (Use Sparingly)
+
+**Do:**
+- Use ARIA only when semantic HTML isn't sufficient
+- Common valid uses: `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-expanded`, `aria-current`, `role="dialog"`
+- Test with screen readers (NVDA, JAWS, VoiceOver)
+
+**Don't:**
+- Use ARIA to override native semantics when not needed (e.g. `<button role="button">` is redundant)
+- Add ARIA without testing with assistive tech
+- Use `aria-hidden` on focusable elements
+
+**Example:**
+```tsx
+// Good: button with dynamic state
+<button aria-expanded={isOpen} aria-label="Open menu">☰</button>
+
+// Good: section with heading
+<section aria-labelledby="about-heading">
+  <h2 id="about-heading">About</h2>
+</section>
+```
+
+---
+
+## 6. Forms
+
+**Do:**
+- Associate labels with inputs using `<label>` and `for` / `htmlFor`
+- Provide clear error messages near the field (not just color)
+- Show required fields explicitly (not just `*`)
+- Use `autocomplete` attributes for common fields (name, email, address)
+
+**Don't:**
+- Use placeholder-only labels (placeholders disappear on focus)
+- Rely on color alone to indicate errors (pair with icon or text)
+- Hide labels visually without providing screen-reader-only text
+
+**Example:**
+```tsx
+// Good: visible label + clear error
+<label htmlFor="email">Email address (required)</label>
+<input id="email" type="email" aria-describedby="email-error" />
+{error && <p id="email-error" className="text-red-600">{error}</p>}
+```
+
+---
+
+## 7. Images & Media
+
+**Do:**
+- Provide meaningful `alt` text for informative images
+- Use `alt=""` for decorative images (announces nothing to screen readers)
+- Provide captions or transcripts for video/audio
+- Ensure text in images is also available as real text
+
+**Don't:**
+- Leave `alt` attribute missing (fails validation and screen readers)
+- Use "image of" or "picture of" (redundant; screen readers announce "image")
+- Embed critical text in images without a text alternative
+
+---
+
+## 8. Interactive Elements
+
+**Do:**
+- Minimum touch/click target: 44×44px (CSS pixels) for primary actions
+- Provide clear hover, focus, and active states
+- Ensure buttons and links have descriptive labels (not "click here")
+- Use `aria-label` or `aria-labelledby` for icon-only buttons
+
+**Don't:**
+- Create tiny click targets (< 24px) for critical actions
+- Use generic labels ("Submit", "Click here") without context
+- Rely on hover-only affordances (ensure tap/keyboard works)
+
+---
+
+## 9. Page Structure
+
+**Do:**
+- One `<main>` landmark per page
+- Skip links ("Skip to main content") for keyboard users when there's heavy nav
+- Unique, descriptive page titles (`<title>`)
+- Use landmarks (`<nav>`, `<main>`, `<aside>`) for screen reader navigation
+
+**Don't:**
+- Have multiple `<main>` elements on the same page
+- Use ambiguous page titles ("Home", "Page")
+
+---
+
+## 10. Motion & Animation
+
+**Do:**
+- Respect `prefers-reduced-motion: reduce` (disable or reduce animation)
+- Keep essential motion under 5 seconds; provide pause/stop for longer
+- Use animation to support understanding, not distract
+
+**Don't:**
+- Auto-play video/audio without controls
+- Flash content more than 3 times per second (seizure risk)
+- Use motion as the only indicator of state change
+
+---
+
+## Quick WCAG AA Checklist
+
+- [ ] Color contrast: 4.5:1 text, 3:1 UI
+- [ ] Keyboard: all interactive elements accessible, no traps
+- [ ] Focus: visible indicators, consistent, 3:1 contrast
+- [ ] Semantic HTML: headings, landmarks, native controls
+- [ ] ARIA: only when needed, tested with screen readers
+- [ ] Forms: labels, error messages, required indicators
+- [ ] Images: meaningful alt text or alt=""
+- [ ] Touch targets: min 44×44px for primary actions
+- [ ] Page structure: one main, skip links if needed, unique titles
+- [ ] Motion: respect prefers-reduced-motion, no flashing
+
+---
+
+## Testing Tools
+
+- **Browser DevTools:** Lighthouse (Accessibility audit), Inspect element accessibility tree
+- **Contrast:** WebAIM Contrast Checker, browser DevTools color picker
+- **Screen readers:** NVDA (Windows), JAWS (Windows), VoiceOver (Mac/iOS)
+- **Keyboard:** Tab through the page; ensure all actions work without mouse
+- **Automated:** axe DevTools, WAVE browser extension
+
+---
+
+## Resources
+
+- [WCAG 2.1 Quick Reference](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WebAIM WCAG 2 Checklist](https://webaim.org/standards/wcag/checklist)
+- [a11y Project Checklist](https://www.a11yproject.com/checklist/)
