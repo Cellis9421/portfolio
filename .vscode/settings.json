@@ -1,15 +1,18 @@
 {
-    "npm-scripts.showStartNotification": false,
-    "cSpell.words": [
-        "cellis",
-        "Chargebee",
-        "Cybrary",
-        "DALL",
-        "googlesheets",
-        "heroicons",
-        "Octocat",
-        "SGPFL",
-        "tailwindcss",
-        "WCAG"
-    ]
+  "npm-scripts.showStartNotification": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": ["cellis", "Chargebee", "Cybrary", "DALL", "googlesheets", "heroicons", "Octocat", "SGPFL", "tailwindcss", "WCAG"]
 }
