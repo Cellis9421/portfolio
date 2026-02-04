@@ -3,10 +3,10 @@
 import { LinkedInIcon } from "@/app/icons/LinkedInIcon";
 import { Octocat } from "@/app/icons/Octocat";
 import Header from "@/components/Header/Header";
+import { ABOUT_ME_WINDOW_ID } from "@/configs/constants";
 import { useWindowManagerCtx } from "@/contexts/WindowManagerCtx";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { CWindowAboutMe } from "../CWindow/AboutMe/CWindowAboutMe";
-import { ABOUT_ME_WINDOW_ID } from "@/configs/constants";
 
 /**
  * Widget with links to connect with me on Github, LinkedIn, and Email.
@@ -63,14 +63,14 @@ export const LetsConnectWidget = ({
           </span>
           {/** Profile Image */}
           <button
-            className="profile_item w-[200px] h-[200px] border-2 rounded-full hover:border-gray-400/50 transition-all duration-500 z-0 cursor-pointer group-hover:scale-95"
+            className="profile_item w-[200px] h-[200px] border-2 rounded-full group-hover:border-gray-400/50 transition-all duration-500 z-0 cursor-pointer group-hover:scale-95"
             onClick={() => toggle(ABOUT_ME_WINDOW_ID)}
           >
-            <div className="w-full group-hover:bg-white h-full flex items-center justify-center rounded-full object-cover transition-all duration-500">
+            <div className="w-full h-full flex items-center justify-center rounded-full object-cover transition-all duration-500">
               <img
                 src="/imgthumb/avatars/calvin_ellis_headshot_transparent.png"
                 alt="Calvin Ellis"
-                className="w-full h-full rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 overflow-hidden"
+                className="w-full h-full rounded-full object-cover grayscale transition-all duration-500 overflow-hidden"
               />
             </div>
           </button>

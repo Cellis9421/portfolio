@@ -24,7 +24,7 @@ export default function RootLayout({
         <WindowManagerProvider>
         <body className={`${workSans.className} bg-editor.background text-editor.text`}>
           <Navigation />
-          <main className="flex min-h-dvh flex-col items-center justify-center mx-auto pt-24 md:pt-36">
+          <main className="flex flex-col items-center mx-auto pt-24 md:pt-36 w-full">
             {children}
           </main>
         </body>
