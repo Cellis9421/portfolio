@@ -22,7 +22,12 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # KECK POOL (KK-AGENTS#237). Self-hosted ephemeral runners in ac-janitor. The queued-jobs
+    # function discovers any repo whose workflows declare the `keck` label, so no infra change
+    # went with this. The image is `ghcr.io/actions/actions-runner:latest`, which is slim and
+    # carries none of `ubuntu-latest`'s preinstalled toolchain; this job is safe on it only
+    # because every tool it uses arrives through a setup action.
+    runs-on: [self-hosted, linux, keck]
 
     steps:
     - uses: actions/checkout@v4
