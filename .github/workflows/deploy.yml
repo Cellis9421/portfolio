@@ -22,6 +22,7 @@ concurrency:
 
 jobs:
   build:
+    timeout-minutes: 10 # Owner CI budget, KK-AGENTS#450
     # KECK POOL (KK-AGENTS#237). Self-hosted ephemeral runners in ac-janitor. The queued-jobs
     # function discovers any repo whose workflows declare the `keck` label, so no infra change
     # went with this. The image is `ghcr.io/actions/actions-runner:latest`, which is slim and
@@ -52,6 +53,7 @@ jobs:
 
   # Deployment job
   deploy:
+    timeout-minutes: 10 # Owner CI budget, KK-AGENTS#450
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
