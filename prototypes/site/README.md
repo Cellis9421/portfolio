@@ -39,8 +39,8 @@ python -m http.server 4173
 | How I ship | Work moving down a line through six gates | Pick a gate for its proof, then send that filter up to the gallery |
 | Working with agents | None: words and a log | Read what he does with agents, and the pull requests that built this page |
 | Release history | The career as a commit graph | Drag it or step through. Each job is a tagged release with its notes |
-| Guides and articles | Books on a shelf | Point at one and it comes off the shelf. Click to open it |
-| Education and blog | Plain cards | Read |
+| Writing | One book for the guide, drawn in CSS 3D, and the blog's latest posts | Tap the book or a post. Each is a plain link, with no canvas, so it is effortless on a phone |
+| Closing | The swarm again, spelling "Let's talk" | Get in touch, and see where he studied |
 
 ## The six gates
 
@@ -70,10 +70,10 @@ the CPU slowed four times. It is an emulation, not a real phone.
 
 | Measure | First version | Now |
 |---|---|---|
-| Desktop: longest main-thread stall | 609 ms | 244 ms |
-| Phone profile: longest stall | 2,562 ms | 209 ms |
-| Phone profile: stalls in total | 6,163 ms | 1,240 ms |
-| Phone profile: lowest frame rate in any section | 16 | 59 |
+| Desktop: longest main-thread stall | 609 ms | 300 ms |
+| Phone profile: longest stall | 2,562 ms | 226 ms |
+| Phone profile: stalls in total | 6,163 ms | 1,138 ms |
+| Phone profile: lowest frame rate in any section | 16 | 58 |
 
 How it stays quick:
 
@@ -95,20 +95,20 @@ How it stays quick:
 | `index.html` | The page: every section's words and styles |
 | `main.js` | Loads the data and starts each scene when its section comes near the screen |
 | `stage.js` | One small WebGL stage per section, with the tiers and the resolution trade |
-| `hero.js`, `projects.js`, `ship.js`, `releases.js`, `guides.js` | One scene each |
-| `build-data.mjs` | Builds `data.json`: the gates, the projects filed under them, the releases, the receipts |
+| `hero.js`, `projects.js`, `ship.js`, `releases.js` | One scene each. `hero.js` also draws the closing section |
+| `build-data.mjs` | Builds `data.json`: the gates, the projects filed under them, the releases, the receipts, the education and the blog's latest posts |
 | `data.json` | The built data, committed so the page runs without a build |
-| `assets/` | The shelf's wood and the gallery's screenshots, written by `../build-assets.py` |
+| `assets/` | The gallery's screenshots, written by `../build-assets.py` |
 | `shoot.py`, `shots/` | The capture script and its stills |
 
 ## What is real and what is placeholder
 
 - **Real:** all 26 projects with their descriptions and links, the proof under each gate,
-  the release notes, the 20 screenshots, the social links, the guide, the blog, and the
-  pull requests in the receipts.
+  the release notes, the 20 screenshots, the social links, the guide, the blog's latest
+  posts read from its feed, the education, and the pull requests in the receipts.
 - **Filed by hand:** which gates a project shows, its line of proof, and its screenshot,
   all in `build-data.mjs`.
-- **Placeholder:** the three pale books on the shelf.
+- **Placeholder:** nothing. The shelf of pale placeholder books is gone.
 
 ## What it still needs
 
@@ -122,8 +122,8 @@ How it stays quick:
 ## Rebuild and retake
 
 ```bash
-node prototypes/site/build-data.mjs      # after a change to the site's config, or to refresh the receipts
-python prototypes/build-assets.py        # the wood and the gallery's screenshots
+node prototypes/site/build-data.mjs      # after a change to the site's config, or to refresh the receipts and the posts
+python prototypes/build-assets.py        # the gallery's screenshots
 python prototypes/site/shoot.py          # every section, and the sheet
 python prototypes/site/shoot.py phone    # every section as a phone shows it
 node prototypes/publish.mjs              # write the copy that the site publishes

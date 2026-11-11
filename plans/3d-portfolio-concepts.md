@@ -89,8 +89,8 @@ Ideas 2 to 4 need facts from his private projects. Nothing from them is on the p
 | How I ship | Work moving down a line through the six gates. A gate opens its proof and the projects that show it |
 | Working with agents | What he does with agents, and the receipts |
 | Release history | The career as a commit graph: each job a tagged release, each thing shipped a commit |
-| Guides and articles | Books on a shelf, with room for more |
-| Education and blog | Plain cards at the foot |
+| Writing | The guide as one book, and the blog's latest posts, as plain links |
+| Closing | The swarm again, the way to get in touch, and the education |
 
 The sections are independent, so one can be swapped without touching the rest. What is
 real, what is placeholder, the measurements and what it still needs are in the
@@ -103,9 +103,14 @@ real, what is placeholder, the measurements and what it still needs are in the
   did not like it there. The release history replaced it. It is in git history at `beb13db`.
 - **The skills globe, 2026-11-11.** Every language and tool as a dot. The gates replaced it,
   because languages are no longer the point.
+- **The bookshelf, 2026-11-11.** Books on a wooden shelf that came off it when pointed at.
+  The owner liked the idea, but it was poor on a phone and there were only two real things
+  to put on it. One book and the blog's posts replaced it.
+- **The plain education cards, 2026-11-11.** Three boxes at the foot. A closing section
+  replaced them.
 - **Photographic scenes.** The owner asked for the page to be super realistic while the tree
-  was in it, and the tree and the shelf were rebuilt from photo scans. With the tree gone,
-  only the shelf is. The other scenes are drawn.
+  was in it, and the tree and the shelf were rebuilt from photo scans. Both are gone, so
+  every scene is drawn.
 
 ## The four jobs
 

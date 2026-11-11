@@ -1,7 +1,7 @@
 // About: a swarm of particles. Point at a link and the swarm spells it. The links are satellites round it.
 import { THREE, stage, tier, glow, calm, clamp, lerp, ease } from './stage.js';
 
-export default function hero(canvas, anchors) {
+export default function hero(canvas, anchors, opts = {}) {
   const s = stage(canvas, { fov: 35 });
   const { scene, camera } = s;
   camera.position.set(0, 0, 14);
@@ -9,7 +9,7 @@ export default function hero(canvas, anchors) {
   let seedState = 7;
   const R = () => { seedState = (seedState + 0x6d2b79f5) >>> 0; let t = seedState; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
-  const N = tier === 'low' ? 11000 : 26000;
+  const N = Math.round((tier === 'low' ? 11000 : 26000) * (opts.share ?? 1));
   const A = new Float32Array(N * 3), B = new Float32Array(N * 3), seed = new Float32Array(N);
   for (let i = 0; i < N; i++) { seed[i] = R(); A.set([(R() - 0.5) * 30, (R() - 0.5) * 18, (R() - 0.5) * 12], i * 3); }
 
@@ -92,8 +92,8 @@ export default function hero(canvas, anchors) {
 
   let to = ball, mixing = true, held = -1, back = 0, spin = 0, orbit = 0, wide = true;
   // Left alone, the swarm spells the loop a product engineer runs. It is the page's message, and a phone has no hover to find it.
-  const loop = ['Plan', 'Build', 'Test', 'Ship'].map((w) => ({ w, shape: null }));
-  let beat = 0, wait = 2.4;
+  const loop = (opts.words ?? ['Plan', 'Build', 'Test', 'Ship']).map((w) => ({ w, shape: null }));
+  let beat = 0, wait = opts.first ?? 2.4;
   function form(target) {
     if (target === to) return;
     const m = uniforms.uMix.value;
@@ -116,7 +116,7 @@ export default function hero(canvas, anchors) {
 
   s.onSize((w, h) => {
     wide = w / h > 1.25;
-    group.position.set(wide ? 3.6 : 0, wide ? 0 : -0.7, 0);
+    group.position.set(wide ? (opts.x ?? 3.6) : 0, wide ? 0 : (opts.y ?? -0.7), 0);
     group.scale.setScalar(wide ? 1 : clamp((w / h) * 1.25, 0.5, 1));
     uniforms.uSize.value = h * 0.075 * s.renderer.getPixelRatio() * (tier === 'low' ? 1.5 : 1) * (wide ? 1 : 0.5);
     uniforms.uGain.value = wide ? 0.55 : 0.34;
@@ -139,7 +139,7 @@ export default function hero(canvas, anchors) {
     if (held < 0 && !calm) {
       wait -= dt;
       if (wait <= 0) {
-        if (beat < loop.length) { const k = loop[beat++]; form(k.shape ??= word(k.w)); wait = 2.2; }
+        if (beat < loop.length) { const k = loop[beat++]; form(k.shape ??= word(k.w)); wait = opts.hold ?? 2.2; }
         else { beat = 0; form(ball); wait = 4.5; }
       }
     }

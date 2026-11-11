@@ -104,18 +104,49 @@
   .tag-rel span { font-size: 12px; color: var(--soft); }
   .tag-rel:hover, .tag-rel[data-state="on"] { border-color: var(--hue); }
 
-  #writing .reading { position: absolute; right: var(--pad); top: 130px; z-index: 3; width: 400px; display: grid; gap: 12px; }
-  .read { display: grid; gap: 4px; padding: 18px 20px; text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
-  .read b { font-size: 18px; line-height: 1.25; }
-  .read span { color: var(--soft); font-size: 14px; }
-  .read .open { color: var(--ink); font-weight: 700; margin-top: 6px; }
-  .read:hover, .read.on { border-color: var(--ink); }
+  /* Writing: one book and the latest posts. Plain CSS 3D and real links, with no canvas, so a phone gets it for free. */
+  #writing { min-height: 0; padding: 104px var(--pad); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+  .guide { display: flex; gap: 48px; align-items: center; perspective: 1200px; }
+  .book { --ry: -26deg; --rx: 5deg; position: relative; flex: none; width: 216px; height: 304px; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .3s ease-out; text-decoration: none; }
+  .book > span { position: absolute; display: block; }
+  .book .cover { inset: 0; display: flex; flex-direction: column; padding: 26px 22px 22px 28px; border-radius: 4px 10px 10px 4px; color: #fff; background: linear-gradient(135deg, #4d6cf0, #2a3a9a 72%); box-shadow: inset 7px 0 10px rgba(0, 0, 0, .3), inset -1px 0 0 rgba(255, 255, 255, .22); transform: translateZ(20px); }
+  .book .cover small { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+  .book .cover b { margin-top: 14px; font: 600 24px/1.14 Georgia, serif; }
+  .book .cover i { margin-top: auto; font-style: normal; font-size: 13px; opacity: .9; }
+  .book .back { inset: 0; border-radius: 10px 4px 4px 10px; background: #22307c; transform: translateZ(-20px); }
+  .book .spine { left: 0; top: 0; width: 40px; height: 100%; background: linear-gradient(90deg, #1c2764, #33479d); transform: translateX(-20px) rotateY(-90deg); }
+  .book .pages { right: 0; top: 4px; width: 38px; height: calc(100% - 8px); background: repeating-linear-gradient(90deg, #efe6d2 0 2px, #d6ccb4 2px 3px); transform: translateX(19px) rotateY(90deg); }
+  .book .lid { left: 3px; top: 0; width: calc(100% - 6px); height: 38px; background: #e8dfca; transform: translateY(-19px) rotateX(90deg); }
+  .book .floor { left: 4%; right: -10%; bottom: -34px; height: 30px; background: radial-gradient(ellipse at center, rgba(0, 0, 0, .6), transparent 70%); filter: blur(7px); transform: translateZ(-30px); }
+  .book:hover, .book:focus-visible { --ry: -12deg; --rx: 2deg; }
+  .guide .say p { color: var(--soft); margin: 12px 0 0; max-width: 380px; }
+  .guide .say .btn { margin-top: 22px; }
+  .posts h3 { margin-bottom: 6px; }
+  .post { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; align-items: center; min-height: 64px; margin-top: 10px; padding: 14px 18px; text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+  .post b { font-size: 17px; line-height: 1.3; }
+  .post span { grid-column: 1; color: var(--soft); font-size: 13px; }
+  .post i { grid-row: 1 / 3; grid-column: 2; font-style: normal; font-size: 20px; color: var(--soft); }
+  .post:hover { border-color: var(--ink); } .post:hover i { color: var(--ink); }
+  .posts .btn { margin-top: 18px; }
 
-  #more { min-height: 0; padding: 72px var(--pad) 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  #more .box { padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
-  #more p { margin: 6px 0 0; color: var(--soft); font-size: 14px; }
-  #more ul { margin: 10px 0 0; padding-left: 18px; color: var(--soft); font-size: 14px; }
-  footer { padding: 26px var(--pad) 40px; color: var(--soft); font-size: 13px; }
+  /* Closing: the swarm comes back to say hello, with the way to reach him and where he studied. */
+  #close { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 48px; align-items: end; padding: 0 var(--pad) 64px; border-bottom: 0; }
+  #close .closing { position: relative; z-index: 3; align-self: center; max-width: 580px; pointer-events: none; }
+  #close .closing a { pointer-events: auto; }
+  #close h2 { font-size: 68px; line-height: 1; }
+  #close .lead { font-size: 21px; line-height: 1.4; color: var(--soft); margin: 20px 0 0; }
+  #close .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .edu { position: relative; z-index: 3; padding: 24px 26px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; backdrop-filter: blur(12px); }
+  .edu .school { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .edu .school:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
+  .edu h3 { font-size: 20px; }
+  .edu .where { margin: 2px 0 0; color: var(--soft); font-size: 13px; }
+  .edu .fields { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .edu .fields span { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); }
+  footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px var(--pad) 34px; color: var(--soft); font-size: 13px; border-top: 1px solid var(--line); }
+  @media (hover: none) { .book { animation: sway 7s ease-in-out infinite; } }
+  @keyframes sway { 50% { transform: rotateX(3deg) rotateY(-13deg); } }
+  @media (prefers-reduced-motion: reduce) { .book { animation: none; transition: none; } }
   [hidden] { display: none !important; }
 
   @media (max-width: 900px) {
@@ -125,7 +156,7 @@
     main > section { min-height: 0; display: flex; flex-direction: column; overflow: visible; }
     .scene { position: relative; inset: auto; order: 2; height: 62vh; height: 62svh; overflow: hidden; }
     .head, #shipped .bar { position: relative; left: auto; right: auto; top: auto; order: 1; padding: 36px var(--pad) 14px; max-width: none; }
-    .detail, .panel, #writing .reading { position: relative; right: auto; top: auto; order: 3; width: auto; max-height: none; margin: 14px 16px 28px; }
+    .detail, .panel { position: relative; right: auto; top: auto; order: 3; width: auto; max-height: none; margin: 14px 16px 28px; }
     /* The first screen is the whole point on a phone: the swarm fills it, with the name over the top and the buttons at the foot. */
     #about { display: block; }
     #about .scene { position: absolute; inset: 0 0 auto 0; height: calc(100vh - 56px); height: calc(100svh - 56px); }
@@ -144,8 +175,15 @@
     #agents { grid-template-columns: 1fr; gap: 28px; padding: 44px var(--pad); }
     .log a { grid-template-columns: 30px 40px 1fr; font-size: 12.5px; padding: 10px 14px; } .log .d { display: none; }
     #history .scene { height: 44vh; height: 44svh; }
-    #writing .scene { height: 46vh; height: 46svh; }
-    #more { grid-template-columns: 1fr; padding: 40px var(--pad); }
+    #writing { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 48px var(--pad); }
+    .guide { flex-direction: column; align-items: flex-start; gap: 34px; }
+    .book { align-self: center; width: 190px; height: 268px; } .book .cover b { font-size: 21px; }
+    #close { display: block; padding: 0; }
+    #close .scene { position: absolute; inset: 0 0 auto 0; height: 76vh; height: 76svh; }
+    #close .closing { min-height: 76vh; min-height: 76svh; display: flex; flex-direction: column; max-width: none; padding: 40px var(--pad) 28px; }
+    #close .closing .cta { margin-top: auto; }
+    #close h2 { font-size: 46px; } #close .lead { font-size: 19px; }
+    .edu { margin: 0 16px 32px; }
   }
 </style>
 <script type="importmap">
@@ -159,7 +197,8 @@
   <a class="tab" href="#how">How I ship</a>
   <a class="tab" href="#agents">Agents</a>
   <a class="tab" href="#history">History</a>
-  <a class="tab" href="#writing">Guides</a>
+  <a class="tab" href="#writing">Writing</a>
+  <a class="tab" href="#close">Contact</a>
   <a class="btn main" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener" style="min-height:40px;margin-left:10px">Get in touch</a>
 </nav>
 
@@ -233,18 +272,41 @@
   </section>
 
   <section id="writing" aria-labelledby="writing-h">
-    <div class="scene"><canvas aria-hidden="true"></canvas></div>
-    <div class="head"><h2 id="writing-h">Guides and articles</h2><p>Longer pieces on working with AI. The shelf has room for more.</p></div>
-    <div class="reading"></div>
+    <div class="guide">
+      <a class="book" href="https://www.notion.so/Agentic-Software-Development-Enablement-Guide-2c7965a5986780edb657fa92aab449fc?source=copy_link" target="_blank" rel="noopener" aria-label="Open the Agentic Software Development Enablement Guide">
+        <span class="back"></span><span class="spine"></span><span class="pages"></span><span class="lid"></span><span class="floor"></span>
+        <span class="cover"><small>Guide</small><b>Agentic Software Development Enablement Guide</b><i>Calvin Ellis</i></span>
+      </a>
+      <div class="say">
+        <p class="kicker">Writing</p>
+        <h2 id="writing-h">The guide</h2>
+        <p>A practical guide to enabling software teams with AI and agentic workflows. It is how I teach it.</p>
+        <a class="btn main" href="https://www.notion.so/Agentic-Software-Development-Enablement-Guide-2c7965a5986780edb657fa92aab449fc?source=copy_link" target="_blank" rel="noopener">Read the guide ↗</a>
+      </div>
+    </div>
+    <div class="posts">
+      <h3>From the blog</h3>
+      <div class="list"></div>
+      <a class="btn" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Visit the blog ↗</a>
+    </div>
   </section>
 
-  <section id="more" aria-label="Education and blog">
-    <div class="box"><p class="kicker">Education</p><h3>Quincy College</h3><p>Quincy, MA</p><ul><li>Computer Science</li><li>Business Administration</li></ul></div>
-    <div class="box"><p class="kicker">Education</p><h3>Plymouth North High</h3><p>Plymouth, MA</p><ul><li>Computer Science</li><li>Technical Marketing Certificate</li></ul></div>
-    <div class="box"><p class="kicker">Blog</p><h3>Notes as I go</h3><p>Thoughts on engineering, AI, and building in public.</p><p style="margin-top:14px"><a class="btn" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Visit the blog ↗</a></p></div>
+  <section id="close" aria-labelledby="close-h">
+    <div class="scene"><canvas aria-hidden="true"></canvas></div>
+    <div class="closing">
+      <p class="kicker">Greater Boston · open to opportunities</p>
+      <h2 id="close-h">Let's build something great.</h2>
+      <p class="lead">I'm based near Boston and always up for talking shop.</p>
+      <div class="cta">
+        <a class="btn main" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener">Get in touch ↗</a>
+        <a class="btn" href="https://github.com/Cellis9421" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog ↗</a>
+      </div>
+    </div>
+    <aside class="edu" aria-label="Education"></aside>
   </section>
 </main>
-<footer>Prototype. Not the live site.</footer>
+<footer><span>Calvin Ellis · product engineer</span><span>Prototype. Not the live site.</span></footer>
 <script type="module" src="./main.js"></script>
 </body>
 </html>

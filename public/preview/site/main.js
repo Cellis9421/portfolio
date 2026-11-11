@@ -103,32 +103,23 @@ near($('#history'), async () => {
   demo.release = (i) => graph.go(i);
 });
 
-// ------------------------------------------------------------ guides
-const GUIDES = [
-  { kind: 'Guide', title: 'Agentic Software Development Enablement Guide', short: 'Agentic Development Guide', blurb: 'A practical guide to enabling software teams with AI and agentic workflows.', hue: '#3b5bdb',
-    link: 'https://www.notion.so/Agentic-Software-Development-Enablement-Guide-2c7965a5986780edb657fa92aab449fc?source=copy_link' },
-  { kind: 'Blog', title: 'Engineering, AI and building in public', short: 'The Blog', blurb: 'Notes as I go, on engineering and on working with AI.', hue: '#c2410c', link: 'https://blog.calvinellis.io/' },
-  { kind: 'Next', title: 'The next guide', short: 'Next guide', blurb: 'A slot on the shelf for the next one.', hue: '#5a6680', link: null },
-  { kind: 'Next', title: 'The next article', short: 'Next article', blurb: 'A slot on the shelf for the next one.', hue: '#5a6680', link: null },
-  { kind: 'Next', title: 'And the one after', short: 'And after', blurb: 'A slot on the shelf for the next one.', hue: '#5a6680', link: null },
-];
-const reading = $('#writing .reading');
-GUIDES.filter((gd) => gd.link).forEach((gd, i) => {
-  const a = el('a', 'read', `<span class="kicker" style="color:${i ? '#ff8f3a' : '#8aa2ff'}">${gd.kind}</span><b>${gd.title}</b><span>${gd.blurb}</span><span class="open">Open ↗</span>`);
-  a.href = gd.link; a.target = '_blank'; a.rel = 'noopener';
-  a.dataset.i = i;
-  reading.appendChild(a);
-});
-near($('#writing'), async () => {
-  const links = [...reading.querySelectorAll('.read')];
-  const shelf = (await import('./guides.js')).default($('#writing canvas'), GUIDES, { onHover: (i) => links.forEach((a) => a.classList.toggle('on', Number(a.dataset.i) === i)) });
-  links.forEach((a) => {
-    a.addEventListener('pointerenter', () => shelf.show(Number(a.dataset.i)));
-    a.addEventListener('pointerleave', () => shelf.show(-1));
-    a.addEventListener('focus', () => shelf.show(Number(a.dataset.i)));
-    a.addEventListener('blur', () => shelf.show(-1));
+// ------------------------------------------------------------ writing: the guide as a book, and the latest posts
+$('#writing .list').innerHTML = data.posts.map((p) => `<a class="post" href="${p.url}" target="_blank" rel="noopener"><b>${p.title}</b><span>${p.when}</span><i aria-hidden="true">↗</i></a>`).join('');
+if (matchMedia('(hover: hover)').matches) {  // with a mouse, the book turns to face the pointer
+  const book = $('#writing .book');
+  $('#writing').addEventListener('pointermove', (e) => {
+    const r = book.getBoundingClientRect(), dx = (e.clientX - (r.left + r.width / 2)) / innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+    book.style.setProperty('--ry', `${Math.max(-40, Math.min(10, -26 + dx * 60)).toFixed(1)}deg`);
+    book.style.setProperty('--rx', `${Math.max(-8, Math.min(14, 5 - dy * 26)).toFixed(1)}deg`);
   });
-  demo.book = (i) => shelf.show(i);
+  $('#writing').addEventListener('pointerleave', () => { book.style.removeProperty('--ry'); book.style.removeProperty('--rx'); });
+}
+
+// ------------------------------------------------------------ closing: the swarm again, and where he studied
+$('#close .edu').innerHTML = `<p class="kicker">Education</p>${data.education.map((s) => `<div class="school"><h3>${s.institution}</h3><p class="where">${s.location}</p>
+  <div class="fields">${s.fields.map((f) => `<span>${f}</span>`).join('')}</div></div>`).join('')}`;
+near($('#close'), async () => {
+  (await import('./hero.js')).default($('#close canvas'), [], { words: ["Let's talk"], hold: 3.4, first: 1.4, share: 0.6, x: 1.6, y: -0.9 });
 });
 
 // ------------------------------------------------------------ nav: mark the section in view

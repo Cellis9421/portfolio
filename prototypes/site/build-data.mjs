@@ -117,5 +117,17 @@ try {
   try { receipts = JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')).receipts ?? []; } catch { /* first run without the CLI: no receipts */ }
 }
 
-writeFileSync(join(here, 'data.json'), `${JSON.stringify({ caps: CAPS, projects, releases, receipts }, null, 1)}\n`);
-console.log(`[build-data] ${projects.length} projects, ${CAPS.length} capabilities, ${releases.length} releases, ${receipts.length} receipts`);
+const education = load('EDUCATION.tsx', 'EDUCATION');
+
+// The blog's latest posts, from its own feed. Kept from the last run when the feed cannot be reached.
+let posts = [];
+try {
+  const feed = await (await fetch('https://blog.calvinellis.io/feeds/posts/default?alt=json&max-results=3')).json();
+  posts = feed.feed.entry.map((e) => ({ title: e.title.$t, url: e.link.find((l) => l.rel === 'alternate').href,
+    when: new Date(e.published.$t).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) }));
+} catch {
+  try { posts = JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')).posts ?? []; } catch { /* first run offline: no posts */ }
+}
+
+writeFileSync(join(here, 'data.json'), `${JSON.stringify({ caps: CAPS, projects, releases, receipts, education, posts }, null, 1)}\n`);
+console.log(`[build-data] ${projects.length} projects, ${CAPS.length} capabilities, ${releases.length} releases, ${receipts.length} receipts, ${posts.length} posts`);
