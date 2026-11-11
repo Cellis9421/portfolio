@@ -24,4 +24,5 @@ See [.github/workflows/deploy.yml](.github/workflows/deploy.yml) for more
 Design notes live in [plans/](plans/), never in `docs/`, which is build output.
 
 - [3D portfolio: concepts](plans/3d-portfolio-concepts.md)
+- [Career tree prototype](prototypes/career-tree/), the current direction: one tree, one slider
 - [Live mockups](plans/concept-mockups/), one rough three.js scene per concept

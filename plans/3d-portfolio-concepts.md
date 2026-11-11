@@ -1,12 +1,13 @@
 # 3D portfolio: concepts
 
-Brainstorm for remaking calvinellis.io as a 3D experience. Round two is the live set: six
-ways to show a lot of projects, with a timeline and an answer to who made them. Pick one,
-prototype it on localhost, then decide whether it replaces the current site. Nothing here
-is built yet. The pictures are rough live mockups in three.js, in
-[concept-mockups/](concept-mockups/). They show the idea, not the final art.
+Brainstorm for remaking calvinellis.io as a 3D experience. **The current direction is the
+career tree**, a working prototype in [../prototypes/career-tree/](../prototypes/career-tree/).
+Round two below is six other ways to show a lot of projects. Its pictures are rough live
+mockups in three.js, in [concept-mockups/](concept-mockups/). They show the idea, not the
+final art.
 
 - [The brief](#the-brief)
+- [The bar, and the career tree](#the-bar-and-the-career-tree)
 - [The four jobs](#the-four-jobs)
 - [The six, side by side](#the-six-side-by-side)
 - [Concepts](#concepts)
@@ -26,6 +27,27 @@ Owner, 2026-11-11, after round one.
 - **A work history timeline** sits somewhere in it.
 - **It still answers two questions**: who is this, and what has he done.
 - **Original.** Round one toured a career, and none of the seven landed.
+
+## The bar, and the career tree
+
+Owner, 2026-11-11, after round two: a reference of one photoreal tree with a single slider
+that takes it through the four seasons. That is the interactivity and the level of detail
+he wants, in portfolio form. One living object, one control, real detail, almost no
+interface. The mockups in rounds one and two were diagrams with labels, and missed it.
+
+![The career tree in 2010, 2014, 2019 and now](../prototypes/career-tree/shots/four-years.jpg)
+
+- **The idea.** The tree is the career. The slider is the years, 2009 to now, and the
+  tree grows from a seedling as it moves.
+- **Who.** The name, and the tree itself.
+- **Timeline.** The slider. The panel beside it reads out the job for the year under the
+  handle, and each job is a side of the tree that the camera walks round to.
+- **Projects.** A glowing fruit each, coloured by job, appearing in its year. The newest
+  sit at the top. The same projects are a plain list one click away.
+- **Live.** A fruit opens a card, and the card opens the thing itself.
+
+What works, what is placeholder and what it still needs are in the
+[prototype's README](../prototypes/career-tree/README.md).
 
 ## The four jobs
 
@@ -147,6 +169,9 @@ the work on its own.
 - **Risk.** Plants crowd and hide their names, so it is the weakest of the six at scale.
 
 ## Recommendation
+
+**On hold.** The owner set the bar after this was written, and the career tree answers it.
+What follows was the pick among the six.
 
 **Build 4, the cabinet.** Projects matter most in the brief, and it is the only concept
 where every project is visible at once and looks like itself. It also has the strongest
