@@ -1,25 +1,23 @@
 // Projects: a curved wall of project screens, with their real screenshots, over a dark glass floor.
-import { THREE, stage, canvasTexture, clamp, lerp } from './stage.js';
-
-// The site's screenshots live in public/. From prototypes/ that is two folders up and into public;
-// from the published copy in public/preview/ it is just two folders up.
-const SHOTS = location.pathname.includes('/prototypes/') ? '../../public/img/screenshots/' : '../../img/screenshots/';
+import { THREE, stage, tier, canvasTexture, clamp, lerp } from './stage.js';
 
 export const HUE = { Cybrary: '#5cc8ff', 'Stove & Grill Parts': '#ff8f3a', Personal: '#b78cff' };
 
 export default function projects(canvas, list, ui) {
-  const s = stage(canvas, { fov: 34, fog: [0x0a0c11, 0.022], bloom: [0.22, 0.6, 0.86], tone: THREE.NoToneMapping });
+  const s = stage(canvas, { fov: 34, fog: [0x0a0c11, 0.022], tone: THREE.NoToneMapping });
   const { scene, camera } = s;
   const RAD = 15, STEP = 0.214, W = 2.95, H = 2.03, ROWS = [1.16, -1.16], FLOOR = -2.5;
   camera.position.set(0, 0.2, -RAD + 13.4);
   camera.lookAt(0, 0.75, -RAD);
 
+  const SIZE = tier === 'low' ? [480, 330] : [640, 440];
   const cols = Math.ceil(list.length / 2), angleOf = (col) => (col - (cols - 1) / 2) * STEP;
   const wall = new THREE.Group();
   scene.add(wall);
 
   function paint(tex, p, img) {
-    const { g, w, h } = tex.userData, top = 330, hue = HUE[p.group];
+    const { g } = tex.userData, w = 640, h = 440, top = 330, hue = HUE[p.group];
+    g.setTransform(tex.userData.w / 640, 0, 0, tex.userData.h / 440, 0, 0);
     g.clearRect(0, 0, w, h);
     g.save();
     g.beginPath(); g.roundRect(3, 3, w - 6, h - 6, 28); g.clip();
@@ -44,6 +42,9 @@ export default function projects(canvas, list, ui) {
     g.fillStyle = hue; g.beginPath(); g.arc(36, top + 82, 6, 0, 7); g.fill();
     g.fillStyle = '#9aa6bd'; g.font = '500 21px "Segoe UI", Arial'; g.fillText(p.group, 52, top + 89);
     g.restore();
+    const sheen = g.createLinearGradient(0, 0, w * 0.7, top);  // light catching the glass
+    sheen.addColorStop(0, 'rgba(255,255,255,.16)'); sheen.addColorStop(0.45, 'rgba(255,255,255,0)');
+    g.save(); g.beginPath(); g.roundRect(3, 3, w - 6, top, [28, 28, 0, 0]); g.clip(); g.fillStyle = sheen; g.fillRect(0, 0, w, top); g.restore();
     g.strokeStyle = 'rgba(255,255,255,.2)'; g.lineWidth = 3;
     g.beginPath(); g.roundRect(3, 3, w - 6, h - 6, 28); g.stroke();
     tex.needsUpdate = true;
@@ -52,9 +53,8 @@ export default function projects(canvas, list, ui) {
   const geo = new THREE.PlaneGeometry(W, H), rimGeo = new THREE.PlaneGeometry(W + 0.12, H + 0.12);
   const cards = list.map((p, i) => {
     const col = Math.floor(i / 2), row = i % 2, a = angleOf(col);
-    const tex = canvasTexture(640, 440, () => {});
+    const tex = canvasTexture(SIZE[0], SIZE[1], () => {});
     paint(tex, p, null);
-    if (p.shot) { const img = new Image(); img.onload = () => paint(tex, p, img); img.src = `${SHOTS}${p.shot}`; }
     const mat = new THREE.MeshBasicMaterial({ map: tex, alphaTest: 0.5, alphaToCoverage: true });
     const mesh = new THREE.Mesh(geo, mat);
     const pivot = new THREE.Group();
@@ -69,8 +69,17 @@ export default function projects(canvas, list, ui) {
     pivot.add(mesh, rim, echo);
     wall.add(pivot);
     mesh.userData.card = i;
-    return { p, col, row, a, mesh, rim, echo, mat, lift: 0, shown: 1 };
+    return { p, col, row, a, mesh, rim, echo, mat, tex, lift: 0, shown: 1 };
   });
+  // Load the screenshots two at a time, nearest the middle first, decoding off the main thread.
+  const queue = cards.filter((c) => c.p.shot).sort((x, y) => Math.abs(x.a) - Math.abs(y.a));
+  const next = async () => {
+    const c = queue.shift();
+    if (!c) return;
+    try { paint(c.tex, c.p, await createImageBitmap(await (await fetch(`assets/shots/${c.p.shot.replace('.png', '.webp')}`)).blob())); } catch { /* the drawn cover stays */ }
+    next();
+  };
+  next(); next();
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(120, 60), new THREE.MeshBasicMaterial({ color: 0x0a0c11, transparent: true, opacity: 0.55 }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.set(0, FLOOR, -RAD);

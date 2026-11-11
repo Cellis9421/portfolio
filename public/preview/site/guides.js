@@ -1,8 +1,8 @@
 // Guides and articles: books on a shelf. Point at one and it comes off the shelf to show its cover.
-import { THREE, stage, canvasTexture, lerp } from './stage.js';
+import { THREE, stage, tier, canvasTexture, lerp } from './stage.js';
 
 export default function guides(canvas, items, ui) {
-  const s = stage(canvas, { fov: 30, shadows: true, bloom: [0.16, 0.5, 0.92], exposure: 1.15 });
+  const s = stage(canvas, { fov: 30, shadows: true, exposure: 1.1 });
   const { scene, camera } = s;
   camera.position.set(0.4, 2.5, 13.5);
   camera.lookAt(1.3, 1.25, 0);
@@ -12,10 +12,15 @@ export default function guides(canvas, items, ui) {
   lamp.position.set(-4, 8.5, 8);
   lamp.target.position.set(0.5, 1, 0);
   lamp.castShadow = true;
-  lamp.shadow.mapSize.set(2048, 2048);
+  lamp.shadow.mapSize.set(tier === 'low' ? 1024 : 2048, tier === 'low' ? 1024 : 2048);
   lamp.shadow.bias = -0.0004;
   scene.add(lamp, lamp.target);
-  const wood = new THREE.MeshStandardMaterial({ color: 0x4a2f1c, roughness: 0.6 });
+  const grain = new THREE.TextureLoader().load('assets/wood.jpg');
+  grain.colorSpace = THREE.SRGBColorSpace;
+  grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
+  grain.repeat.set(3, 1);
+  grain.anisotropy = 4;
+  const wood = new THREE.MeshStandardMaterial({ map: grain, color: 0xc89a6a, roughness: 0.5 });
   const plank = new THREE.Mesh(new THREE.BoxGeometry(11.5, 0.26, 2.6), wood);
   plank.position.x = 1.2;
   plank.receiveShadow = plank.castShadow = true;
@@ -29,7 +34,8 @@ export default function guides(canvas, items, ui) {
   end.castShadow = true;
   scene.add(end);
 
-  const page = new THREE.MeshStandardMaterial({ color: 0xf1e9d6, roughness: 0.9 });
+  const paper = canvasTexture(64, 256, (g, w, h) => { g.fillStyle = '#efe6d2'; g.fillRect(0, 0, w, h); for (let x = 0; x < w; x += 2) { g.fillStyle = `rgba(120,100,70,${0.06 + Math.random() * 0.16})`; g.fillRect(x, 0, 1, h); } });
+  const page = new THREE.MeshStandardMaterial({ map: paper, roughness: 0.95 });
   const wrap = (g, text, x, y, width, line) => {
     let row = '';
     for (const wd of text.split(' ')) {
@@ -62,7 +68,7 @@ export default function guides(canvas, items, ui) {
       g.fillText(label, 0, 0);
       g.restore();
     });
-    const side = (map) => new THREE.MeshStandardMaterial({ map, roughness: 0.55, transparent: !it.link, opacity: it.link ? 1 : 0.55 });
+    const side = (map) => new THREE.MeshStandardMaterial({ map, roughness: 0.78, transparent: !it.link, opacity: it.link ? 1 : 0.55 });
     const plain = new THREE.MeshStandardMaterial({ color: it.hue, roughness: 0.6, transparent: !it.link, opacity: it.link ? 1 : 0.4 });
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(thick, tall, deep), [side(cover), plain, page, page, side(spine), page]);
     mesh.castShadow = !!it.link;
@@ -78,6 +84,7 @@ export default function guides(canvas, items, ui) {
   let hovered = -1, forced = -1;
   const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
   canvas.addEventListener('click', () => { if (hovered >= 0 && books[hovered].it.link) window.open(books[hovered].it.link, '_blank', 'noopener'); });
+  s.onSize((w, h) => { const tall = w / h < 1.1; camera.fov = tall ? 44 : 30; camera.position.set(0.4, tall ? 2.4 : 2.5, tall ? 12.6 : 13.5); camera.lookAt(tall ? -0.6 : 1.3, 1.3, 0); camera.updateProjectionMatrix(); });
   s.onTick((t, dt) => {
     hovered = -1;
     if (s.pointer.inside) {

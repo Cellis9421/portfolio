@@ -51,7 +51,14 @@ network connection.
   Scaling a bone grows its whole subtree, so the young tree is the grown one with most of
   its bones still at zero. Wind is the same bones, turned a little.
 - **Leaves ride their twig.** A leaf is skinned to the twig it sits on, so it arrives when
-  the twig does. A new leaf opens pale, turns fresh green, then settles.
+  the twig does. A new leaf opens pale, then settles.
+- **It is built from photographs.** The leaves, the grass blades, the bark and the sky are
+  free CC0 scans, cut down by `../build-assets.py`. The sky is a real meadow, already out of
+  focus, and the sun in it is where the scene's light comes from. Light behind a leaf shines
+  through it.
+- **It sizes itself to the machine.** Three tiers set how many leaves and grass clumps are
+  drawn, and resolution drops a step when frames run long. See the
+  [sectioned page's README](../site/README.md#speed-and-phones).
 - **Each job has a side.** Two limbs per job, the oldest lowest. The camera walks round
   as the years pass, so the job under the handle faces the visitor.
 - **Fruit rides the wood.** A fruit is placed on the outermost leaf of a twig and follows
@@ -65,10 +72,9 @@ network connection.
 
 ## What it still needs
 
-- **Closer to the reference.** The leaves are drawn, not photographed, and there is no
-  depth of field. Real leaf and bark textures and a blur pass are the next step in detail.
-- **A frame rate on a phone.** It has only run on a desktop GPU. It draws tens of
-  thousands of leaf sprigs and 210,000 grass blades.
+- **Closer still to the reference.** The backdrop is out of focus, but the near grass is
+  not: there is no depth of field pass, because it costs too much on a phone.
+- **A real phone.** It has run on a desktop GPU and on an emulated phone, never a real one.
 - **The real project file**, and a fruit that opens the live thing.
 - **The plain page underneath**, reduced motion beyond a calmer wind, and a keyboard path
   to each fruit. The list and the slider are already real controls.

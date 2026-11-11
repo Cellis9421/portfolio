@@ -46,9 +46,15 @@ def main(only: list[str]) -> int:
     SHOTS.mkdir(exist_ok=True)
     port = serve()
     errors: list[str] = []
+    phone = "phone" in only
+    only = [o for o in only if o != "phone"]
+    pre = "phone-" if phone else ""
     with sync_playwright() as p:
         browser = p.chromium.launch(args=["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"])
-        page = browser.new_page(viewport={"width": SIZE[0], "height": SIZE[1]})
+        if phone:  # a phone: narrow, tall, dense pixels, touch
+            page = browser.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=2, is_mobile=True, has_touch=True).new_page()
+        else:
+            page = browser.new_page(viewport={"width": SIZE[0], "height": SIZE[1]})
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
         page.goto(f"http://127.0.0.1:{port}/prototypes/site/index.html")
@@ -56,7 +62,7 @@ def main(only: list[str]) -> int:
         for sid, name, act in SECTIONS:
             if only and sid not in only:
                 continue
-            page.evaluate("id => document.getElementById(id).scrollIntoView({ behavior: 'instant' })", sid)
+            page.evaluate("id => document.querySelector(`#${id} .scene`).scrollIntoView({ behavior: 'instant', block: 'center' })" if phone else "id => document.getElementById(id).scrollIntoView({ behavior: 'instant' })", sid)
             try:
                 page.wait_for_function(
                     "id => { const c = document.querySelector(`#${id} canvas`); return !c || c.dataset.ready === '1'; }", arg=sid, timeout=30000
@@ -67,16 +73,23 @@ def main(only: list[str]) -> int:
             if act:
                 page.evaluate(act)
                 page.wait_for_timeout(2600)
-            Image.open(io.BytesIO(page.screenshot())).convert("RGB").save(SHOTS / f"{name}.jpg", quality=86, optimize=True)
+            Image.open(io.BytesIO(page.screenshot())).convert("RGB").save(SHOTS / f"{pre}{name}.jpg", quality=86, optimize=True)
             print(f"[shoot] {sid}: ok")
         browser.close()
 
-    tiles = [Image.open(SHOTS / f"{name}.jpg").resize((800, 450), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"{name}.jpg").exists()]
-    rows = (len(tiles) + 1) // 2
-    sheet = Image.new("RGB", (1600, 450 * rows), (10, 12, 17))
-    for i, tile in enumerate(tiles):
-        sheet.paste(tile, ((i % 2) * 800 + (400 if i == len(tiles) - 1 and len(tiles) % 2 else 0), (i // 2) * 450))
-    sheet.save(SHOTS / "sections.jpg", quality=86, optimize=True)
+    if phone:  # five phone screens side by side
+        tiles = [Image.open(SHOTS / f"phone-{name}.jpg").resize((320, 692), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"phone-{name}.jpg").exists()]
+        sheet = Image.new("RGB", (320 * len(tiles), 692), (10, 12, 17))
+        for i, tile in enumerate(tiles):
+            sheet.paste(tile, (i * 320, 0))
+        sheet.save(SHOTS / "phone.jpg", quality=86, optimize=True)
+    else:
+        tiles = [Image.open(SHOTS / f"{name}.jpg").resize((800, 450), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"{name}.jpg").exists()]
+        rows = (len(tiles) + 1) // 2
+        sheet = Image.new("RGB", (1600, 450 * rows), (10, 12, 17))
+        for i, tile in enumerate(tiles):
+            sheet.paste(tile, ((i % 2) * 800 + (400 if i == len(tiles) - 1 and len(tiles) % 2 else 0), (i // 2) * 450))
+        sheet.save(SHOTS / "sections.jpg", quality=86, optimize=True)
     for e in errors:
         print(f"[shoot] ERROR {e[:400]}")
     print(f"[shoot] done, {len(errors)} error(s)")

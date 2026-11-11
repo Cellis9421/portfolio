@@ -1,10 +1,11 @@
 // Skills: a globe of every skill the projects use. Size is how many projects use it, lines join skills used together.
-import { THREE, stage, calm, clamp, lerp } from './stage.js';
+import { THREE, stage, glow, calm, clamp, lerp } from './stage.js';
 
 export const KIND = { language: '#5cc8ff', framework: '#7ef0c0', platform: '#ff8f3a', ai: '#b78cff', practice: '#ffd54a' };
 
 export default function skills(canvas, layer, list, links, ui) {
-  const s = stage(canvas, { fov: 35, bloom: [0.3, 0.6, 0.55] });
+  const s = stage(canvas, { fov: 35 });
+  const small = canvas.clientWidth < 620;
   const { scene, camera } = s;
   camera.position.set(0, 0, 15.5);
   const globe = new THREE.Group();
@@ -17,11 +18,12 @@ export default function skills(canvas, layer, list, links, ui) {
     const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(KIND[sk.kind]) });
     const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.055 + Math.min(sk.count, 9) * 0.022, 18, 12), mat);
     mesh.position.copy(at);
+    mesh.add(glow(KIND[sk.kind], 0.9 + Math.min(sk.count, 9) * 0.16, 0.5));
     globe.add(mesh);
     const el = document.createElement('button');
     el.className = 'skill';
     el.textContent = sk.name;
-    el.style.fontSize = `${12 + Math.min(sk.count, 8) * 1.5}px`;
+    el.style.fontSize = `${(12 + Math.min(sk.count, 8) * 1.5) * (small ? 0.8 : 1)}px`;
     el.style.setProperty('--hue', KIND[sk.kind]);
     layer.appendChild(el);
     return { sk, at, mesh, mat, el, near: new Set(), hue: new THREE.Color(KIND[sk.kind]) };
@@ -54,7 +56,8 @@ export default function skills(canvas, layer, list, links, ui) {
     nodes.forEach((nd, j) => {
       const state = i < 0 ? '' : j === i ? 'on' : nd.near.has(i) ? 'near' : 'far';
       nd.el.dataset.state = state;
-      nd.mat.color.copy(nd.hue).multiplyScalar(state === 'on' ? 1.7 : state === 'near' ? 1.15 : state === 'far' ? 0.3 : 0.9);
+      nd.mat.color.copy(nd.hue).multiplyScalar(state === 'on' ? 1.5 : state === 'near' ? 1.1 : state === 'far' ? 0.3 : 0.9);
+      nd.mesh.children[0].material.opacity = state === 'on' ? 0.95 : state === 'far' ? 0.12 : 0.5;
     });
   }
   function choose(i) {
@@ -80,7 +83,7 @@ export default function skills(canvas, layer, list, links, ui) {
   canvas.addEventListener('pointerup', () => { drag = null; });
 
   let shift = 0;
-  s.onSize((w, h) => { shift = w / h > 1.3 ? -2.3 : 0; globe.position.x = shift; globe.scale.setScalar(w / h > 1.3 ? 1 : 0.72); });
+  s.onSize((w, h) => { shift = w / h > 1.3 ? -2.3 : 0; globe.position.x = shift; globe.scale.setScalar(w / h > 1.3 ? 1 : Math.min(1, (w / h) * 0.92)); });
 
   const world = new THREE.Vector3();
   s.onTick((t, dt) => {
@@ -88,16 +91,19 @@ export default function skills(canvas, layer, list, links, ui) {
     else if (!drag && over < 0 && chosen < 0) yaw += dt * (calm ? 0.02 : 0.09);
     globe.rotation.set(pitch, yaw, 0);
     light(over >= 0 ? over : chosen);
-    for (const nd of nodes) {
+    for (const nd of nodes) {  // only touch the page for what changed: these writes are the cost of this scene
       world.copy(nd.at).applyEuler(globe.rotation);
-      const front = world.z / RAD;
+      const front = world.z / RAD, state = nd.el.dataset.state, lit = state === 'on' || state === 'near';
+      const show = lit || front > -0.2;
+      if (show !== nd.show) { nd.show = show; nd.el.style.display = show ? '' : 'none'; }
+      if (!show) continue;
       world.multiplyScalar(globe.scale.x).add(globe.position);
-      const p = s.project(world), state = nd.el.dataset.state;
-      const fade = state === 'on' || state === 'near' ? 1 : clamp(0.16 + (front + 0.25) * 0.9, 0.1, 1) * (state === 'far' ? 0.35 : 1);
-      nd.el.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -150%) scale(${(0.82 + clamp(front, -1, 1) * 0.18).toFixed(3)})`;
-      nd.el.style.opacity = fade.toFixed(2);
-      nd.el.style.zIndex = String(Math.round(front * 100) + 100);
-      nd.el.style.pointerEvents = front > -0.15 ? 'auto' : 'none';
+      const p = s.project(world);
+      nd.el.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -150%)`;
+      const fade = Math.round((lit ? 1 : clamp(0.16 + (front + 0.25) * 0.9, 0.1, 1) * (state === 'far' ? 0.35 : 1)) * 10) / 10;
+      if (fade !== nd.fade) { nd.fade = fade; nd.el.style.opacity = fade; }
+      const z = lit ? 300 : Math.round(front * 10) + 100;
+      if (z !== nd.z) { nd.z = z; nd.el.style.zIndex = z; }
     }
   });
   return { choose: (name) => choose(nodes.findIndex((nd) => nd.sk.name === name)) };

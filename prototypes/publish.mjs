@@ -10,19 +10,19 @@ const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, '..', 'public', 'preview');
 // Only what the page needs to run. Capture scripts, stills and build tools stay behind.
 const FILES = {
-  site: ['index.html', 'main.js', 'stage.js', 'hero.js', 'projects.js', 'skills.js', 'guides.js', 'data.json'],
-  'career-tree': ['index.html'],
+  site: ['index.html', 'main.js', 'stage.js', 'hero.js', 'projects.js', 'skills.js', 'guides.js', 'data.json', 'assets'],
+  'career-tree': ['index.html', 'assets'],
 };
 
 rmSync(out, { recursive: true, force: true });
 let count = 0;
 for (const [folder, files] of Object.entries(FILES)) {
   mkdirSync(join(out, folder), { recursive: true });
-  for (const file of files) { cpSync(join(here, folder, file), join(out, folder, file)); count++; }
+  for (const file of files) { cpSync(join(here, folder, file), join(out, folder, file), { recursive: true }); count++; }
 }
 writeFileSync(join(out, 'index.html'), `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">
 <meta http-equiv="refresh" content="0; url=site/"><title>Portfolio prototype</title></head>
 <body><p><a href="site/">Open the prototype</a></p></body></html>
 `);
-console.log(`[publish] ${count + 1} files written to public/preview/`);
+console.log(`[publish] ${count + 1} files and folders written to public/preview/`);

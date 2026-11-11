@@ -50,6 +50,11 @@ The sections are independent, so one can be swapped without touching the rest. W
 real, what is placeholder and what it still needs are in the
 [prototype's README](../prototypes/site/README.md).
 
+Owner, 2026-11-11, after opening it: make it super realistic, do not freeze the browser, and
+make it work on a phone. The tree and the shelf are now built from free photo scans, the
+page sizes itself to the machine, and the layout stacks on a phone. The measurements are in
+[Speed and phones](../prototypes/site/README.md#speed-and-phones).
+
 ## The bar, and the career tree
 
 Owner, 2026-11-11, after round two: a reference of one photoreal tree with a single slider
