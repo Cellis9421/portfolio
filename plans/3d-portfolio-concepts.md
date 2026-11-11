@@ -1,12 +1,14 @@
 # 3D portfolio: concepts
 
 Brainstorm for remaking calvinellis.io as a 3D experience. **The current direction is the
-career tree**, a working prototype in [../prototypes/career-tree/](../prototypes/career-tree/).
-Round two below is six other ways to show a lot of projects. Its pictures are rough live
+sectioned page**, a working prototype in [../prototypes/site/](../prototypes/site/): the
+current site's sections, each as its own 3D piece. The career tree is its work history
+section. Round two below is six other ways to show a lot of projects. Its pictures are rough live
 mockups in three.js, in [concept-mockups/](concept-mockups/). They show the idea, not the
 final art.
 
 - [The brief](#the-brief)
+- [The sectioned page](#the-sectioned-page)
 - [The bar, and the career tree](#the-bar-and-the-career-tree)
 - [The four jobs](#the-four-jobs)
 - [The six, side by side](#the-six-side-by-side)
@@ -27,6 +29,26 @@ Owner, 2026-11-11, after round one.
 - **A work history timeline** sits somewhere in it.
 - **It still answers two questions**: who is this, and what has he done.
 - **Original.** Round one toured a career, and none of the seven landed.
+
+## The sectioned page
+
+Owner, 2026-11-11, after the career tree: not the tree as the whole site. The current site
+has the right sections, and each one should be its own 3D piece.
+
+![About, projects, skills, work history and guides](../prototypes/site/shots/sections.jpg)
+
+| Section | What he asked for | What the prototype does |
+|---|---|---|
+| About | Decent as it is. Rework it to be more AI focused, and be creative with the social links | New copy that leads with agentic work. A particle swarm with the links in orbit; point at one and the swarm spells it |
+| Projects | The biggest part: a showcase for a lot of projects | A curved wall of project screens with the real screenshots, filters, and a card with the story and links |
+| Skills | He likes the section. Something creative in 3D | A globe of every skill, sized by use, joined where skills were used together. A skill filters the gallery |
+| Work history | Could be its own 3D experience | The career tree, with the years on a slider |
+| Guides and articles | A way to link them | Books on a shelf, with room for more |
+| Education and blog | Linked, in a lower capacity | Plain cards at the foot |
+
+The sections are independent, so one can be swapped without touching the rest. What is
+real, what is placeholder and what it still needs are in the
+[prototype's README](../prototypes/site/README.md).
 
 ## The bar, and the career tree
 

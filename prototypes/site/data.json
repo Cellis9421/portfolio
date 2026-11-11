@@ -1,0 +1,1750 @@
+{
+ "projects": [
+  {
+   "id": 0,
+   "title": "Enterprise Hub Platform",
+   "group": "Cybrary",
+   "description": "Next.js dashboard for team owners to manage users, assign learning, and view reports across multiple Cybrary products. Supports multi-tenant team/group hierarchies, role-based permissions, and persistent team selection. Tech: Next.js 15, TypeScript, Material-UI, TanStack Query.",
+   "tags": [
+    "Next.js",
+    "TypeScript",
+    "Material-UI",
+    "Multi-Tenancy",
+    "RBAC",
+    "Enterprise"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_dashboard_hub.png"
+  },
+  {
+   "id": 1,
+   "title": "Type-Safe API Client Generator",
+   "group": "Cybrary",
+   "description": "Automated TypeScript client generation from OpenAPI specs. Syncs backend microservice schemas to frontend types for end-to-end type safety. Includes JWT auth injection and team-scoped request patterns. Tech: OpenAPI, TypeScript, code generation tooling.",
+   "tags": [
+    "OpenAPI",
+    "TypeScript",
+    "Code Generation",
+    "Type Safety",
+    "Microservices"
+   ],
+   "view": null,
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 2,
+   "title": "Dynamic Form System",
+   "group": "Cybrary",
+   "description": "Form builder with 22+ field types: date/time pickers, file uploads with validation, ratings, multi-select chips. Uses JSON configs with Zod schemas for type-safe validation. Responsive, accessible (WCAG AA), 100% test coverage (65 tests). Tech: React Hook Form, Zod, TypeScript, MUI.",
+   "tags": [
+    "React Hook Form",
+    "Zod",
+    "TypeScript",
+    "Material-UI",
+    "Accessibility",
+    "Testing"
+   ],
+   "view": null,
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 3,
+   "title": "Multi-Tenancy",
+   "group": "Cybrary",
+   "description": "System for managing hierarchical organization and group selection in multi-tenant SaaS. Handles automatic team selection, localStorage persistence with validation, and team-scoped data fetching. Tech: React Context, TypeScript, TanStack Query.",
+   "tags": [
+    "React",
+    "Context API",
+    "Multi-Tenancy",
+    "TypeScript",
+    "SaaS Architecture"
+   ],
+   "view": null,
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 4,
+   "title": "User Checkout",
+   "group": "Cybrary",
+   "description": "Led migration of checkout and registration flows from Chargebee to Paddle payment platform. Implemented dual-flow support for authenticated and guest users, payment processing with subscription management, retention flows, and upgrade paths. Included building migration plans, test plans, and data-science event tracking for conversion analytics. Tech: React, Paddle SDK, TypeScript.",
+   "tags": [
+    "Paddle",
+    "Chargebee",
+    "React",
+    "SaaS"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_checkout.png"
+  },
+  {
+   "id": 5,
+   "title": "Immersive LX",
+   "group": "Cybrary",
+   "description": "Learning platform serving video lessons, text lessons, quizzes/assessments, and hands-on virtual labs for cybersecurity training. Supports free, paid, and enterprise users with configurable access levels and permissions. Includes progress tracking, bookmarking, completion certificates, and content recommendations. Tech: React, video player APIs, virtual lab integration.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "Virtual Labs"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_immersive.png"
+  },
+  {
+   "id": 6,
+   "title": "Enterprise Dashboards",
+   "group": "Cybrary",
+   "description": "Rebuilt enterprise dashboards that allowed users to manage their team, access their learning materials, and manage their account settings. Features highly configurable RBAC and license management.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "Reporting"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_dashboard.png"
+  },
+  {
+   "id": 7,
+   "title": "User Profiles",
+   "group": "Cybrary",
+   "description": "Built a user profile system that allowed users to manage their account settings and information such as name and profile image, toggle profile visibility, and share their progress and achievements with others.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "User Profiles"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_profile.png"
+  },
+  {
+   "id": 8,
+   "title": "Forums",
+   "group": "Cybrary",
+   "description": "Built a public and private forums system that allowed users to ask questions, share knowledge, and collaborate with others. The forums were built to serve free, paid, and teams users with different access levels and permissions. Authentication was shared with the main platform for better UX.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "Forums"
+   ],
+   "view": "https://forums.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_forums.png"
+  },
+  {
+   "id": 9,
+   "title": "Guided Onboarding",
+   "group": "Cybrary",
+   "description": "Built an in-app onboarding system that guided users through the platform, helped them set up their account, and showed them how to access their learning materials. The onboarding system was built to serve free and teams users, navigating them to relevant parts of the platform.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "Onboarding"
+   ],
+   "view": "https://app.cybrary.it",
+   "code": null,
+   "shot": "cybrary_onboarding.png"
+  },
+  {
+   "id": 10,
+   "title": "Sales Demos",
+   "group": "Cybrary",
+   "description": "Built an in-app sales demo system that empowered sales teams to show off the teams platform to potential customers. The sales demo system was built to showcase different access levels and permissions of a team, as well as reporting features and user management tools.",
+   "tags": [
+    "React",
+    "SaaS",
+    "Cybersecurity",
+    "Sales Demos"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_sales_demo.png"
+  },
+  {
+   "id": 11,
+   "title": "Demo Mocks (MSW)",
+   "group": "Cybrary",
+   "description": "Browser-only demo mocks using Mock Service Worker (MSW). Intercepts API calls and serves deterministic demo data while keeping type-safe API clients and TanStack Query hooks intact. Covers auth, roles, permissions, courses, and team management endpoints.",
+   "tags": [
+    "MSW",
+    "TypeScript",
+    "React",
+    "TanStack Query"
+   ],
+   "view": "https://app.cybrary.it/",
+   "code": null,
+   "shot": "cybrary_msw_demo.png"
+  },
+  {
+   "id": 12,
+   "title": "Marketing Website (Headless CMS)",
+   "group": "Cybrary",
+   "description": "Next.js marketing website powered by Contentful CMS with block-based architecture. 35+ reusable marketing blocks, dynamic content pages (courses, programs, instructors, blogs), automated type-safe Contentful integration. 90+ Lighthouse scores with ISR on Vercel. Tech: Next.js, Contentful, TypeScript, ISR.",
+   "tags": [
+    "Next.js",
+    "Contentful",
+    "TypeScript",
+    "Headless CMS",
+    "ISR",
+    "SEO"
+   ],
+   "view": "https://www.cybrary.it/",
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 13,
+   "title": "Contentful Automation Scripts",
+   "group": "Cybrary",
+   "description": "Suite of automation scripts syncing React components with Contentful CMS. Auto-generates TypeScript types from Contentful schemas, creates/updates block type entries with screenshots and documentation, maintains bidirectional sync between codebase and CMS. Eliminated 95% of manual Contentful configuration. Tech: Contentful API, TypeScript, automation.",
+   "tags": [
+    "Contentful",
+    "TypeScript",
+    "Code Generation",
+    "Automation",
+    "DevOps"
+   ],
+   "view": null,
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 14,
+   "title": "Webflow Migration (1000+ Pages)",
+   "group": "Cybrary",
+   "description": "Migration from Webflow to Next.js + Contentful. Built ETL scripts to convert Webflow HTML/CSV exports into Contentful rich text format. Handled asset migration (1000+ images), author linking, category mapping, and URL preservation. Automated blog import with deduplication and HTML-to-RichText conversion. Tech: ETL, Contentful, data transformation.",
+   "tags": [
+    "Migration",
+    "ETL",
+    "Contentful",
+    "Data Transformation",
+    "Automation"
+   ],
+   "view": null,
+   "code": null,
+   "shot": null
+  },
+  {
+   "id": 15,
+   "title": "E-commerce Website",
+   "group": "Stove & Grill Parts",
+   "description": "Built a custom e-commerce point-of-sale website on top of Shopify's CMS/Checkout. The system included a user funnel to reduce incorrect orders, product pages optimized for conversion, and resources to make informed purchasing decisions. The website was built to be fast, SEO performant, and easy to use for non-technical users.",
+   "tags": [
+    "Shopify",
+    "E-commerce",
+    "SSR",
+    "Liquid"
+   ],
+   "view": "https://pellet-stove-parts-4less.com/",
+   "code": null,
+   "shot": "sgpfl_homepage.png"
+  },
+  {
+   "id": 16,
+   "title": "Reporting Server",
+   "group": "Stove & Grill Parts",
+   "description": "Built a custom reporting server to pull data from Shopify, Finale Inventory, and several other third-party services. The system included multiple forms of export, including CSV/PDF via email, direct download, and writing directly to Google sheets. Handled user authentication, filtering, sorting, custom formulas, and more. Hosted on GCP using cloud run and cloud scheduler.",
+   "tags": [
+    "Shopify",
+    "Finale Inventory",
+    "E-commerce",
+    "Reporting",
+    "GCP",
+    "API",
+    "Google Sheets"
+   ],
+   "view": null,
+   "code": null,
+   "shot": "sgpfl_ac2_reports.png"
+  },
+  {
+   "id": 17,
+   "title": "Diagnostics Server",
+   "group": "Stove & Grill Parts",
+   "description": "Built a custom diagnostics server to monitor the health of our e-commerce catalog. The system included monitoring of product prices, inventory levels, and order statuses. The system was built to be fast, reliable, and issues were surfaced in a way that was easy fix for end users. Hosted on GCP using cloud run and cloud scheduler.",
+   "tags": [
+    "Shopify",
+    "Finale Inventory",
+    "E-commerce",
+    "Diagnostics",
+    "GCP",
+    "API"
+   ],
+   "view": null,
+   "code": null,
+   "shot": "sgpfl_ac2_diagnostics.png"
+  },
+  {
+   "id": 18,
+   "title": "CMS",
+   "group": "Stove & Grill Parts",
+   "description": "Built a content management system to extend our existing product catalog(s) from Shopify and Finale Inventory in custom ways. The system included a product editor, product list, and product detail pages. It performed basic CRUD operations on data from multiple sources and was built to be fast, reliable, and easy to use for non-technical users.",
+   "tags": [
+    "Shopify",
+    "Finale Inventory",
+    "E-commerce",
+    "CMS"
+   ],
+   "view": null,
+   "code": null,
+   "shot": "sgpfl_ac2_app.png"
+  },
+  {
+   "id": 19,
+   "title": "Accessibility Compliance",
+   "group": "Stove & Grill Parts",
+   "description": "Lead the effort to make our e-commerce platform WCAG 2.2 AA compliant. This included a full audit of the website, a plan to fix issues, and a plan to maintain compliance moving forward. All websites should be accessible to all users, including those with disabilities. Used WAVE and Lighthouse to audit the website.",
+   "tags": [
+    "Shopify",
+    "E-commerce",
+    "WCAG 2.2 AA",
+    "Accessibility"
+   ],
+   "view": "https://pellet-stove-parts-4less.com/",
+   "code": null,
+   "shot": "sgpfl_homepage_wave.png"
+  },
+  {
+   "id": 20,
+   "title": "Label Generation Server",
+   "group": "Stove & Grill Parts",
+   "description": "Created an internal custom label generation server to print shelf labels for our warehouse. The system included a web interface to select products, print labels, and manage label templates. The system built labels to a PDF and sent print jobs to a print node client running on the respective printers machine. Hosted on GCP using cloud run.",
+   "tags": [
+    "Shopify",
+    "Finale Inventory",
+    "E-commerce",
+    "Label Generation",
+    "GCP",
+    "API"
+   ],
+   "view": null,
+   "code": null,
+   "shot": "sgpfl_label_pdf.png"
+  },
+  {
+   "id": 21,
+   "title": "My Portfolio",
+   "group": "Personal",
+   "description": "This website! Built with Next.js, TailwindCSS, and TypeScript. Exported as a static site and hosted on Github Pages. The site is built to be fast, mobile-first, open-source, and easily maintainable meaning a heavy focus on documentation and minimal dependencies.",
+   "tags": [
+    "Next.js",
+    "TailwindCSS",
+    "TypeScript",
+    "Static Site",
+    "Open Source"
+   ],
+   "view": "https://calvinellis.io",
+   "code": "https://github.com/Cellis9421/portfolio",
+   "shot": "portfolio.png"
+  },
+  {
+   "id": 22,
+   "title": "Discord AI Bot",
+   "group": "Personal",
+   "description": "Created a discord bot to do various things with AI. The bot could generate text, images, and more. It was a good project to learn about AI text generation and how to integrate it into a discord bot. The bot was used in a few small servers and was a fun project to work on.",
+   "tags": [
+    "Discord",
+    "AI",
+    "Bot",
+    "Python",
+    "OpenAI"
+   ],
+   "view": null,
+   "code": "https://github.com/Cellis9421/discord-ai-bot",
+   "shot": "discord_ai_bot.png"
+  },
+  {
+   "id": 23,
+   "title": "pAInt it",
+   "group": "Personal",
+   "description": "Created a web app to generate art using AI. The app could generate art from text. It was a fun project to learn about AI image generation and how to integrate it into a web app. The app was used by a few friends and was a fun project to work on.",
+   "tags": [
+    "AI",
+    "OpenAI",
+    "React",
+    "Next.js",
+    "DALL-E"
+   ],
+   "view": null,
+   "code": "https://github.com/Cellis9421/paint-it",
+   "shot": "paint_it.png"
+  },
+  {
+   "id": 24,
+   "title": "Process Manager",
+   "group": "Personal",
+   "description": "Created a process manager to manage long-running processes on a system. The python script starts processes and monitors them for crashes, restarting them as needed. The system was built to be fast, reliable, and easy to use for non-technical users.",
+   "tags": [
+    "Python",
+    "Process Manager",
+    "System Administration",
+    "CLI"
+   ],
+   "view": null,
+   "code": "https://github.com/Cellis9421/HydraMBLauncher/tree/master",
+   "shot": "process_manager.png"
+  },
+  {
+   "id": 25,
+   "title": "Website Builder",
+   "group": "Personal",
+   "description": "Created a php website builder to generate static websites from a simple JSON configuration. As one of my first projects in PHP, it was a great learning experience and allowed me to build a website for a friend in a fraction of the time it would have taken to build by hand. (That was it's only user)",
+   "tags": [
+    "PHP",
+    "Website Builder",
+    "Static Site"
+   ],
+   "view": null,
+   "code": "https://github.com/Cellis9421/HydraMBLauncher/tree/master",
+   "shot": "website_builder.png"
+  }
+ ],
+ "skills": [
+  {
+   "name": "Next.js",
+   "count": 4,
+   "kind": "framework"
+  },
+  {
+   "name": "TypeScript",
+   "count": 8,
+   "kind": "language"
+  },
+  {
+   "name": "Material-UI",
+   "count": 2,
+   "kind": "framework"
+  },
+  {
+   "name": "Multi-Tenancy",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "RBAC",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Enterprise",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "OpenAPI",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "Code Generation",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "Type Safety",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Microservices",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "React Hook Form",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "Zod",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "Accessibility",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "Testing",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "React",
+   "count": 10,
+   "kind": "framework"
+  },
+  {
+   "name": "Context API",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "SaaS Architecture",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Paddle",
+   "count": 1,
+   "kind": "platform"
+  },
+  {
+   "name": "Chargebee",
+   "count": 1,
+   "kind": "platform"
+  },
+  {
+   "name": "SaaS",
+   "count": 7,
+   "kind": "practice"
+  },
+  {
+   "name": "Cybersecurity",
+   "count": 6,
+   "kind": "practice"
+  },
+  {
+   "name": "Virtual Labs",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Reporting",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "User Profiles",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Forums",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Onboarding",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Sales Demos",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "MSW",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "TanStack Query",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "Contentful",
+   "count": 3,
+   "kind": "platform"
+  },
+  {
+   "name": "Headless CMS",
+   "count": 1,
+   "kind": "platform"
+  },
+  {
+   "name": "ISR",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "SEO",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Automation",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "DevOps",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Migration",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "ETL",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Data Transformation",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Shopify",
+   "count": 6,
+   "kind": "platform"
+  },
+  {
+   "name": "E-commerce",
+   "count": 6,
+   "kind": "practice"
+  },
+  {
+   "name": "SSR",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Liquid",
+   "count": 1,
+   "kind": "language"
+  },
+  {
+   "name": "Finale Inventory",
+   "count": 4,
+   "kind": "platform"
+  },
+  {
+   "name": "GCP",
+   "count": 3,
+   "kind": "platform"
+  },
+  {
+   "name": "API",
+   "count": 3,
+   "kind": "platform"
+  },
+  {
+   "name": "Google Sheets",
+   "count": 1,
+   "kind": "platform"
+  },
+  {
+   "name": "Diagnostics",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "CMS",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "WCAG 2.2 AA",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Label Generation",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "TailwindCSS",
+   "count": 1,
+   "kind": "framework"
+  },
+  {
+   "name": "Static Site",
+   "count": 2,
+   "kind": "practice"
+  },
+  {
+   "name": "Open Source",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "Discord",
+   "count": 1,
+   "kind": "platform"
+  },
+  {
+   "name": "AI",
+   "count": 2,
+   "kind": "ai"
+  },
+  {
+   "name": "Bot",
+   "count": 1,
+   "kind": "ai"
+  },
+  {
+   "name": "Python",
+   "count": 2,
+   "kind": "language"
+  },
+  {
+   "name": "OpenAI",
+   "count": 2,
+   "kind": "ai"
+  },
+  {
+   "name": "DALL-E",
+   "count": 1,
+   "kind": "ai"
+  },
+  {
+   "name": "Process Manager",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "System Administration",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "CLI",
+   "count": 1,
+   "kind": "practice"
+  },
+  {
+   "name": "PHP",
+   "count": 1,
+   "kind": "language"
+  },
+  {
+   "name": "Website Builder",
+   "count": 1,
+   "kind": "practice"
+  }
+ ],
+ "links": [
+  [
+   0,
+   1,
+   3
+  ],
+  [
+   0,
+   2,
+   1
+  ],
+  [
+   0,
+   3,
+   1
+  ],
+  [
+   0,
+   4,
+   1
+  ],
+  [
+   0,
+   5,
+   1
+  ],
+  [
+   1,
+   2,
+   2
+  ],
+  [
+   1,
+   3,
+   2
+  ],
+  [
+   1,
+   4,
+   1
+  ],
+  [
+   1,
+   5,
+   1
+  ],
+  [
+   2,
+   3,
+   1
+  ],
+  [
+   2,
+   4,
+   1
+  ],
+  [
+   2,
+   5,
+   1
+  ],
+  [
+   3,
+   4,
+   1
+  ],
+  [
+   3,
+   5,
+   1
+  ],
+  [
+   4,
+   5,
+   1
+  ],
+  [
+   1,
+   6,
+   1
+  ],
+  [
+   6,
+   7,
+   1
+  ],
+  [
+   6,
+   8,
+   1
+  ],
+  [
+   6,
+   9,
+   1
+  ],
+  [
+   1,
+   7,
+   2
+  ],
+  [
+   1,
+   8,
+   1
+  ],
+  [
+   1,
+   9,
+   1
+  ],
+  [
+   7,
+   8,
+   1
+  ],
+  [
+   7,
+   9,
+   1
+  ],
+  [
+   8,
+   9,
+   1
+  ],
+  [
+   10,
+   11,
+   1
+  ],
+  [
+   1,
+   10,
+   1
+  ],
+  [
+   2,
+   10,
+   1
+  ],
+  [
+   10,
+   12,
+   1
+  ],
+  [
+   10,
+   13,
+   1
+  ],
+  [
+   1,
+   11,
+   1
+  ],
+  [
+   2,
+   11,
+   1
+  ],
+  [
+   11,
+   12,
+   1
+  ],
+  [
+   11,
+   13,
+   1
+  ],
+  [
+   1,
+   12,
+   1
+  ],
+  [
+   1,
+   13,
+   1
+  ],
+  [
+   2,
+   12,
+   1
+  ],
+  [
+   2,
+   13,
+   1
+  ],
+  [
+   12,
+   13,
+   1
+  ],
+  [
+   14,
+   15,
+   1
+  ],
+  [
+   3,
+   14,
+   1
+  ],
+  [
+   1,
+   14,
+   2
+  ],
+  [
+   14,
+   16,
+   1
+  ],
+  [
+   3,
+   15,
+   1
+  ],
+  [
+   1,
+   15,
+   1
+  ],
+  [
+   15,
+   16,
+   1
+  ],
+  [
+   3,
+   16,
+   1
+  ],
+  [
+   1,
+   16,
+   1
+  ],
+  [
+   17,
+   18,
+   1
+  ],
+  [
+   14,
+   17,
+   1
+  ],
+  [
+   17,
+   19,
+   1
+  ],
+  [
+   14,
+   18,
+   1
+  ],
+  [
+   18,
+   19,
+   1
+  ],
+  [
+   14,
+   19,
+   7
+  ],
+  [
+   14,
+   20,
+   6
+  ],
+  [
+   14,
+   21,
+   1
+  ],
+  [
+   19,
+   20,
+   6
+  ],
+  [
+   19,
+   21,
+   1
+  ],
+  [
+   20,
+   21,
+   1
+  ],
+  [
+   14,
+   22,
+   1
+  ],
+  [
+   19,
+   22,
+   1
+  ],
+  [
+   20,
+   22,
+   1
+  ],
+  [
+   14,
+   23,
+   1
+  ],
+  [
+   19,
+   23,
+   1
+  ],
+  [
+   20,
+   23,
+   1
+  ],
+  [
+   14,
+   24,
+   1
+  ],
+  [
+   19,
+   24,
+   1
+  ],
+  [
+   20,
+   24,
+   1
+  ],
+  [
+   14,
+   25,
+   1
+  ],
+  [
+   19,
+   25,
+   1
+  ],
+  [
+   20,
+   25,
+   1
+  ],
+  [
+   14,
+   26,
+   1
+  ],
+  [
+   19,
+   26,
+   1
+  ],
+  [
+   20,
+   26,
+   1
+  ],
+  [
+   1,
+   27,
+   1
+  ],
+  [
+   14,
+   27,
+   1
+  ],
+  [
+   27,
+   28,
+   1
+  ],
+  [
+   1,
+   28,
+   1
+  ],
+  [
+   14,
+   28,
+   1
+  ],
+  [
+   0,
+   29,
+   1
+  ],
+  [
+   0,
+   30,
+   1
+  ],
+  [
+   0,
+   31,
+   1
+  ],
+  [
+   0,
+   32,
+   1
+  ],
+  [
+   1,
+   29,
+   2
+  ],
+  [
+   29,
+   30,
+   1
+  ],
+  [
+   29,
+   31,
+   1
+  ],
+  [
+   29,
+   32,
+   1
+  ],
+  [
+   1,
+   30,
+   1
+  ],
+  [
+   1,
+   31,
+   1
+  ],
+  [
+   1,
+   32,
+   1
+  ],
+  [
+   30,
+   31,
+   1
+  ],
+  [
+   30,
+   32,
+   1
+  ],
+  [
+   31,
+   32,
+   1
+  ],
+  [
+   7,
+   29,
+   1
+  ],
+  [
+   29,
+   33,
+   2
+  ],
+  [
+   29,
+   34,
+   1
+  ],
+  [
+   1,
+   33,
+   1
+  ],
+  [
+   1,
+   34,
+   1
+  ],
+  [
+   7,
+   33,
+   1
+  ],
+  [
+   7,
+   34,
+   1
+  ],
+  [
+   33,
+   34,
+   1
+  ],
+  [
+   35,
+   36,
+   1
+  ],
+  [
+   29,
+   35,
+   1
+  ],
+  [
+   35,
+   37,
+   1
+  ],
+  [
+   33,
+   35,
+   1
+  ],
+  [
+   29,
+   36,
+   1
+  ],
+  [
+   36,
+   37,
+   1
+  ],
+  [
+   33,
+   36,
+   1
+  ],
+  [
+   29,
+   37,
+   1
+  ],
+  [
+   33,
+   37,
+   1
+  ],
+  [
+   38,
+   39,
+   6
+  ],
+  [
+   38,
+   40,
+   1
+  ],
+  [
+   38,
+   41,
+   1
+  ],
+  [
+   39,
+   40,
+   1
+  ],
+  [
+   39,
+   41,
+   1
+  ],
+  [
+   40,
+   41,
+   1
+  ],
+  [
+   38,
+   42,
+   4
+  ],
+  [
+   22,
+   38,
+   1
+  ],
+  [
+   38,
+   43,
+   3
+  ],
+  [
+   38,
+   44,
+   3
+  ],
+  [
+   38,
+   45,
+   1
+  ],
+  [
+   39,
+   42,
+   4
+  ],
+  [
+   22,
+   42,
+   1
+  ],
+  [
+   42,
+   43,
+   3
+  ],
+  [
+   42,
+   44,
+   3
+  ],
+  [
+   42,
+   45,
+   1
+  ],
+  [
+   22,
+   39,
+   1
+  ],
+  [
+   39,
+   43,
+   3
+  ],
+  [
+   39,
+   44,
+   3
+  ],
+  [
+   39,
+   45,
+   1
+  ],
+  [
+   22,
+   43,
+   1
+  ],
+  [
+   22,
+   44,
+   1
+  ],
+  [
+   22,
+   45,
+   1
+  ],
+  [
+   43,
+   44,
+   3
+  ],
+  [
+   43,
+   45,
+   1
+  ],
+  [
+   44,
+   45,
+   1
+  ],
+  [
+   38,
+   46,
+   1
+  ],
+  [
+   42,
+   46,
+   1
+  ],
+  [
+   39,
+   46,
+   1
+  ],
+  [
+   43,
+   46,
+   1
+  ],
+  [
+   44,
+   46,
+   1
+  ],
+  [
+   38,
+   47,
+   1
+  ],
+  [
+   42,
+   47,
+   1
+  ],
+  [
+   39,
+   47,
+   1
+  ],
+  [
+   38,
+   48,
+   1
+  ],
+  [
+   12,
+   38,
+   1
+  ],
+  [
+   39,
+   48,
+   1
+  ],
+  [
+   12,
+   39,
+   1
+  ],
+  [
+   12,
+   48,
+   1
+  ],
+  [
+   38,
+   49,
+   1
+  ],
+  [
+   42,
+   49,
+   1
+  ],
+  [
+   39,
+   49,
+   1
+  ],
+  [
+   43,
+   49,
+   1
+  ],
+  [
+   44,
+   49,
+   1
+  ],
+  [
+   0,
+   50,
+   1
+  ],
+  [
+   0,
+   51,
+   1
+  ],
+  [
+   0,
+   52,
+   1
+  ],
+  [
+   1,
+   50,
+   1
+  ],
+  [
+   50,
+   51,
+   1
+  ],
+  [
+   50,
+   52,
+   1
+  ],
+  [
+   1,
+   51,
+   1
+  ],
+  [
+   1,
+   52,
+   1
+  ],
+  [
+   51,
+   52,
+   1
+  ],
+  [
+   53,
+   54,
+   1
+  ],
+  [
+   53,
+   55,
+   1
+  ],
+  [
+   53,
+   56,
+   1
+  ],
+  [
+   53,
+   57,
+   1
+  ],
+  [
+   54,
+   55,
+   1
+  ],
+  [
+   54,
+   56,
+   1
+  ],
+  [
+   54,
+   57,
+   2
+  ],
+  [
+   55,
+   56,
+   1
+  ],
+  [
+   55,
+   57,
+   1
+  ],
+  [
+   56,
+   57,
+   1
+  ],
+  [
+   14,
+   54,
+   1
+  ],
+  [
+   0,
+   54,
+   1
+  ],
+  [
+   54,
+   58,
+   1
+  ],
+  [
+   14,
+   57,
+   1
+  ],
+  [
+   0,
+   57,
+   1
+  ],
+  [
+   57,
+   58,
+   1
+  ],
+  [
+   0,
+   14,
+   1
+  ],
+  [
+   14,
+   58,
+   1
+  ],
+  [
+   0,
+   58,
+   1
+  ],
+  [
+   56,
+   59,
+   1
+  ],
+  [
+   56,
+   60,
+   1
+  ],
+  [
+   56,
+   61,
+   1
+  ],
+  [
+   59,
+   60,
+   1
+  ],
+  [
+   59,
+   61,
+   1
+  ],
+  [
+   60,
+   61,
+   1
+  ],
+  [
+   62,
+   63,
+   1
+  ],
+  [
+   51,
+   62,
+   1
+  ],
+  [
+   51,
+   63,
+   1
+  ]
+ ],
+ "work": [
+  {
+   "company": "Cybrary (Cybersecurity Education-as-a-Service)",
+   "title": "Principal Software Engineer",
+   "dates": "September 2022 → February 2026",
+   "location": "Remote | Washington D.C.",
+   "bullets": [
+    "Rewrote marketing website (Next.js, TS, ISR/SSR, Vercel, Tailwind)",
+    "Rewrote core application (Next.js, TS, Vercel, MaterialUI)",
+    "Multi-tenancy, Configurable RBAC, MSW Demos, Cursor rules",
+    "Organized and led company-wide 'AI Enablement' training sessions",
+    "Documented hundreds of workflows and systems, resulting in faster onboarding and better agentic understanding of our code (Confluence, Miro, READMEs)",
+    "Managed/Maintained a cloud-based complex virtual lab environment (CLAB)",
+    "Orchestrated cross-team projects - often acted as a TPM (JIRA, Trello)",
+    "Trained engineers on team/org with 1:1 agentic coding sessions, helping them find where AI can improve DX and velocity",
+    "Mentored interns, helping them complete required work and personal goals"
+   ]
+  },
+  {
+   "company": "Stove & Grill Parts for Less (E-commerce)",
+   "title": "Lead Software Engineer",
+   "dates": "January 2017 → September 2022",
+   "location": "Remote | Cataumet, MA",
+   "bullets": [
+    "Lead engineering strategy/team, growing revenue from $1M ARR → $10M ARR",
+    "Rewrote core e-commerce site (Shopify CMS, Liquid, JS) with WCAG 2.2 AA accessibility and better IA / design for the industry",
+    "Built sync services to move our catalog, inventory, and sales data between sales channels (Shopify, Amazon, Walmart, eBay, Etsy, Google)",
+    "Built a report / diagnostic server to provide critical insights into the business",
+    "Optimized third-party tools, significantly enhancing the security, reliability, and cost-efficiency. (Fulfillment, IMS, Marketing)",
+    "Implemented CI/CD pipelines for automated deployments of all services and sites (GitHub Actions)",
+    "Helped orchestrate engineering, marketing, and customer success efforts.",
+    "Mentored engineers of all skill levels through rapid growth."
+   ]
+  },
+  {
+   "company": "Independent (SMB Websites / Systems)",
+   "title": "Contract Software Engineer",
+   "dates": "May 2012 → January 2017",
+   "location": "Plymouth, MA",
+   "bullets": [
+    "Built custom CMS platforms and marketing automation tools for small businesses, streamlining internal reporting, task management, and customer engagement.",
+    "Built web applications to improve operational efficiency, integrating CRMs and analytics dashboards based on client-specific needs.",
+    "Worked with clients to find technologies and tools that cost-effectively empower small businesses."
+   ]
+  },
+  {
+   "company": "Independent (Game Bot Development)",
+   "title": "Game Bot Developer",
+   "dates": "January 2009 → May 2012",
+   "bullets": [
+    "Built AI bots in Java that automated gameplay and completed complex tasks across multiple video games.",
+    "Used reflection and injection techniques to run scripts on top of or inside native game clients.",
+    "Designed workflows that consumed external APIs to drive bot behavior and in-game actions.",
+    "Developed complex scripts in Java to orchestrate multi-step tasks and objectives within game environments.",
+    "Focused on Java-based tooling, API integration, and script orchestration for automated in-game completion of varied tasks."
+   ]
+  }
+ ]
+}

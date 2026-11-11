@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calvin Ellis · portfolio prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --bg: #0a0c11; --panel: rgba(18, 23, 34, .86); --line: rgba(255, 255, 255, .14); --ink: #f4f6fb; --soft: #a3aec4; --blue: #5cc8ff; --violet: #b78cff; --gold: #ffd54a; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 56px; }
+  body { margin: 0; padding-top: 56px; background: var(--bg); color: var(--ink); font: 16px/1.55 Inter, "Segoe UI", system-ui, sans-serif; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-weight: 600; letter-spacing: -.02em; margin: 0; }
+  h2 { font-size: 44px; line-height: 1.05; }
+  h3 { margin: 0; font-size: 22px; line-height: 1.2; }
+  .kicker { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  .quiet { color: var(--soft); font-size: 14px; }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .btn:hover { background: rgba(255, 255, 255, .14); }
+  .btn.main { background: var(--ink); color: #0a0c11; border-color: var(--ink); }
+  .btn.main:hover { background: #fff; }
+
+  nav { position: fixed; inset: 0 0 auto 0; z-index: 20; height: 56px; display: flex; align-items: center; gap: 6px; padding: 0 28px; background: rgba(10, 12, 17, .72); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  nav .me { font: 600 20px Georgia, serif; text-decoration: none; margin-right: auto; }
+  nav a.tab { text-decoration: none; font-size: 14px; color: var(--soft); padding: 8px 12px; border-radius: 999px; }
+  nav a.tab:hover, nav a.tab.on { color: var(--ink); background: rgba(255, 255, 255, .08); }
+
+  main > section { position: relative; min-height: calc(100vh - 56px); overflow: hidden; border-bottom: 1px solid var(--line); }
+  section > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+  .head { position: absolute; left: 56px; top: 40px; z-index: 3; max-width: 460px; pointer-events: none; }
+  .head p { margin: 12px 0 0; color: var(--soft); }
+
+  /* about */
+  #about .copy { position: relative; z-index: 3; max-width: 560px; padding: 96px 0 80px 56px; pointer-events: none; }
+  #about .copy > * { pointer-events: auto; }
+  #about h1 { font-size: 84px; line-height: .98; }
+  #about .lead { font-size: 25px; line-height: 1.3; margin: 22px 0 0; }
+  #about .copy p { color: var(--soft); margin: 16px 0 0; }
+  #about .lead { color: var(--ink) !important; }
+  #about .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; font-size: 13px; }
+  #about .facts li { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .04); }
+  #about .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .moons { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+  .moon { position: absolute; left: 0; top: 0; pointer-events: auto; text-decoration: none; font-weight: 700; font-size: 15px; padding: 9px 16px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); white-space: nowrap; will-change: transform; }
+  .moon:hover, .moon:focus-visible { background: var(--ink); color: #0a0c11; }
+  .moon small { font-weight: 500; opacity: .7; margin-left: 6px; }
+  #about .hint { position: absolute; right: 56px; bottom: 34px; z-index: 3; }
+
+  /* projects */
+  #projects .bar { position: absolute; left: 56px; right: 56px; top: 40px; z-index: 3; display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; pointer-events: none; }
+  #projects .bar > * { pointer-events: auto; }
+  #projects .count { color: var(--soft); margin: 0 0 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+  .chip { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .05); font-size: 14px; font-weight: 600; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: #0a0c11; border-color: var(--ink); }
+  .chip.skill-chip { border-color: var(--gold); color: var(--gold); }
+  #projects .turn { position: absolute; top: 50%; z-index: 3; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); font-size: 22px; }
+  #projects .prev { left: 20px; } #projects .next { right: 20px; }
+  #projects .hint { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 3; }
+  .detail { position: absolute; right: 84px; top: 132px; z-index: 4; width: 400px; max-height: calc(100vh - 270px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--hue, var(--line)); border-radius: 18px; backdrop-filter: blur(14px); }
+  .detail .kicker { color: var(--hue); }
+  .detail p { color: #cfd6e4; font-size: 15px; margin: 12px 0 0; }
+  .detail .x { position: absolute; right: 12px; top: 10px; width: 40px; height: 40px; border: 0; background: none; font-size: 22px; border-radius: 50%; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .tag { font-size: 12px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: none; }
+  .tag:hover { border-color: var(--gold); color: var(--gold); }
+  .go { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; align-items: center; }
+
+  /* skills */
+  .labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  .skill { position: absolute; left: 0; top: 0; pointer-events: auto; background: none; border: 0; padding: 2px 6px; font-weight: 600; white-space: nowrap; text-shadow: 0 1px 8px #000; will-change: transform, opacity; }
+  .skill:hover, .skill[data-state="on"] { color: var(--hue); }
+  .skill[data-state="near"] { color: #fff; }
+  #skills .panel { position: absolute; right: 56px; top: 120px; z-index: 3; width: 380px; max-height: calc(100vh - 240px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
+  #skills .panel p { color: #cfd6e4; font-size: 15px; margin: 12px 0 0; }
+  .legend, .used { list-style: none; padding: 0; margin: 14px 0 0; font-size: 14px; }
+  .legend li, .used button { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+  .legend span, .used span { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .used button { width: 100%; background: none; border: 0; text-align: left; padding: 7px 8px; border-radius: 8px; }
+  .used button:hover { background: rgba(255, 255, 255, .1); }
+  #skills #see { margin-top: 16px; }
+
+  /* work */
+  #work { height: calc(100vh - 56px); }
+  #work iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #cfdde2; }
+  #work .head { color: #14211a; top: 36px; }
+  #work .head p { color: rgba(20, 33, 26, .8); }
+  #work .head .kicker { color: #14211a; }
+
+  /* writing */
+  #writing .reading { position: absolute; right: 56px; top: 130px; z-index: 3; width: 400px; display: grid; gap: 12px; }
+  .read { display: grid; gap: 4px; padding: 18px 20px; text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+  .read b { font-size: 18px; line-height: 1.25; }
+  .read span { color: var(--soft); font-size: 14px; }
+  .read .open { color: var(--ink); font-weight: 700; margin-top: 6px; }
+  .read:hover, .read.on { border-color: var(--ink); }
+
+  /* the rest */
+  #more { min-height: 0; padding: 72px 56px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  #more .box { padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
+  #more p { margin: 6px 0 0; color: var(--soft); font-size: 14px; }
+  #more ul { margin: 10px 0 0; padding-left: 18px; color: var(--soft); font-size: 14px; }
+  footer { padding: 26px 56px 40px; color: var(--soft); font-size: 13px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 980px) {
+    .head, #projects .bar { left: 20px; right: 20px; }
+    #about .copy { padding: 110px 20px 320px; } #about h1 { font-size: 54px; }
+    .detail, #skills .panel, #writing .reading { position: relative; right: auto; top: auto; width: auto; margin: 62vh 16px 16px; }
+    #more { grid-template-columns: 1fr; padding: 40px 20px; }
+    nav a.tab { display: none; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<nav aria-label="Sections">
+  <a class="me" href="#about">Calvin Ellis</a>
+  <a class="tab" href="#about">About</a>
+  <a class="tab" href="#projects">Projects</a>
+  <a class="tab" href="#skills">Skills</a>
+  <a class="tab" href="#work">Work history</a>
+  <a class="tab" href="#writing">Guides</a>
+  <a class="btn main" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener" style="min-height:36px;margin-left:10px">Get in touch</a>
+</nav>
+
+<main>
+  <section id="about" aria-labelledby="about-h">
+    <canvas aria-hidden="true"></canvas>
+    <div class="copy">
+      <p class="kicker">Principal software engineer · AI enablement</p>
+      <h1 id="about-h">Calvin Ellis</h1>
+      <p class="lead">I build software with AI agents, and I teach engineering teams to do the same.</p>
+      <p>Fifteen years across the stack, from cybersecurity education at Cybrary to a tenfold e-commerce business at Stove &amp; Grill Parts For Less. Today the work is agentic: designing the workflows, the guardrails and the documentation that let AI agents ship real software.</p>
+      <p>I have run company-wide AI enablement training, coached engineers one to one on agentic coding, and documented hundreds of systems so that people and agents can both understand them.</p>
+      <ul class="facts"><li>15+ years</li><li>Front end, back end, DevOps</li><li>Greater Boston · open to opportunities</li></ul>
+      <div class="cta"><a class="btn main" href="#projects">See the projects ↓</a><a class="btn" href="#writing">Read the agentic guide</a></div>
+    </div>
+    <div class="moons">
+      <a class="moon" data-word="GitHub" href="https://github.com/Cellis9421" target="_blank" rel="noopener">GitHub<small>cellis9421</small></a>
+      <a class="moon" data-word="LinkedIn" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="moon" data-word="Blog" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog</a>
+      <a class="moon" data-word="Guide" href="#writing">Agentic guide</a>
+    </div>
+    <p class="hint quiet">Point at a link and the swarm spells it.</p>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-h">
+    <canvas tabindex="0" aria-label="Project gallery. Left and right arrows browse, Enter opens."></canvas>
+    <div class="bar"><div><h2 id="projects-h">Projects</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter projects"></div></div>
+    <button class="turn prev" aria-label="Previous projects">‹</button>
+    <button class="turn next" aria-label="Next projects">›</button>
+    <article class="detail" aria-live="polite" hidden></article>
+    <p class="hint quiet">Drag to browse · click a project to open it</p>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-h">
+    <canvas aria-hidden="true"></canvas>
+    <div class="labels"></div>
+    <div class="head"><h2 id="skills-h">Skills</h2><p>What the projects were built with.</p></div>
+    <aside class="panel" aria-live="polite"></aside>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <iframe title="Work history: a tree that grows through the years" data-src="../career-tree/index.html?embed=1" loading="lazy"></iframe>
+    <div class="head"><h2 id="work-h">Work history</h2><p>Drag the years. Each job is a side of the tree.</p></div>
+  </section>
+
+  <section id="writing" aria-labelledby="writing-h">
+    <canvas aria-hidden="true"></canvas>
+    <div class="head"><h2 id="writing-h">Guides and articles</h2><p>Longer pieces on working with AI. The shelf has room for more.</p></div>
+    <div class="reading"></div>
+  </section>
+
+  <section id="more" aria-label="Education and blog">
+    <div class="box"><p class="kicker">Education</p><h3>Quincy College</h3><p>Quincy, MA</p><ul><li>Computer Science</li><li>Business Administration</li></ul></div>
+    <div class="box"><p class="kicker">Education</p><h3>Plymouth North High</h3><p>Plymouth, MA</p><ul><li>Computer Science</li><li>Technical Marketing Certificate</li></ul></div>
+    <div class="box"><p class="kicker">Blog</p><h3>Notes as I go</h3><p>Thoughts on engineering, AI, and building in public.</p><p style="margin-top:14px"><a class="btn" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Visit the blog ↗</a></p></div>
+  </section>
+</main>
+<footer>Prototype. Not the live site.</footer>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
