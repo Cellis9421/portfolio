@@ -25,10 +25,11 @@ SIZE = (1600, 900)
 # section id, file name, what to do before the picture
 SECTIONS = [
     ("about", "01-about", None),
-    ("projects", "02-projects", "window.__demo.pick(9)"),
-    ("skills", "03-skills", "window.__demo.skill('TypeScript')"),
-    ("work", "04-work", None),
-    ("writing", "05-guides", "window.__demo.book(0)"),
+    ("shipped", "02-shipped", "window.__demo.pick(2)"),
+    ("how", "03-how", "window.__demo.cap('test')"),
+    ("agents", "04-agents", None),
+    ("history", "05-history", "window.__demo.release(2)"),
+    ("writing", "06-guides", "window.__demo.book(0)"),
 ]
 
 
@@ -62,14 +63,14 @@ def main(only: list[str]) -> int:
         for sid, name, act in SECTIONS:
             if only and sid not in only:
                 continue
-            page.evaluate("id => document.querySelector(`#${id} .scene`).scrollIntoView({ behavior: 'instant', block: 'center' })" if phone else "id => document.getElementById(id).scrollIntoView({ behavior: 'instant' })", sid)
+            page.evaluate("id => (document.querySelector(`#${id} .scene`) ?? document.getElementById(id)).scrollIntoView({ behavior: 'instant', block: id === 'about' ? 'start' : 'center' })" if phone else "id => document.getElementById(id).scrollIntoView({ behavior: 'instant' })", sid)
             try:
                 page.wait_for_function(
                     "id => { const c = document.querySelector(`#${id} canvas`); return !c || c.dataset.ready === '1'; }", arg=sid, timeout=30000
                 )
             except Exception as exc:  # noqa: BLE001 - report it and still take the picture
                 errors.append(f"{sid} never ready: {exc}")
-            page.wait_for_timeout(5000 if sid == "work" else 2600)
+            page.wait_for_timeout(6500 if sid == "about" else 2600)  # the swarm needs time to spell a word
             if act:
                 page.evaluate(act)
                 page.wait_for_timeout(2600)
@@ -78,10 +79,10 @@ def main(only: list[str]) -> int:
         browser.close()
 
     if phone:  # five phone screens side by side
-        tiles = [Image.open(SHOTS / f"phone-{name}.jpg").resize((320, 692), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"phone-{name}.jpg").exists()]
-        sheet = Image.new("RGB", (320 * len(tiles), 692), (10, 12, 17))
+        tiles = [Image.open(SHOTS / f"phone-{name}.jpg").resize((266, 576), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"phone-{name}.jpg").exists()]
+        sheet = Image.new("RGB", (266 * len(tiles), 576), (10, 12, 17))
         for i, tile in enumerate(tiles):
-            sheet.paste(tile, (i * 320, 0))
+            sheet.paste(tile, (i * 266, 0))
         sheet.save(SHOTS / "phone.jpg", quality=86, optimize=True)
     else:
         tiles = [Image.open(SHOTS / f"{name}.jpg").resize((800, 450), Image.LANCZOS) for _, name, _ in SECTIONS if (SHOTS / f"{name}.jpg").exists()]

@@ -1,40 +1,34 @@
 // Wires the page: loads the data, and starts each section's scene the first time it comes near the screen.
 import { HUE } from './projects.js';
-import { KIND } from './skills.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html !== undefined) n.innerHTML = html; return n; };
 const near = (node, fn) => { const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); fn(); } }, { rootMargin: '400px' }); io.observe(node); };
 const data = await (await fetch('./data.json')).json();
 const demo = (window.__demo = {});
+const capOf = Object.fromEntries(data.caps.map((c) => [c.id, c]));
 
 // ------------------------------------------------------------ about
 near($('#about'), async () => {
   (await import('./hero.js')).default($('#about canvas'), [...document.querySelectorAll('#about .moon')]);
 });
 
-// ------------------------------------------------------------ projects
-const state = { group: 'All', skill: null };
-const groups = ['All', 'Cybrary', 'Stove & Grill Parts', 'Personal', 'AI'];
-const match = (p) => (state.group === 'All' || (state.group === 'AI' ? p.tags.some((t) => ['AI', 'OpenAI', 'DALL-E'].includes(t)) : p.group === state.group)) && (!state.skill || p.tags.includes(state.skill));
-let gallery = null, globe = null;
-const chips = $('#projects .chips'), card = $('#projects .detail');
+// ------------------------------------------------------------ shipped: the projects, filed by what they prove
+const state = { cap: null };
+const match = (p) => !state.cap || p.caps.includes(state.cap);
+let gallery = null, line = null;
+const chips = $('#shipped .chips'), card = $('#shipped .detail');
 function refresh() {
   chips.innerHTML = '';
-  groups.forEach((gname) => {
-    const b = el('button', 'chip', gname);
-    b.setAttribute('aria-pressed', String(state.group === gname));
-    b.addEventListener('click', () => { state.group = gname; refresh(); });
+  [{ id: null, name: 'Everything' }, ...data.caps].forEach((c) => {
+    const b = el('button', 'chip', c.name);
+    b.setAttribute('aria-pressed', String(state.cap === c.id));
+    if (c.hue) b.style.setProperty('--hue', c.hue);
+    b.addEventListener('click', () => { state.cap = c.id; refresh(); });
     chips.appendChild(b);
   });
-  if (state.skill) {
-    const b = el('button', 'chip skill-chip', `Skill: ${state.skill} <span aria-hidden="true">×</span>`);
-    b.setAttribute('aria-label', `Clear the ${state.skill} filter`);
-    b.addEventListener('click', () => { state.skill = null; refresh(); });
-    chips.appendChild(b);
-  }
   const shown = data.projects.filter(match).length;
-  $('#projects .count').textContent = shown === data.projects.length ? `${shown} projects` : `${shown} of ${data.projects.length} projects`;
+  $('#shipped .count').textContent = state.cap ? `${shown} of ${data.projects.length} show ${capOf[state.cap].role.toLowerCase()}` : `${shown} things shipped`;
   gallery?.filter(match);
   if (card.dataset.id && !match(data.projects[card.dataset.id])) card.hidden = true;
 }
@@ -42,61 +36,71 @@ function show(p) {
   card.dataset.id = p.id;
   card.style.setProperty('--hue', HUE[p.group]);
   card.innerHTML = `<button class="x" aria-label="Close">×</button>
-    <p class="kicker">${p.group}</p><h3>${p.title}</h3><p>${p.description}</p>
-    <div class="tags">${p.tags.map((t) => `<button class="tag">${t}</button>`).join('')}</div>
+    <p class="kicker">${p.group}</p><h3>${p.title}</h3>
+    ${p.proof ? `<p class="proof">${p.proof}.</p>` : ''}<p>${p.description}</p>
+    <div class="tags">${p.caps.map((id) => `<button class="tag cap" data-id="${id}" style="--hue:${capOf[id].hue}">${capOf[id].name}</button>`).join('')}</div>
+    <p class="made">Built with ${p.tags.join(', ')}.</p>
     <div class="go">${p.view ? `<a class="btn main" href="${p.view}" target="_blank" rel="noopener">Open it live ↗</a>` : ''}${p.code ? `<a class="btn" href="${p.code}" target="_blank" rel="noopener">Read the code ↗</a>` : ''}${!p.view && !p.code ? '<span class="quiet">Internal work. No public link.</span>' : ''}</div>`;
   card.hidden = false;
   $('.x', card).addEventListener('click', () => { card.hidden = true; });
-  card.querySelectorAll('.tag').forEach((b) => b.addEventListener('click', () => { state.skill = b.textContent; state.group = 'All'; refresh(); }));
+  card.querySelectorAll('.cap').forEach((b) => b.addEventListener('click', () => { state.cap = b.dataset.id; refresh(); }));
 }
 refresh();
-near($('#projects'), async () => {
-  gallery = (await import('./projects.js')).default($('#projects canvas'), data.projects, { onPick: show });
+near($('#shipped'), async () => {
+  gallery = (await import('./projects.js')).default($('#shipped canvas'), data.projects, { onPick: show });
   gallery.filter(match);
-  $('#projects .prev').addEventListener('click', () => gallery.step(-1));
-  $('#projects .next').addEventListener('click', () => gallery.step(1));
+  $('#shipped .prev').addEventListener('click', () => gallery.step(-1));
+  $('#shipped .next').addEventListener('click', () => gallery.step(1));
   demo.pick = (id) => gallery.pick(id);
 });
-function toProjects(skill, id) {
-  state.skill = skill; state.group = 'All';
+function toShipped(cap, id) {
+  state.cap = cap;
   refresh();
-  $('#projects').scrollIntoView({ behavior: 'smooth' });
+  $('#shipped').scrollIntoView({ behavior: 'smooth' });
   if (id !== undefined) setTimeout(() => gallery?.pick(id), 700);
 }
 
-// ------------------------------------------------------------ skills
-const about = $('#skills .panel');
-const legend = Object.entries({ language: 'Languages', framework: 'Frameworks and libraries', platform: 'Platforms and services', ai: 'AI', practice: 'Practices and domains' })
-  .map(([k, name]) => `<li><span style="background:${KIND[k]}"></span>${name}</li>`).join('');
-function skillPanel(sk) {
-  if (!sk) {
-    about.innerHTML = `<h3>${data.skills.length} skills across ${data.projects.length} projects</h3>
-      <p>Every skill here comes from a project above. A bigger dot is used in more projects, and a line joins two skills that were used together.</p>
-      <ul class="legend">${legend}</ul><p class="quiet">Drag the globe. Pick a skill to see where it was used.</p>`;
+// ------------------------------------------------------------ how I ship: the six capabilities, with the proof for each
+const how = $('#how .panel');
+function capPanel(c) {
+  if (!c) {
+    how.innerHTML = `<h3>Six gates, in the order work moves</h3>
+      <p>A piece of work is planned, built, tested, held to a standard, released and then run. Languages and tools are how each gate gets done. They are not the point.</p>
+      <p class="quiet">Pick a gate to see the proof.</p>`;
     return;
   }
-  const used = data.projects.filter((p) => p.tags.includes(sk.name));
-  about.innerHTML = `<p class="kicker" style="color:${KIND[sk.kind]}">Skill</p><h3>${sk.name}</h3>
-    <p>Used in <b>${used.length}</b> ${used.length === 1 ? 'project' : 'projects'}.</p>
-    <ul class="used">${used.map((p) => `<li><button data-id="${p.id}"><span style="background:${HUE[p.group]}"></span>${p.title}</button></li>`).join('')}</ul>
-    <button class="btn main" id="see">Show these in the gallery ↑</button>`;
-  about.querySelectorAll('.used button').forEach((b) => b.addEventListener('click', () => toProjects(sk.name, Number(b.dataset.id))));
-  $('#see').addEventListener('click', () => toProjects(sk.name));
+  const used = data.projects.filter((p) => p.caps.includes(c.id));
+  how.innerHTML = `<p class="kicker" style="color:${c.hue}">${c.role}</p><h3>${c.name}</h3><p>${c.line}</p>
+    <ul class="proofs">${c.evidence.map((e) => `<li style="--hue:${c.hue}">${e}</li>`).join('')}</ul>
+    <p class="made">Done with ${c.tools.join(', ')}.</p>
+    <button class="btn main" id="see">See the ${used.length} projects that show it ↑</button>`;
+  $('#see').addEventListener('click', () => toShipped(c.id));
 }
-skillPanel(null);
-near($('#skills'), async () => {
-  globe = (await import('./skills.js')).default($('#skills canvas'), $('#skills .labels'), data.skills, data.links, { onPick: skillPanel });
-  demo.skill = (name) => globe.choose(name);
+capPanel(null);
+near($('#how'), async () => {
+  line = (await import('./ship.js')).default($('#how canvas'), $('#how .labels'), data.caps, { onPick: capPanel });
+  demo.cap = (id) => line.choose(id);
 });
 
-// ------------------------------------------------------------ work history: the career tree, in a frame that sleeps off screen
-const frame = $('#work iframe');
-near($('#work'), () => {
-  frame.src = frame.dataset.src;
-  let seen = false;
-  const tell = () => frame.contentWindow?.postMessage(seen ? 'resume' : 'pause', '*');
-  frame.addEventListener('load', tell);
-  new IntersectionObserver(([e]) => { seen = e.isIntersecting; tell(); }, { rootMargin: '100px' }).observe(frame);
+// ------------------------------------------------------------ with agents: the receipts
+const log = $('#agents .log');
+log.innerHTML = data.receipts.map((r) => `<a href="https://github.com/Cellis9421/portfolio/pull/${r.number}" target="_blank" rel="noopener"><span class="n">#${r.number}</span><span class="k">${r.kind}</span><span class="t">${r.title}</span><span class="d">${r.merged}</span></a>`).join('');
+$('#agents .tally').textContent = `${data.receipts.length} pull requests`;
+
+// ------------------------------------------------------------ release history
+const notes = $('#history .panel');
+let graph = null;
+function release(r, i) {
+  notes.innerHTML = `<p class="kicker mono">${r.version} · ${r.dates}</p><h3>${r.title}</h3><p class="quiet">${r.org}</p>
+    <ul class="changes">${r.notes.map((nt) => `<li>${nt}</li>`).join('')}</ul>
+    <div class="go"><button class="btn" id="older" ${i === 0 ? 'disabled' : ''}>← Earlier</button><button class="btn" id="newer" ${i === data.releases.length - 1 ? 'disabled' : ''}>Later →</button></div>`;
+  $('#older').addEventListener('click', () => graph?.step(-1));
+  $('#newer').addEventListener('click', () => graph?.step(1));
+}
+release(data.releases[data.releases.length - 1], data.releases.length - 1);
+near($('#history'), async () => {
+  graph = (await import('./releases.js')).default($('#history canvas'), $('#history .labels'), data.releases, { onFocus: release });
+  demo.release = (i) => graph.go(i);
 });
 
 // ------------------------------------------------------------ guides
