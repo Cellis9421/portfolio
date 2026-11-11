@@ -67,6 +67,8 @@
   .stops button:last-child::before { left: auto; right: 0; }
   .ctl { display: flex; gap: 8px; padding-top: 2px; }
   [hidden] { display: none !important; }
+  body.embed .who, body.embed .count, body.embed .list { display: none; }
+  body.embed .era { top: 196px; }
   @media (max-width: 900px) { .era { display: none; } .who h1 { font-size: 36px; } }
 </style>
 <script type="importmap">
@@ -117,6 +119,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const query = new URLSearchParams(location.search);
 const still = query.has('shot');
+if (query.has('embed')) document.body.classList.add('embed');  // inside the sectioned page: it brings its own heading
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (id) => document.getElementById(id);
 const lerp = THREE.MathUtils.lerp, clamp = THREE.MathUtils.clamp, smooth = (x) => { const t = clamp(x, 0, 1); return t * t * (3 - 2 * t); };
@@ -778,7 +781,13 @@ let frames = 0, lastT = 0;
 setG(g);
 window.__setG = (x) => { gliding = null; playing = false; setG(x); for (const f of fruits) f.k = smooth((g - f.p.g) / 0.012); };
 window.__open = (id) => open(fruits[id]);
+let paused = false;
+addEventListener('message', (e) => {  // the page that frames this one says when it is off screen
+  if (e.data === 'pause') paused = true;
+  else if (e.data === 'resume' && paused) { paused = false; requestAnimationFrame(frame); }
+});
 function frame() {
+  if (paused) return;
   const t = clock.getElapsedTime(), dt = Math.min(0.05, t - lastT);
   lastT = t;
   if (playing) { setG(g + dt / 22); if (g >= 1) { playing = false; $('play').textContent = 'Play'; } }

@@ -5,7 +5,9 @@ Each job is a side of the tree, each project is a glowing fruit, and the panel o
 is the work history for the year under the handle. It answers the owner's reference: a
 single living object, changed by one control, with real detail.
 
-This is a first working pass in one file. It is not wired into the site.
+This is a first working pass in one file. It is not wired into the site. The
+[sectioned page](../site/) frames it as its work history section, with `?embed=1`, which
+hides the name and the project count and lets the framing page pause it off screen.
 
 - [Look at it](#look-at-it)
 - [How it works](#how-it-works)
