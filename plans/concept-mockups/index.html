@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>3D portfolio concept mockups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #000; font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+  #stage, #labels, #hud { position: fixed; inset: 0; }
+  #labels, #hud { pointer-events: none; }
+  .label { position: absolute; transform: translate(-50%, -100%); margin-top: -16px; white-space: nowrap; font-size: 13px; font-weight: 600;
+    color: #fff; background: rgba(8, 12, 22, .74); border: 1px solid rgba(255, 255, 255, .2); padding: 5px 11px; border-radius: 999px; }
+  .label::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 15px; background: rgba(255, 255, 255, .5); }
+  .label.plain::after { display: none; }
+  .label.hot { background: #ffb454; color: #1b1205; border-color: #ffb454; }
+  body.light .label { color: #2a2118; background: rgba(255, 252, 246, .92); border-color: rgba(60, 40, 20, .2); }
+  body.light .label::after { background: rgba(60, 40, 20, .45); }
+  body.light .label.hot { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+  #cap { position: fixed; left: 28px; top: 22px; z-index: 5; color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, .7); max-width: 46vw; }
+  #cap b { display: inline-block; min-width: 34px; height: 34px; line-height: 34px; text-align: center; border-radius: 9px; background: #fff; color: #0b0f1a;
+    font-size: 18px; margin-right: 12px; text-shadow: none; vertical-align: middle; }
+  #cap span { font-size: 26px; font-weight: 800; vertical-align: middle; letter-spacing: -.01em; }
+  #cap small { display: block; margin: 8px 0 0 46px; font-size: 15px; opacity: .85; font-weight: 500; }
+  body.light #cap { color: #2a2118; text-shadow: none; }
+  body.light #cap b { background: #2a2118; color: #fff; }
+  .panel { position: absolute; background: rgba(8, 12, 22, .84); border: 1px solid rgba(255, 255, 255, .17); border-radius: 12px; color: #dfe8ff;
+    padding: 14px 16px; font-size: 13px; line-height: 1.6; box-shadow: 0 12px 40px rgba(0, 0, 0, .4); }
+  body.light .panel { background: rgba(255, 252, 246, .95); color: #2a2118; border-color: rgba(60, 40, 20, .16); box-shadow: 0 12px 40px rgba(80, 50, 20, .18); }
+  .mono { font-family: "Cascadia Code", Consolas, monospace; }
+  .btn { display: inline-block; padding: 7px 12px; border-radius: 8px; background: #fff; color: #111; font-weight: 700; font-size: 12px; margin-right: 6px; }
+  .btn.ghost { background: transparent; color: inherit; border: 1px solid currentColor; }
+  body.light .btn { background: #2a2118; color: #fff; }
+  body.light .btn.ghost { background: transparent; color: #2a2118; }
+  .dim { opacity: .6; }
+  #nav { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 6px; z-index: 6; }
+  #nav a { width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 8px; background: rgba(20, 24, 36, .8); color: #fff;
+    text-decoration: none; font-weight: 700; font-size: 14px; border: 1px solid rgba(255, 255, 255, .2); }
+  #nav a.on { background: #fff; color: #111; }
+  body.shot #nav { display: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="stage"></div>
+<div id="labels"></div>
+<div id="hud"></div>
+<header id="cap"><b id="cap-n"></b><span id="cap-t"></span><small id="cap-s"></small></header>
+<nav id="nav" aria-label="Concepts"></nav>
+<script type="module">
+  const SCENES = [
+    ['city', 'The city that builds itself', 'File a ticket. A worker claims it and walks it there.'],
+    ['marble', 'Marble run through a career', 'Scroll to roll. Drop your own marbles.'],
+    ['desk', 'One desk, five eras', 'Turn the dial from 2009 to now and the desk rebuilds itself.'],
+    ['bot', 'The bot plays it for you', 'Watch it, take the controls, or edit its script.'],
+    ['pc', 'The machine, exploded', 'Scroll pulls it apart. Each part is a layer of the stack.'],
+    ['trail', 'The trail', 'Scroll up the mountain. Each camp is an era.'],
+    ['control-room', 'The control room', 'Click a node and fly into its screen.'],
+  ];
+  const q = new URLSearchParams(location.search);
+  const n = Math.max(1, Math.min(SCENES.length, Number(q.get('c') || 1)));
+  if (q.get('shot')) document.body.classList.add('shot');
+  const [slug, title, sub] = SCENES[n - 1];
+  document.getElementById('cap-n').textContent = n;
+  document.getElementById('cap-t').textContent = title;
+  document.getElementById('cap-s').textContent = sub;
+  document.title = `${n}. ${title}`;
+  const nav = document.getElementById('nav');
+  SCENES.forEach((s, i) => {
+    const a = document.createElement('a');
+    a.href = `?c=${i + 1}`;
+    a.textContent = i + 1;
+    a.title = s[1];
+    if (i + 1 === n) a.className = 'on';
+    nav.appendChild(a);
+  });
+  const mod = await import(`./scenes/0${n}-${slug}.js`);
+  mod.default();
+</script>
+</body>
+</html>
