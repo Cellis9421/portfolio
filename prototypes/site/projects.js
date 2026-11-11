@@ -1,6 +1,10 @@
 // Projects: a curved wall of project screens, with their real screenshots, over a dark glass floor.
 import { THREE, stage, canvasTexture, clamp, lerp } from './stage.js';
 
+// The site's screenshots live in public/. From prototypes/ that is two folders up and into public;
+// from the published copy in public/preview/ it is just two folders up.
+const SHOTS = location.pathname.includes('/prototypes/') ? '../../public/img/screenshots/' : '../../img/screenshots/';
+
 export const HUE = { Cybrary: '#5cc8ff', 'Stove & Grill Parts': '#ff8f3a', Personal: '#b78cff' };
 
 export default function projects(canvas, list, ui) {
@@ -50,7 +54,7 @@ export default function projects(canvas, list, ui) {
     const col = Math.floor(i / 2), row = i % 2, a = angleOf(col);
     const tex = canvasTexture(640, 440, () => {});
     paint(tex, p, null);
-    if (p.shot) { const img = new Image(); img.onload = () => paint(tex, p, img); img.src = `../../public/img/screenshots/${p.shot}`; }
+    if (p.shot) { const img = new Image(); img.onload = () => paint(tex, p, img); img.src = `${SHOTS}${p.shot}`; }
     const mat = new THREE.MeshBasicMaterial({ map: tex, alphaTest: 0.5, alphaToCoverage: true });
     const mesh = new THREE.Mesh(geo, mat);
     const pivot = new THREE.Group();

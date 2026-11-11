@@ -15,7 +15,12 @@ shows the real content. It is a prototype and is not wired into the site.
 
 ![About, projects, skills, work history and guides](shots/sections.jpg)
 
-Serve the repo root, because the gallery reads the screenshots in `public/`.
+It is live at <https://calvinellis.io/preview/site/>, unlinked and marked `noindex`. That
+copy is `public/preview/`, written by `node prototypes/publish.mjs`. Edit the files here,
+run that, and the next merge to `main` publishes it. Never edit `public/preview/` by hand.
+
+To run it locally, serve the repo root, because the gallery reads the screenshots in
+`public/`.
 
 ```bash
 python -m http.server 4173

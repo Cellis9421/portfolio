@@ -21,7 +21,10 @@ hides the name and the project count and lets the framing page pause it off scre
 
 The scrub from 2009 to now is [shots/scrub.webp](shots/scrub.webp).
 
-To use it, serve this folder and open it.
+It is live at <https://calvinellis.io/preview/career-tree/>, published by
+`node prototypes/publish.mjs` (see [the sectioned page](../site/README.md)).
+
+To run it locally, serve this folder and open it.
 
 ```bash
 python -m http.server 4173 --directory prototypes/career-tree
