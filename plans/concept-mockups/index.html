@@ -53,13 +53,12 @@
 <nav id="nav" aria-label="Concepts"></nav>
 <script type="module">
   const SCENES = [
-    ['city', 'The city that builds itself', 'File a ticket. A worker claims it and walks it there.'],
-    ['marble', 'Marble run through a career', 'Scroll to roll. Drop your own marbles.'],
-    ['desk', 'One desk, five eras', 'Turn the dial from 2009 to now and the desk rebuilds itself.'],
-    ['bot', 'The bot plays it for you', 'Watch it, take the controls, or edit its script.'],
-    ['pc', 'The machine, exploded', 'Scroll pulls it apart. Each part is a layer of the stack.'],
-    ['trail', 'The trail', 'Scroll up the mountain. Each camp is an era.'],
-    ['control-room', 'The control room', 'Click a node and fly into its screen.'],
+    ['rings', 'Growth rings', 'A slab of tree. One ring a year, every project an inlay in its ring.'],
+    ['rack', 'The rack', 'Projects are modules, skills are cables, the years are a sequencer.'],
+    ['deck', 'The deck', 'Every project is a foil card. One table deals them four ways.'],
+    ['cabinet', 'The cabinet of small things', 'A wall of lit boxes, each one project as a tiny living scene.'],
+    ['line-map', 'The line map', 'Lines are skills, stations are projects, left to right is time.'],
+    ['plot', 'The plot', 'Projects grow on top. The jobs are the layers they root in.'],
   ];
   const q = new URLSearchParams(location.search);
   const n = Math.max(1, Math.min(SCENES.length, Number(q.get('c') || 1)));

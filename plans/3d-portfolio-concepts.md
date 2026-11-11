@@ -1,164 +1,170 @@
-# 3D portfolio: seven concepts
+# 3D portfolio: concepts
 
-Brainstorm for remaking calvinellis.io as a 3D experience. Pick one, prototype it on
-localhost, then decide whether it replaces the current site. Nothing here is built yet.
-The pictures are rough live mockups in three.js, in [concept-mockups/](concept-mockups/).
-They show the idea, not the final art.
+Brainstorm for remaking calvinellis.io as a 3D experience. Round two is the live set: six
+ways to show a lot of projects, with a timeline and an answer to who made them. Pick one,
+prototype it on localhost, then decide whether it replaces the current site. Nothing here
+is built yet. The pictures are rough live mockups in three.js, in
+[concept-mockups/](concept-mockups/). They show the idea, not the final art.
 
-- [The thread that makes it yours](#the-thread-that-makes-it-yours)
-- [What already exists](#what-already-exists)
-- [The seven, side by side](#the-seven-side-by-side)
+- [The brief](#the-brief)
+- [The four jobs](#the-four-jobs)
+- [The six, side by side](#the-six-side-by-side)
 - [Concepts](#concepts)
 - [Recommendation](#recommendation)
 - [Rules for whichever one wins](#rules-for-whichever-one-wins)
 - [First milestone](#first-milestone)
+- [What already exists](#what-already-exists)
+- [Round one, set aside](#round-one-set-aside)
 - [Repo gaps found while reading](#repo-gaps-found-while-reading)
 
-## The thread that makes it yours
+## The brief
 
-The work history has one idea in it, three times over. Game bots in 2009. Sync services
-moving a catalog between sales channels in 2017. Agents doing engineering work now. Each
-is a thing built to do the work on its own. A concept that shows that idea beats one that
-only looks good.
+Owner, 2026-11-11, after round one.
 
-Other material worth using: fifteen years across five eras, a business grown from $1M to
-$10M ARR, hiking, PC building, games, and the in-page window manager the current site
-already has.
+- **Projects come first.** There are a lot of them and the list keeps growing: many small
+  standalone things, each hosted on its own and linked from here.
+- **A work history timeline** sits somewhere in it.
+- **It still answers two questions**: who is this, and what has he done.
+- **Original.** Round one toured a career, and none of the seven landed.
 
-## What already exists
+## The four jobs
 
-Three well-known 3D portfolios set what people expect. None of the seven repeats them.
+Every concept below is judged on the same four things, and each mockup labels them.
 
-- [Bruno Simon](https://bruno-simon.com/): you drive a small car around a world of projects.
-- [Henry Heffernan](https://henryheffernan.com/): a 3D desk with a working operating system on the monitor.
-- [Jesse Zhou](https://jesse-zhou.com/): a neon ramen shop you orbit and click into.
+| Job | The question it answers |
+|---|---|
+| **Who** | Who is this, in one look |
+| **Timeline** | What happened when, across the four jobs since 2009 |
+| **Projects** | What did he build. Room for dozens, and for the next small one |
+| **Live** | Open the real thing, running on its own address |
 
-## The seven, side by side
+One thread is worth keeping from round one. The work history has one idea in it three
+times: game bots in 2009, sync services in 2017, agents now. Each is a thing built to do
+the work on its own.
 
-![All seven concepts on one sheet](concept-mockups/shots/contact-sheet.jpg)
+## The six, side by side
 
-| # | Concept | You move by | Strongest moment | Size |
-|---|---|---|---|---|
-| 1 | The city that builds itself | Filing a ticket a worker picks up | Your ticket becomes a worker walking across the map | Large |
-| 2 | Marble run through a career | Scrolling, and dropping your own marbles | Real physics you can disturb, with sound | Medium |
-| 3 | One desk, five eras | Turning a dial from 2009 to now | The desk rebuilding itself between eras | Medium |
-| 4 | The bot plays it for you | Watching, taking over, or editing its script | Taking the controls mid-run, then handing back | Large |
-| 5 | The machine, exploded | Scrolling a PC apart | Glass, light and the boot | Small to medium |
-| 6 | The trail | Scrolling up a mountain | Turning round at the summit | Medium |
-| 7 | The control room | Clicking a node and flying into its screen | Orders and stock moving as light | Medium |
+![All six concepts on one sheet](concept-mockups/shots/contact-sheet.jpg)
+
+| # | Concept | Who | Timeline | A project is | Adding one costs |
+|---|---|---|---|---|---|
+| 1 | Growth rings | The whole slab | One ring a year | An inlay in its year's ring | One entry |
+| 2 | The rack | The master module | A step sequencer, one step a year | A module with a live screen | One entry |
+| 3 | The deck | The character sheet | One deal of the cards | A foil card | One entry |
+| 4 | The cabinet of small things | The big box in the middle | Rows are years | A lit box with a tiny scene | One entry, plus a miniature when it earns one |
+| 5 | The line map | The station every line ends at | Left to right | A station | One entry |
+| 6 | The plot | The sign at the gate | Layers of ground | A plant | One entry |
 
 ## Concepts
 
-### 1. The city that builds itself
+### 1. Growth rings
 
-![A night plot with five districts, a crew of glowing workers and a ticket box](concept-mockups/shots/01-city.jpg)
+![A slab of tree on a bench, glowing inlays set into its rings, a brass arm across it](concept-mockups/shots/01-rings.jpg)
 
-- **First ten seconds.** An empty plot at night, one lamp. Small glowing workers walk in
-  from the edges and raise the page. The name goes up first, then one district per era.
-  Nothing pops in. Everything is carried and placed.
-- **How you move.** You file a ticket: type or tap "show me the e-commerce work". A worker
-  claims it, walks there and lights the district, and the camera follows. Plain scrolling
-  runs the same tour in order.
-- **Left alone.** The crew keeps working. They add detail, repair things and change shift
-  at dawn. The site is never still.
-- **Why it is yours.** The pitch is agents that do real work. This shows it. Bots, then
-  sync services, then agents: the same idea with a bigger crew each time.
-- **Risk.** It reads as a toy if the art direction is weak, and many moving things are
-  hard on a phone. Instanced workers, baked build animations and a crew sized to the
-  device cover the second. The first needs a look test before anything else.
+- **The idea.** A slab cut from a tree. One ring a year, 2009 at the heart and this year
+  at the bark. The four jobs are bands of colour in the grain. Every project is a glowing
+  inlay set into the ring of the year it shipped.
+- **How you move.** Zoom is the only control. Zoomed out it is one person. Closer, it is
+  years. Closer, one inlay. Closer still, the inlay opens into the live thing.
+- **Timeline.** Drag the brass arm inward and the tree un-grows to that year.
+- **Why it fits.** Outer rings have more room, and recent years hold more small projects.
+  The layout grows the way the work does. Empty sockets on the bark show what is next.
+- **Risk.** Text on a circle is hard to read, so names only appear on zoom. A project is a
+  dot until someone leans in.
 
-### 2. Marble run through a career
+### 2. The rack
 
-![A brass track running down across five wooden platforms, one per era](concept-mockups/shots/02-marble.jpg)
+![A wall of synth modules with small screens, patched together by coloured cables](concept-mockups/shots/02-rack.jpg)
 
-- **First ten seconds.** One track runs from the top of the page to the bottom. Scrolling
-  releases a marble. It rolls through five small dioramas, one per era.
-- **Details.** In the e-commerce era it rides a conveyor past a counter climbing from 1M
-  to 10M. Each stair plays a note, so the career plays a tune.
-- **How you move.** Scroll to run the marble. Drop your own marbles anywhere. Flip a switch
-  on the track to route one into a project.
-- **Why it is yours.** Physics is a craft you already practise, and a marble run is a
-  machine that does its work once you let go.
-- **Risk.** Scroll scrubbing and live physics fight each other. The main marble follows a
-  baked path that scroll scrubs. Live physics is only for marbles the visitor drops.
+- **The idea.** A modular synthesiser. Every project is a module with a small screen
+  showing it running. Skills are patch cables: pull the TypeScript cable and every module
+  it feeds lights up.
+- **Timeline.** The bottom row is a step sequencer, one step a year. Press play and the
+  playhead runs 2009 to now, lighting each year's modules and playing a note for each. The
+  career becomes a loop you can hear.
+- **Who.** The master module, top left: name, title and what the whole rack is for.
+- **Why it fits.** A new project is a new module in a blank slot. A new skill is a new
+  cable. Nothing else on the web looks like it.
+- **Risk.** It may read as niche to someone who has never seen a synth. Module faces are
+  small, so the screen has to carry the project.
 
-### 3. One desk, five eras
+### 3. The deck
 
-![One desk caught mid-turn, a CRT on the left and agent terminals on the right](concept-mockups/shots/03-desk.jpg)
+![A felt table with foil cards laid out on five coloured mats and a character sheet](concept-mockups/shots/03-deck.jpg)
 
-- **First ten seconds.** One desk in a dark room, with a dial on its edge marked 2009 to now.
-- **How you move.** Turn the dial by drag, scroll or arrow keys. The desk rebuilds itself:
-  a CRT and a bot script, a laptop and client sites, two monitors and boxed stove parts, a
-  security lab, a wall of agent terminals.
-- **Details.** Every object is something you made. Click one and its case study opens on
-  the screen in the scene. The current window manager becomes that screen's desktop.
-- **Why it is yours.** Fifteen years reads at a glance, and the dial is the timeline.
-- **Risk.** Many hand-made props. It is the smallest scene and the kindest to a phone.
+- **The idea.** Every project is a card with foil that catches the light as it tilts. One
+  table deals the same cards four ways: Spread shows everything, Timeline lays them on a
+  mat per job, Stacks sorts by skill, and Me flies them into the character sheet.
+- **Who.** The character sheet: name, title, strengths as bars, the four jobs as
+  campaigns.
+- **Projects.** Flip a card for its story. Play opens the live thing. Big work is gold
+  foil and a small standalone toy is a common card, so adding one takes a minute.
+- **Why it fits.** It stays readable at a hundred projects, and sorting is a deal, not a
+  menu.
+- **Risk.** With weak motion it is a card grid. The foil, the physics and the deals have
+  to be good.
 
-### 4. The bot plays it for you
+### 4. The cabinet of small things
 
-![A small tile world with a bot walking to a quest and its script in a side panel](concept-mockups/shots/04-bot.jpg)
+![A wooden wall cabinet of lit boxes, each holding a miniature scene, with a larger box in the middle](concept-mockups/shots/04-cabinet.jpg)
 
-- **First ten seconds.** A small top-down game world in original art. Each job is a quest.
-  A bot is already playing: you see its path, its target and its script in a side panel.
-- **How you move.** Watch. Take the controls at any time. Or reorder the quest list in the
-  script panel and watch the bot obey.
-- **Why it is yours.** The first paid work was game bots and the current work is agents.
-  The site is both at once.
-- **Risk.** Game scope grows fast, touch controls are their own project, and the art must
-  not resemble any real game.
+- **The idea.** A wall cabinet of lit boxes. Each box is one project as a tiny living
+  scene: a stove with a fire for the parts store, a rack of blinking servers for the sync
+  service. Lean in and the camera goes through the glass into the real thing.
+- **Timeline.** Rows are years, newest on top, with a plate on the frame for each.
+- **Who.** The big box in the middle: a desk, a figure and a nameplate.
+- **Projects.** Dark boxes are reserved for the next ones. A project with no miniature yet
+  gets a small screen showing its own front page, so adding one still costs one entry.
+- **Why it fits.** The brief is a lot of little things, and this is a wall of little
+  things. Every project is visible at once, with its own character.
+- **Risk.** The charm depends on the miniatures. Each good one is a small modelling job.
 
-### 5. The machine, exploded
+### 5. The line map
 
-![A PC pulled apart along one axis with each part labelled as a layer of the stack](concept-mockups/shots/05-pc.jpg)
+![A model transit map on a pale table, coloured lines crossing at white stations](concept-mockups/shots/05-line-map.jpg)
 
-- **First ten seconds.** One object at product-film quality: a glass-sided PC on a bench.
-- **How you move.** Scroll pulls it apart. Each part is a layer of the stack with the work
-  that lives there: graphics card for front ends, processor for services, drives for data
-  sync, power supply for CI and infrastructure, cooling loop for team work. Press power,
-  it boots, and the monitor shows the résumé.
-- **Why it is yours.** You build PCs, and full stack maps onto one cleanly.
-- **Risk.** The product-page look is the most expected of the seven, and the mapping can
-  feel forced.
+- **The idea.** A transit map built as a model. Time runs left to right. Every line is a
+  skill and every station is a project. Where lines cross, one project used them all. The
+  jobs are zones shaded under the track.
+- **How you move.** Board a train and ride one skill through every project that used it,
+  in order. Step off at a station and it opens live.
+- **Who.** The station at the right-hand edge, where every line ends.
+- **Why it fits.** One picture shows skills, projects and years together, which a list
+  cannot.
+- **Risk.** It clutters past about forty stations, and it is the quietest of the six. The
+  lines in the mockup are illustrative, not a record of each project's stack.
 
-### 6. The trail
+### 6. The plot
 
-![A mountain at dawn with a lit trail, a camp per era and a flag on the summit](concept-mockups/shots/06-trail.jpg)
+![A block of ground cut open, trees on top and roots reaching into coloured layers](concept-mockups/shots/06-plot.jpg)
 
-- **First ten seconds.** A trailhead before dawn. Scrolling walks the trail.
-- **Details.** Each camp is an era. The light moves from pre-dawn to full sun. At the
-  summit the camera turns and the whole career is laid out below. Signing the trail
-  register is the contact form.
-- **Why it is yours.** You hike. It is calm and personal where most 3D sites are loud.
-- **Risk.** Scroll journeys are common, and this one has the weakest link to the work.
-
-### 7. The control room
-
-![A curved wall of project screens over a table of systems joined by arcs of light](concept-mockups/shots/07-control-room.jpg)
-
-- **First ten seconds.** A dark room with a wall of screens, each playing one project. A
-  table in the middle shows a map of systems: stores, marketplaces and warehouses as
-  nodes, orders and stock as light moving between them.
-- **How you move.** Click a node. The camera flies into its screen and the screen becomes
-  the page.
-- **Why it is yours.** Sync and operations work is a large share of the history and is
-  hard to show any other way.
-- **Risk.** The science-fiction dashboard look is well worn, and it needs a real capture
-  of every project.
+- **The idea.** A block of ground cut open. Projects grow on top, sized by how much work
+  they were. The jobs are the layers underneath, 2009 at the bottom. Each plant's roots
+  reach down to the job that fed it.
+- **Projects.** Small standalone things live under glass. Seedlings are what comes next.
+- **Who.** The sign at the gate.
+- **How you move.** Scroll lifts the block apart one layer at a time.
+- **Risk.** Plants crowd and hide their names, so it is the weakest of the six at scale.
 
 ## Recommendation
 
-**Build 1, the city that builds itself.** It is the only one where the form makes the
-claim: a visitor watches autonomous workers do a job and then gives one an order. Borrow
-the timeline from 3 by making each district an era, so fifteen years still reads at a
-glance.
+**Build 4, the cabinet.** Projects matter most in the brief, and it is the only concept
+where every project is visible at once and looks like itself. It also has the strongest
+single move: through the glass, into the running thing.
 
-**Fallback is 2, the marble run**, if the first look test of the crew reads as a toy. It
-is smaller, it is the most likely to be shared, and each era's run doubles as a short
-video.
+Borrow one idea from 3: let the cabinet re-shelve itself by year, by skill or by kind, the
+way the deck re-deals.
+
+**If the cost per project must be near zero, build 3, the deck.** A card needs only its
+entry. **For the boldest look, build 1, growth rings.**
 
 ## Rules for whichever one wins
 
+- **One file lists the projects.** Title, year, job, skills, weight, live address. Every
+  view reads it, the plain page included. Adding a project is one entry.
+- **Each small thing stands alone.** It is its own static site or service on its own
+  address. The portfolio links to it, and can show it inside the scene: three.js
+  `CSS3DRenderer` places a real page in 3D space.
 - **The ten-second path.** Résumé, work history and contact are one click from the first
   frame and do not wait for the 3D to load. A recruiter in a hurry never has to play.
 - **Real HTML underneath.** Every word lives in the page, not only in the canvas. The
@@ -170,15 +176,34 @@ video.
   First scene under 5 MB, the rest loaded on demand. 60 frames a second on a desktop, a
   floor of 30 on a mid-range phone with a lower quality tier, and the plain view when
   WebGL is missing.
-- **Stack.** React Three Fiber and drei on the Next.js and React already here. Rapier for
-  physics. Three's WebGPU renderer with its WebGL 2 fallback. Models from Blender as glTF
-  with meshopt geometry and KTX2 textures. Lighting baked offline so a phone pays for none.
+- **Stack.** React Three Fiber and drei on the Next.js and React already here. Three's
+  WebGPU renderer with its WebGL 2 fallback. Models from Blender as glTF with meshopt
+  geometry and KTX2 textures. Lighting baked offline so a phone pays for none.
 
 ## First milestone
 
-It runs on localhost and can be looked at. For concept 1 that is one plot, twenty workers
-and one building raised, with a frame rate read on a phone. The look test comes before
-any second district.
+It runs on localhost and can be looked at: the chosen home, a dozen real projects read
+from the one file, and one that opens a real standalone thing. A frame rate read on a
+phone comes before any more art.
+
+## What already exists
+
+Three well-known 3D portfolios set what people expect. None of the six repeats them.
+
+- [Bruno Simon](https://bruno-simon.com/): you drive a small car around a world of projects.
+- [Henry Heffernan](https://henryheffernan.com/): a 3D desk with a working operating system on the monitor.
+- [Jesse Zhou](https://jesse-zhou.com/): a neon ramen shop you orbit and click into.
+
+## Round one, set aside
+
+Seven concepts, 2026-11-11. The owner did not love any of them. They toured a career, and
+the brief is a project showcase. The scenes and their write-ups are in git history at
+`4ffe8d6`.
+
+![Round one, all seven on one sheet](concept-mockups/shots/round-1-contact-sheet.jpg)
+
+A city that builds itself, a marble run through a career, one desk across five eras, a bot
+that plays the site, an exploded PC, a mountain trail, and a control room.
 
 ## Repo gaps found while reading
 
