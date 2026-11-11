@@ -20,7 +20,7 @@ from playwright.sync_api import sync_playwright
 
 HERE = Path(__file__).resolve().parent
 SHOTS = HERE / "shots"
-NAMES = ["city", "marble", "desk", "bot", "pc", "trail", "control-room"]
+NAMES = ["rings", "rack", "deck", "cabinet", "line-map", "plot"]
 SIZE = (1600, 900)
 SETTLE_MS = 3500
 
@@ -46,7 +46,7 @@ def title_card(sheet: Image.Image, at: tuple[int, int], tile: tuple[int, int]) -
         big = small = ImageFont.load_default()
     x, y = at[0] + 56, at[1] + tile[1] // 2 - 80
     draw.text((x, y), "3D portfolio", font=big, fill=(255, 255, 255))
-    draw.text((x, y + 56), "seven concepts", font=big, fill=(255, 180, 84))
+    draw.text((x, y + 56), "concepts", font=big, fill=(255, 180, 84))
     draw.text((x, y + 128), "Rough live mockups in three.js.", font=small, fill=(170, 184, 210))
     draw.text((x, y + 158), "They show the idea, not the final art.", font=small, fill=(170, 184, 210))
 
@@ -83,8 +83,10 @@ def main(only: list[int]) -> int:
         browser.close()
 
     tile = (800, 450)
-    sheet = Image.new("RGB", (tile[0] * 2, tile[1] * 4), (10, 12, 18))
-    title_card(sheet, (tile[0], tile[1] * 3), tile)
+    rows = (len(NAMES) + 1) // 2
+    sheet = Image.new("RGB", (tile[0] * 2, tile[1] * rows), (10, 12, 18))
+    if len(NAMES) % 2:
+        title_card(sheet, (tile[0], tile[1] * (rows - 1)), tile)
     for i, name in enumerate(NAMES):
         jpg = SHOTS / f"0{i + 1}-{name}.jpg"
         if jpg.exists():
