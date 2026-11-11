@@ -2,6 +2,8 @@
 
 Brainstorm for remaking calvinellis.io as a 3D experience. Pick one, prototype it on
 localhost, then decide whether it replaces the current site. Nothing here is built yet.
+The pictures are rough live mockups in three.js, in [concept-mockups/](concept-mockups/).
+They show the idea, not the final art.
 
 - [The thread that makes it yours](#the-thread-that-makes-it-yours)
 - [What already exists](#what-already-exists)
@@ -33,6 +35,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 
 ## The seven, side by side
 
+![All seven concepts on one sheet](concept-mockups/shots/contact-sheet.jpg)
+
 | # | Concept | You move by | Strongest moment | Size |
 |---|---|---|---|---|
 | 1 | The city that builds itself | Filing a ticket a worker picks up | Your ticket becomes a worker walking across the map | Large |
@@ -46,6 +50,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 ## Concepts
 
 ### 1. The city that builds itself
+
+![A night plot with five districts, a crew of glowing workers and a ticket box](concept-mockups/shots/01-city.jpg)
 
 - **First ten seconds.** An empty plot at night, one lamp. Small glowing workers walk in
   from the edges and raise the page. The name goes up first, then one district per era.
@@ -63,6 +69,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 
 ### 2. Marble run through a career
 
+![A brass track running down across five wooden platforms, one per era](concept-mockups/shots/02-marble.jpg)
+
 - **First ten seconds.** One track runs from the top of the page to the bottom. Scrolling
   releases a marble. It rolls through five small dioramas, one per era.
 - **Details.** In the e-commerce era it rides a conveyor past a counter climbing from 1M
@@ -76,6 +84,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 
 ### 3. One desk, five eras
 
+![One desk caught mid-turn, a CRT on the left and agent terminals on the right](concept-mockups/shots/03-desk.jpg)
+
 - **First ten seconds.** One desk in a dark room, with a dial on its edge marked 2009 to now.
 - **How you move.** Turn the dial by drag, scroll or arrow keys. The desk rebuilds itself:
   a CRT and a bot script, a laptop and client sites, two monitors and boxed stove parts, a
@@ -86,6 +96,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 - **Risk.** Many hand-made props. It is the smallest scene and the kindest to a phone.
 
 ### 4. The bot plays it for you
+
+![A small tile world with a bot walking to a quest and its script in a side panel](concept-mockups/shots/04-bot.jpg)
 
 - **First ten seconds.** A small top-down game world in original art. Each job is a quest.
   A bot is already playing: you see its path, its target and its script in a side panel.
@@ -98,6 +110,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 
 ### 5. The machine, exploded
 
+![A PC pulled apart along one axis with each part labelled as a layer of the stack](concept-mockups/shots/05-pc.jpg)
+
 - **First ten seconds.** One object at product-film quality: a glass-sided PC on a bench.
 - **How you move.** Scroll pulls it apart. Each part is a layer of the stack with the work
   that lives there: graphics card for front ends, processor for services, drives for data
@@ -109,6 +123,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 
 ### 6. The trail
 
+![A mountain at dawn with a lit trail, a camp per era and a flag on the summit](concept-mockups/shots/06-trail.jpg)
+
 - **First ten seconds.** A trailhead before dawn. Scrolling walks the trail.
 - **Details.** Each camp is an era. The light moves from pre-dawn to full sun. At the
   summit the camera turns and the whole career is laid out below. Signing the trail
@@ -117,6 +133,8 @@ Three well-known 3D portfolios set what people expect. None of the seven repeats
 - **Risk.** Scroll journeys are common, and this one has the weakest link to the work.
 
 ### 7. The control room
+
+![A curved wall of project screens over a table of systems joined by arcs of light](concept-mockups/shots/07-control-room.jpg)
 
 - **First ten seconds.** A dark room with a wall of screens, each playing one project. A
   table in the middle shows a map of systems: stores, marketplaces and warehouses as
