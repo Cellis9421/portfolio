@@ -18,3 +18,9 @@ npm run dev
 This portfolio gets built and uploaded to github pages on merges to `main`
 
 See [.github/workflows/deploy.yml](.github/workflows/deploy.yml) for more
+
+## Plans
+
+Design notes live in [plans/](plans/), never in `docs/`, which is build output.
+
+- [3D portfolio: seven concepts](plans/3d-portfolio-concepts.md)
