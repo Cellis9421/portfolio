@@ -716,6 +716,12 @@
  ],
  "receipts": [
   {
+   "number": 10,
+   "title": "present a product engineer, not a list of languages",
+   "kind": "feat",
+   "merged": "2026-11-11"
+  },
+  {
    "number": 9,
    "title": "make the prototype fast, phone-ready and photographic",
    "kind": "feat",
@@ -756,6 +762,41 @@
    "title": "add seven concepts for a 3D portfolio remake",
    "kind": "docs",
    "merged": "2026-11-11"
+  }
+ ],
+ "education": [
+  {
+   "institution": "Quincy College",
+   "location": "Quincy, MA",
+   "fields": [
+    "Computer Science",
+    "Business Administration"
+   ]
+  },
+  {
+   "institution": "Plymouth North High",
+   "location": "Plymouth, MA",
+   "fields": [
+    "Computer Science",
+    "Technical Marketing Certificate"
+   ]
+  }
+ ],
+ "posts": [
+  {
+   "title": "Tailwind CSS: The Last CSS Framework You Need",
+   "url": "https://blog.calvinellis.io/2024/09/tailwind-css-last-css-framework-you-need.html",
+   "when": "September 2024"
+  },
+  {
+   "title": "AI Programming Assistants are Good at...",
+   "url": "https://blog.calvinellis.io/2024/09/ai-programming-assistants-are-good-at.html",
+   "when": "September 2024"
+  },
+  {
+   "title": "Welcome!",
+   "url": "https://blog.calvinellis.io/2024/09/welcome.html",
+   "when": "September 2024"
   }
  ]
 }

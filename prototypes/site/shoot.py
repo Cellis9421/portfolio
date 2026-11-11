@@ -29,7 +29,8 @@ SECTIONS = [
     ("how", "03-how", "window.__demo.cap('test')"),
     ("agents", "04-agents", None),
     ("history", "05-history", "window.__demo.release(2)"),
-    ("writing", "06-guides", "window.__demo.book(0)"),
+    ("writing", "06-writing", None),
+    ("close", "07-close", None),
 ]
 
 
@@ -70,7 +71,7 @@ def main(only: list[str]) -> int:
                 )
             except Exception as exc:  # noqa: BLE001 - report it and still take the picture
                 errors.append(f"{sid} never ready: {exc}")
-            page.wait_for_timeout(6500 if sid == "about" else 2600)  # the swarm needs time to spell a word
+            page.wait_for_timeout(6500 if sid == "about" else 4200 if sid == "close" else 2600)  # the swarm needs time to spell a word
             if act:
                 page.evaluate(act)
                 page.wait_for_timeout(2600)
