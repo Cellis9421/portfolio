@@ -10,8 +10,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, '..', 'public', 'preview');
 // Only what the page needs to run. Capture scripts, stills and build tools stay behind.
 const FILES = {
-  site: ['index.html', 'main.js', 'stage.js', 'hero.js', 'projects.js', 'skills.js', 'guides.js', 'data.json', 'assets'],
-  'career-tree': ['index.html', 'assets'],
+  site: ['index.html', 'main.js', 'stage.js', 'hero.js', 'projects.js', 'ship.js', 'releases.js', 'guides.js', 'data.json', 'assets'],
 };
 
 rmSync(out, { recursive: true, force: true });

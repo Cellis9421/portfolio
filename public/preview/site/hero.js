@@ -33,7 +33,7 @@ export default function hero(canvas, anchors) {
     g.fillText(text, c.width / 2, c.height / 2 + 8);
     const img = g.getImageData(0, 0, c.width, c.height).data, hits = [];
     for (let y = 0; y < c.height; y += 3) for (let x = 0; x < c.width; x += 3) if (img[(y * c.width + x) * 4 + 3] > 120) hits.push(x, y);
-    const out = new Float32Array(N * 3), k = 8.4 / c.width;
+    const out = new Float32Array(N * 3), k = (wide ? 8.4 : 6.3) / c.width;
     for (let i = 0; i < N; i++) {
       const j = Math.floor(R() * (hits.length / 2)) * 2;
       out.set([(hits[j] - c.width / 2 + (R() - 0.5) * 3) * k, -(hits[j + 1] - c.height / 2 + (R() - 0.5) * 3) * k, (R() - 0.5) * 0.5], i * 3);
@@ -47,7 +47,7 @@ export default function hero(canvas, anchors) {
   geo.setAttribute('aA', new THREE.BufferAttribute(A, 3));
   geo.setAttribute('aB', new THREE.BufferAttribute(B, 3));
   geo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
-  const uniforms = { uMix: { value: 0 }, uTime: { value: 0 }, uSize: { value: 60 }, uPointer: { value: new THREE.Vector3(99, 99, 0) } };
+  const uniforms = { uMix: { value: 0 }, uTime: { value: 0 }, uSize: { value: 60 }, uGain: { value: 0.55 }, uPointer: { value: new THREE.Vector3(99, 99, 0) } };
   const swarm = new THREE.Points(geo, new THREE.ShaderMaterial({
     uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     vertexShader: `
@@ -66,13 +66,13 @@ export default function hero(canvas, anchors) {
         vSeed = aSeed;
       }`,
     fragmentShader: `
-      varying float vSeed;
+      varying float vSeed; uniform float uGain;
       void main() {
         float d = length(gl_PointCoord - 0.5);
         float a = smoothstep(0.5, 0.05, d);
         vec3 c = mix(vec3(0.36, 0.78, 1.0), vec3(0.72, 0.55, 1.0), vSeed);
         if (fract(vSeed * 17.0) > 0.93) c = vec3(1.0, 0.84, 0.29);
-        gl_FragColor = vec4(c * a * 0.55, a);
+        gl_FragColor = vec4(c * a * uGain, a);
       }`,
   }));
   swarm.frustumCulled = false;
@@ -90,7 +90,10 @@ export default function hero(canvas, anchors) {
     return { el, m, shape: null, phase: (j / anchors.length) * 6.2832 };
   });
 
-  let to = ball, mixing = true, held = -1, back = 0, spin = 0, orbit = 0;
+  let to = ball, mixing = true, held = -1, back = 0, spin = 0, orbit = 0, wide = true;
+  // Left alone, the swarm spells the loop a product engineer runs. It is the page's message, and a phone has no hover to find it.
+  const loop = ['Plan', 'Build', 'Test', 'Ship'].map((w) => ({ w, shape: null }));
+  let beat = 0, wait = 2.4;
   function form(target) {
     if (target === to) return;
     const m = uniforms.uMix.value;
@@ -106,17 +109,17 @@ export default function hero(canvas, anchors) {
   }
   moons.forEach((mn, j) => {
     const on = () => { held = j; clearTimeout(back); form(mn.shape ??= word(mn.el.dataset.word)); };
-    const off = () => { held = -1; back = setTimeout(() => form(ball), 500); };
+    const off = () => { held = -1; beat = 0; wait = 5; back = setTimeout(() => form(ball), 500); };
     mn.el.addEventListener('pointerenter', on); mn.el.addEventListener('focus', on);
     mn.el.addEventListener('pointerleave', off); mn.el.addEventListener('blur', off);
   });
 
-  let wide = true;
   s.onSize((w, h) => {
     wide = w / h > 1.25;
-    group.position.set(wide ? 3.6 : 0, 0, 0);
-    group.scale.setScalar(wide ? 1 : Math.min(1, (w / h) * 0.74));
-    uniforms.uSize.value = h * 0.075 * s.renderer.getPixelRatio() * (tier === 'low' ? 1.5 : 1);
+    group.position.set(wide ? 3.6 : 0, wide ? 0 : -0.7, 0);
+    group.scale.setScalar(wide ? 1 : clamp((w / h) * 1.25, 0.5, 1));
+    uniforms.uSize.value = h * 0.075 * s.renderer.getPixelRatio() * (tier === 'low' ? 1.5 : 1) * (wide ? 1 : 0.5);
+    uniforms.uGain.value = wide ? 0.55 : 0.34;
   });
 
   const ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), hit = new THREE.Vector3(), tmp = new THREE.Vector3();
@@ -133,12 +136,19 @@ export default function hero(canvas, anchors) {
       if (ray.ray.intersectPlane(plane, hit)) uniforms.uPointer.value.copy(hit).sub(group.position).divideScalar(group.scale.x).applyAxisAngle(new THREE.Vector3(0, 1, 0), -spin);
     } else uniforms.uPointer.value.set(99, 99, 0);
 
+    if (held < 0 && !calm) {
+      wait -= dt;
+      if (wait <= 0) {
+        if (beat < loop.length) { const k = loop[beat++]; form(k.shape ??= word(k.w)); wait = 2.2; }
+        else { beat = 0; form(ball); wait = 4.5; }
+      }
+    }
     if (held < 0) orbit += dt * (calm ? 0.05 : 0.2);
     moons.forEach((mn, j) => {
       const a = orbit + mn.phase;
-      mn.m.position.set(Math.cos(a) * 4.9, Math.sin(a * 1.0 + j * 1.3) * 1.5, Math.sin(a) * 2.6);
+      mn.m.position.set(Math.cos(a) * (wide ? 4.9 : 2.3), Math.sin(a + j * 1.3) * (wide ? 1.5 : 2.6), Math.sin(a) * (wide ? 2.6 : 1.5));
       const p = s.project(mn.m.getWorldPosition(tmp)), front = clamp(0.5 + mn.m.position.z / 5.2, 0, 1);
-      mn.el.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) ${wide ? 'translate(18px, -50%)' : 'translate(-50%, -150%)'}`;
+      mn.el.style.transform = `translate(${(wide ? p.x : clamp(p.x, 64, canvas.clientWidth - 64)).toFixed(1)}px, ${p.y.toFixed(1)}px) ${wide ? 'translate(18px, -50%)' : 'translate(-50%, -150%)'}`;
       mn.el.style.opacity = (0.55 + front * 0.45).toFixed(2);
       mn.m.scale.setScalar(j === held ? 1.6 : 1);
     });

@@ -40,7 +40,10 @@ export default function projects(canvas, list, ui) {
     while (g.measureText(title).width > w - 60 && title.length > 4) title = `${title.slice(0, -2).trimEnd()}…`;
     g.fillText(title, 28, top + 50);
     g.fillStyle = hue; g.beginPath(); g.arc(36, top + 82, 6, 0, 7); g.fill();
-    g.fillStyle = '#9aa6bd'; g.font = '500 21px "Segoe UI", Arial'; g.fillText(p.group, 52, top + 89);
+    g.fillStyle = '#9aa6bd'; g.font = '500 21px "Segoe UI", Arial';
+    let under = p.proof ?? p.group;
+    while (g.measureText(under).width > w - 84 && under.length > 4) under = `${under.slice(0, -2).trimEnd()}…`;
+    g.fillText(under, 52, top + 89);
     g.restore();
     const sheen = g.createLinearGradient(0, 0, w * 0.7, top);  // light catching the glass
     sheen.addColorStop(0, 'rgba(255,255,255,.16)'); sheen.addColorStop(0.45, 'rgba(255,255,255,0)');

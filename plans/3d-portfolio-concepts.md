@@ -1,15 +1,17 @@
 # 3D portfolio: concepts
 
 Brainstorm for remaking calvinellis.io as a 3D experience. **The current direction is the
-sectioned page**, a working prototype in [../prototypes/site/](../prototypes/site/): the
-current site's sections, each as its own 3D piece. The career tree is its work history
-section. Round two below is six other ways to show a lot of projects. Its pictures are rough live
-mockups in three.js, in [concept-mockups/](concept-mockups/). They show the idea, not the
-final art.
+sectioned page**, a working prototype in [../prototypes/site/](../prototypes/site/), live at
+<https://calvinellis.io/preview/site/>. It presents a product engineer: what shipped, how it
+ships, and the agentic work, with languages in the small print. Round two, further down, is
+six earlier ways to show a lot of projects. Its pictures are rough live mockups in three.js,
+in [concept-mockups/](concept-mockups/).
 
 - [The brief](#the-brief)
+- [Product engineer](#product-engineer)
+- [Ideas for showing the agentic work](#ideas-for-showing-the-agentic-work)
 - [The sectioned page](#the-sectioned-page)
-- [The bar, and the career tree](#the-bar-and-the-career-tree)
+- [What was dropped](#what-was-dropped)
 - [The four jobs](#the-four-jobs)
 - [The six, side by side](#the-six-side-by-side)
 - [Concepts](#concepts)
@@ -22,59 +24,88 @@ final art.
 
 ## The brief
 
-Owner, 2026-11-11, after round one.
+Owner, 2026-11-11, in the order he said it.
 
 - **Projects come first.** There are a lot of them and the list keeps growing: many small
   standalone things, each hosted on its own and linked from here.
 - **A work history timeline** sits somewhere in it.
 - **It still answers two questions**: who is this, and what has he done.
-- **Original.** Round one toured a career, and none of the seven landed.
+- **Keep the current site's sections**, each as its own 3D piece. Projects are the biggest.
+- **It must not freeze the browser, and it must work on a phone.**
+- **A product engineer, not a list of languages.** See the next section.
+
+## Product engineer
+
+Owner, 2026-11-11, after the page was live. What it means to be a software engineer has
+changed since the current site was written. Languages matter less. What matters is what
+shipped, with examples, and the work round the code: CI/CD, quality assurance, testability,
+maintainability and project management. Languages can be peppered in. He loved the text and
+the direction, did not like the tree, and found the first screen on a phone underwhelming.
+
+So the page is organised by six gates, in the order work moves through them. Every line of
+proof under a gate is a fact the current site already states.
+
+| Gate | What it shows | Proof it leads with |
+|---|---|---|
+| Plan | Project management | Cross-team projects run as technical project manager; the checkout migration plan |
+| Build | Maintainability | Type-safe API clients generated from the spec; documentation people and agents can both read |
+| Test | Testability | 65 tests at 100% coverage on the form system; the app running on mocked APIs |
+| Assure | Quality assurance | WCAG 2.2 AA; a diagnostics server; role-based access |
+| Release | CI/CD | Pipelines deploying every service; 95% of manual CMS setup removed |
+| Run | Operations | Sync between six sales channels; scheduled reporting |
+
+Each project is filed under the gates it shows, and its card leads with one line of proof.
+The tools sit at the foot of a card as "Built with".
+
+## Ideas for showing the agentic work
+
+The owner asked for these. The first is built. The rest draw on work that is not public,
+so they wait for his word.
+
+1. **Receipts. Built.** The page lists the pull requests that built it, each with a written
+   what, why and risk, and says an agent built it under his direction. Anyone can check it,
+   because the repository is public.
+2. **A replay of one real piece of work.** One ticket from brief to live: the brief, the
+   agent's plan, the diff, the checks, the merge and the deploy, as a timeline to scrub. It
+   shows the judgement, which a list of tools cannot.
+3. **The numbers.** Work closed, changes merged, how often a gate caught something, and the
+   time from ask to live. An employer reads a number first.
+4. **The operating manual.** The rules, gates and budgets he gives his agents, as one short
+   page beside the enablement guide. It shows he can make agents safe, not only fast.
+5. **Small standalone products, each with its own receipts.** The many little things he wants
+   to host, each carrying the same strip: what it is, how it was built, how long it took.
+6. **A before and after.** One task done by hand and then with agents: time, defects, cost.
+
+Ideas 2 to 4 need facts from his private projects. Nothing from them is on the page.
 
 ## The sectioned page
 
-Owner, 2026-11-11, after the career tree: not the tree as the whole site. The current site
-has the right sections, and each one should be its own 3D piece.
+![The sections on a desktop](../prototypes/site/shots/sections.jpg)
 
-![About, projects, skills, work history and guides](../prototypes/site/shots/sections.jpg)
-
-| Section | What he asked for | What the prototype does |
-|---|---|---|
-| About | Decent as it is. Rework it to be more AI focused, and be creative with the social links | New copy that leads with agentic work. A particle swarm with the links in orbit; point at one and the swarm spells it |
-| Projects | The biggest part: a showcase for a lot of projects | A curved wall of project screens with the real screenshots, filters, and a card with the story and links |
-| Skills | He likes the section. Something creative in 3D | A globe of every skill, sized by use, joined where skills were used together. A skill filters the gallery |
-| Work history | Could be its own 3D experience | The career tree, with the years on a slider |
-| Guides and articles | A way to link them | Books on a shelf, with room for more |
-| Education and blog | Linked, in a lower capacity | Plain cards at the foot |
+| Section | What it does |
+|---|---|
+| About | Product engineer copy. A particle swarm that spells plan, build, test, ship, with the social links in orbit. On a phone it fills the first screen |
+| Shipped | The 26 projects on a curved wall with their screenshots, filtered by gate. Each card leads with its proof |
+| How I ship | Work moving down a line through the six gates. A gate opens its proof and the projects that show it |
+| Working with agents | What he does with agents, and the receipts |
+| Release history | The career as a commit graph: each job a tagged release, each thing shipped a commit |
+| Guides and articles | Books on a shelf, with room for more |
+| Education and blog | Plain cards at the foot |
 
 The sections are independent, so one can be swapped without touching the rest. What is
-real, what is placeholder and what it still needs are in the
+real, what is placeholder, the measurements and what it still needs are in the
 [prototype's README](../prototypes/site/README.md).
 
-Owner, 2026-11-11, after opening it: make it super realistic, do not freeze the browser, and
-make it work on a phone. The tree and the shelf are now built from free photo scans, the
-page sizes itself to the machine, and the layout stacks on a phone. The measurements are in
-[Speed and phones](../prototypes/site/README.md#speed-and-phones).
+## What was dropped
 
-## The bar, and the career tree
-
-Owner, 2026-11-11, after round two: a reference of one photoreal tree with a single slider
-that takes it through the four seasons. That is the interactivity and the level of detail
-he wants, in portfolio form. One living object, one control, real detail, almost no
-interface. The mockups in rounds one and two were diagrams with labels, and missed it.
-
-![The career tree in 2010, 2014, 2019 and now](../prototypes/career-tree/shots/four-years.jpg)
-
-- **The idea.** The tree is the career. The slider is the years, 2009 to now, and the
-  tree grows from a seedling as it moves.
-- **Who.** The name, and the tree itself.
-- **Timeline.** The slider. The panel beside it reads out the job for the year under the
-  handle, and each job is a side of the tree that the camera walks round to.
-- **Projects.** A glowing fruit each, coloured by job, appearing in its year. The newest
-  sit at the top. The same projects are a plain list one click away.
-- **Live.** A fruit opens a card, and the card opens the thing itself.
-
-What works, what is placeholder and what it still needs are in the
-[prototype's README](../prototypes/career-tree/README.md).
+- **The career tree, 2026-11-11.** One photographic tree that grew as the years were
+  dragged, first as the whole site and then as the work history section. The owner really
+  did not like it there. The release history replaced it. It is in git history at `beb13db`.
+- **The skills globe, 2026-11-11.** Every language and tool as a dot. The gates replaced it,
+  because languages are no longer the point.
+- **Photographic scenes.** The owner asked for the page to be super realistic while the tree
+  was in it, and the tree and the shelf were rebuilt from photo scans. With the tree gone,
+  only the shelf is. The other scenes are drawn.
 
 ## The four jobs
 
@@ -197,8 +228,8 @@ the work on its own.
 
 ## Recommendation
 
-**On hold.** The owner set the bar after this was written, and the career tree answers it.
-What follows was the pick among the six.
+**On hold.** The owner set a different direction after this was written: the sectioned
+page. What follows was the pick among the six.
 
 **Build 4, the cabinet.** Projects matter most in the brief, and it is the only concept
 where every project is visible at once and looks like itself. It also has the strongest

@@ -57,6 +57,8 @@ export function stage(canvas, o = {}) {
   }, { rootMargin: '80px' }).observe(canvas);
   new ResizeObserver(fit).observe(canvas);
   fit();
+  // Once the caller has filled the scene, build its shaders in the background, so the first frame does not stall on them.
+  setTimeout(() => renderer.compileAsync(scene, camera).catch(() => {}));
 
   // pointer, in the canvas's own -1..1 space
   const pointer = { x: 0, y: 0, inside: false };

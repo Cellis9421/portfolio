@@ -6,20 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <style>
-  :root { --bg: #0a0c11; --panel: rgba(18, 23, 34, .88); --line: rgba(255, 255, 255, .14); --ink: #f4f6fb; --soft: #a3aec4; --blue: #5cc8ff; --violet: #b78cff; --gold: #ffd54a; --pad: 56px; }
+  :root { --bg: #0a0c11; --panel: rgba(18, 23, 34, .9); --line: rgba(255, 255, 255, .14); --ink: #f4f6fb; --soft: #a3aec4; --blue: #5cc8ff; --violet: #b78cff; --gold: #ffd54a; --pad: 56px; --mono: "Cascadia Code", Consolas, ui-monospace, monospace; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 56px; }
   body { margin: 0; padding-top: 56px; background: var(--bg); color: var(--ink); font: 16px/1.55 Inter, "Segoe UI", system-ui, sans-serif; overflow-x: hidden; }
   a { color: inherit; }
   button { font: inherit; color: inherit; cursor: pointer; }
+  button:disabled { opacity: .4; cursor: default; }
   :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
   h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-weight: 600; letter-spacing: -.02em; margin: 0; }
   h2 { font-size: 44px; line-height: 1.05; }
   h3 { margin: 0; font-size: 22px; line-height: 1.2; }
   .kicker { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  .mono { font-family: var(--mono); letter-spacing: 0; text-transform: none; }
   .quiet { color: var(--soft); font-size: 14px; }
   .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); font-weight: 600; font-size: 14px; text-decoration: none; }
-  .btn:hover { background: rgba(255, 255, 255, .14); }
+  .btn:hover:not(:disabled) { background: rgba(255, 255, 255, .14); }
   .btn.main { background: var(--ink); color: #0a0c11; border-color: var(--ink); }
   .btn.main:hover { background: #fff; }
 
@@ -31,16 +33,20 @@
   /* Every section is a scene with words laid over it. On a phone the words and the scene stack. */
   main > section { position: relative; min-height: calc(100vh - 56px); overflow: hidden; border-bottom: 1px solid var(--line); }
   .scene { position: absolute; inset: 0; }
-  .scene canvas, .scene iframe { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; touch-action: pan-y; }
-  .head { position: absolute; left: var(--pad); top: 40px; z-index: 3; max-width: 460px; pointer-events: none; }
+  .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+  .labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  .head { position: absolute; left: var(--pad); top: 40px; z-index: 3; max-width: 480px; pointer-events: none; }
   .head p { margin: 12px 0 0; color: var(--soft); }
   .hint { position: absolute; z-index: 3; margin: 0; pointer-events: none; }
+  .panel { position: absolute; right: var(--pad); top: 120px; z-index: 3; width: 400px; max-height: calc(100vh - 240px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
+  .panel p { color: #cfd6e4; font-size: 15px; margin: 12px 0 0; }
+  .made { font-size: 13px !important; color: var(--soft) !important; }
 
   #about .copy { position: relative; z-index: 3; max-width: 560px; padding: 96px 0 80px var(--pad); pointer-events: none; }
-  #about .copy > * { pointer-events: auto; }
+  #about .copy a, #about .copy li { pointer-events: auto; }
   #about h1 { font-size: 84px; line-height: .98; }
-  #about .lead { font-size: 25px; line-height: 1.3; margin: 22px 0 0; color: var(--ink); }
-  #about .copy p:not(.lead):not(.kicker) { color: var(--soft); margin: 16px 0 0; }
+  #about .lead { font-size: 25px; line-height: 1.3; margin: 22px 0 0; }
+  #about .rest p { color: var(--soft); margin: 16px 0 0; }
   #about .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; font-size: 13px; }
   #about .facts li { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .04); }
   #about .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
@@ -50,42 +56,53 @@
   .moon small { font-weight: 500; opacity: .7; margin-left: 6px; }
   #about .hint { right: var(--pad); bottom: 34px; }
 
-  #projects .bar { position: absolute; left: var(--pad); right: var(--pad); top: 40px; z-index: 3; display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; pointer-events: none; }
-  #projects .bar > * { pointer-events: auto; }
-  #projects .count { color: var(--soft); margin: 0 0 6px; }
+  #shipped .bar { position: absolute; left: var(--pad); right: var(--pad); top: 40px; z-index: 3; display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; pointer-events: none; }
+  #shipped .bar > * { pointer-events: auto; }
+  #shipped .count { color: var(--soft); margin: 0 0 6px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
   .chip { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .05); font-size: 14px; font-weight: 600; }
-  .chip[aria-pressed="true"] { background: var(--ink); color: #0a0c11; border-color: var(--ink); }
-  .chip.skill-chip { border-color: var(--gold); color: var(--gold); }
+  .chip[aria-pressed="true"] { background: var(--hue, var(--ink)); color: #0a0c11; border-color: var(--hue, var(--ink)); }
   .turn { position: absolute; top: 50%; z-index: 3; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); font-size: 22px; }
   .turn.prev { left: 20px; } .turn.next { right: 20px; }
-  #projects .hint { left: 50%; bottom: 30px; transform: translateX(-50%); white-space: nowrap; }
+  #shipped .hint { left: 50%; bottom: 30px; transform: translateX(-50%); white-space: nowrap; }
   .detail { position: absolute; right: 84px; top: 132px; z-index: 4; width: 400px; max-height: calc(100vh - 270px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--hue, var(--line)); border-radius: 18px; backdrop-filter: blur(14px); }
   .detail .kicker { color: var(--hue); }
   .detail p { color: #cfd6e4; font-size: 15px; margin: 12px 0 0; }
+  .detail .proof { color: var(--ink); font-size: 17px; font-weight: 600; line-height: 1.35; }
   .detail .x { position: absolute; right: 8px; top: 8px; width: 44px; height: 44px; border: 0; background: none; font-size: 22px; border-radius: 50%; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-  .tag { font-size: 12px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: none; }
-  .tag:hover { border-color: var(--gold); color: var(--gold); }
+  .tag { font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hue, var(--line)); color: var(--hue, inherit); background: none; }
+  .tag:hover { background: var(--hue); color: #0a0c11; }
   .go { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; align-items: center; }
 
-  .labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
-  .skill { position: absolute; left: 0; top: 0; pointer-events: auto; background: none; border: 0; padding: 2px 6px; font-weight: 600; white-space: nowrap; text-shadow: 0 1px 8px #000; will-change: transform, opacity; }
-  .skill:hover, .skill[data-state="on"] { color: var(--hue); }
-  .skill[data-state="near"] { color: #fff; }
-  #skills .panel { position: absolute; right: var(--pad); top: 120px; z-index: 3; width: 380px; max-height: calc(100vh - 240px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
-  #skills .panel p { color: #cfd6e4; font-size: 15px; margin: 12px 0 0; }
-  .legend, .used { list-style: none; padding: 0; margin: 14px 0 0; font-size: 14px; }
-  .legend li, .used button { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
-  .legend span, .used span { width: 10px; height: 10px; border-radius: 50%; flex: none; }
-  .used button { width: 100%; min-height: 40px; background: none; border: 0; text-align: left; padding: 7px 8px; border-radius: 8px; }
-  .used button:hover { background: rgba(255, 255, 255, .1); }
-  #skills #see { margin-top: 16px; }
+  .stop { position: absolute; left: 0; top: 0; pointer-events: auto; min-width: 112px; padding: 8px 12px; text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; will-change: transform; }
+  .stop b { display: block; font-size: 17px; color: var(--hue); }
+  .stop span { font-size: 12px; color: var(--soft); white-space: nowrap; }
+  .stop:hover, .stop[data-state="on"] { border-color: var(--hue); }
+  .stop[data-state="dim"] { opacity: .5; }
+  .proofs, .changes { list-style: none; padding: 0; margin: 14px 0 0; font-size: 14.5px; }
+  .proofs li { position: relative; padding: 0 0 0 20px; margin-top: 10px; color: #dfe5f0; }
+  .proofs li::before { content: "✓"; position: absolute; left: 0; color: var(--hue); font-weight: 700; }
+  .changes li { position: relative; padding: 0 0 0 20px; margin-top: 9px; color: #dfe5f0; font-size: 14px; }
+  .changes li::before { content: "+"; position: absolute; left: 2px; color: #7ef0c0; font-family: var(--mono); font-weight: 700; }
+  #see { margin-top: 16px; }
 
-  #work { height: calc(100vh - 56px); }
-  #work .scene { background: #7f9a6a; }
-  #work .head { color: #fff; top: 36px; text-shadow: 0 1px 14px rgba(10, 30, 60, .5); }
-  #work .head p { color: rgba(255, 255, 255, .9); }
+  #agents { min-height: 0; padding: 96px var(--pad); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 56px; align-items: start; }
+  #agents .say p { color: var(--soft); margin: 14px 0 0; max-width: 520px; }
+  #agents .say .lead { color: var(--ink); font-size: 21px; line-height: 1.35; }
+  #agents .proofs { max-width: 520px; }
+  .receipts { background: #0d1119; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .receipts header { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-bottom: 1px solid var(--line); font-weight: 700; }
+  .receipts header span { font: 13px var(--mono); color: var(--soft); font-weight: 400; }
+  .log a { display: grid; grid-template-columns: 38px 46px 1fr 88px; gap: 10px; align-items: baseline; padding: 10px 18px; text-decoration: none; font: 13.5px/1.4 var(--mono); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  .log a:hover { background: rgba(255, 255, 255, .06); }
+  .log .n { color: var(--blue); } .log .k { color: #7ef0c0; } .log .d { color: var(--soft); text-align: right; }
+  .receipts footer { padding: 14px 18px; color: var(--soft); font-size: 13.5px; }
+
+  .tag-rel { position: absolute; left: 0; top: 0; pointer-events: auto; padding: 6px 12px; text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font-family: var(--mono); will-change: transform; }
+  .tag-rel b { display: block; font-size: 15px; color: var(--hue); }
+  .tag-rel span { font-size: 12px; color: var(--soft); }
+  .tag-rel:hover, .tag-rel[data-state="on"] { border-color: var(--hue); }
 
   #writing .reading { position: absolute; right: var(--pad); top: 130px; z-index: 3; width: 400px; display: grid; gap: 12px; }
   .read { display: grid; gap: 4px; padding: 18px 20px; text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
@@ -107,18 +124,26 @@
     h2 { font-size: 34px; }
     main > section { min-height: 0; display: flex; flex-direction: column; overflow: visible; }
     .scene { position: relative; inset: auto; order: 2; height: 62vh; height: 62svh; overflow: hidden; }
-    .head, #projects .bar { position: relative; left: auto; right: auto; top: auto; order: 1; padding: 36px var(--pad) 14px; max-width: none; }
-    .detail, #skills .panel, #writing .reading { position: relative; right: auto; top: auto; order: 3; width: auto; max-height: none; margin: 14px 16px 28px; }
-    #about .copy { order: 1; max-width: none; padding: 36px var(--pad) 8px; }
-    #about h1 { font-size: 52px; } #about .lead { font-size: 21px; }
-    #about .scene { height: 54vh; height: 54svh; }
-    #about .hint { right: auto; left: 50%; transform: translateX(-50%); bottom: 12px; white-space: nowrap; }
-    .moon { font-size: 14px; }
+    .head, #shipped .bar { position: relative; left: auto; right: auto; top: auto; order: 1; padding: 36px var(--pad) 14px; max-width: none; }
+    .detail, .panel, #writing .reading { position: relative; right: auto; top: auto; order: 3; width: auto; max-height: none; margin: 14px 16px 28px; }
+    /* The first screen is the whole point on a phone: the swarm fills it, with the name over the top and the buttons at the foot. */
+    #about { display: block; }
+    #about .scene { position: absolute; inset: 0 0 auto 0; height: calc(100vh - 56px); height: calc(100svh - 56px); }
+    #about .copy { max-width: none; padding: 0; }
+    #about .top { min-height: calc(100vh - 56px); min-height: calc(100svh - 56px); display: flex; flex-direction: column; padding: 28px var(--pad) 26px; }
+    #about .top .cta { margin-top: auto; }
+    #about .rest { position: relative; padding: 4px var(--pad) 40px; background: var(--bg); }
+    #about h1 { font-size: 54px; } #about .lead { font-size: 20px; margin-top: 14px; }
+    #about .hint { right: auto; left: 50%; transform: translateX(-50%); bottom: 96px; white-space: nowrap; font-size: 12px; }
+    .moon { font-size: 13px; padding: 0 12px; } .moon small { display: none; }
     .chips { margin-left: 0; }
     .turn { top: auto; bottom: 14px; } .turn.prev { left: 14px; } .turn.next { right: 14px; }
-    #projects .hint { bottom: 28px; font-size: 12px; }
-    #work { height: auto; } #work .scene { height: 84vh; height: 84svh; }
-    #work .head { top: auto; color: var(--ink); text-shadow: none; } #work .head p { color: var(--soft); }
+    #shipped .hint { bottom: 28px; font-size: 12px; }
+    .stop { min-width: 0; text-align: left; padding: 6px 10px; } .stop b { font-size: 15px; }
+    #how .scene { height: 70vh; height: 70svh; }
+    #agents { grid-template-columns: 1fr; gap: 28px; padding: 44px var(--pad); }
+    .log a { grid-template-columns: 30px 40px 1fr; font-size: 12.5px; padding: 10px 14px; } .log .d { display: none; }
+    #history .scene { height: 44vh; height: 44svh; }
     #writing .scene { height: 46vh; height: 46svh; }
     #more { grid-template-columns: 1fr; padding: 40px var(--pad); }
   }
@@ -130,10 +155,10 @@
 <body>
 <nav aria-label="Sections">
   <a class="me" href="#about">Calvin Ellis</a>
-  <a class="tab" href="#about">About</a>
-  <a class="tab" href="#projects">Projects</a>
-  <a class="tab" href="#skills">Skills</a>
-  <a class="tab" href="#work">Work history</a>
+  <a class="tab" href="#shipped">Shipped</a>
+  <a class="tab" href="#how">How I ship</a>
+  <a class="tab" href="#agents">Agents</a>
+  <a class="tab" href="#history">History</a>
   <a class="tab" href="#writing">Guides</a>
   <a class="btn main" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener" style="min-height:40px;margin-left:10px">Get in touch</a>
 </nav>
@@ -148,39 +173,63 @@
         <a class="moon" data-word="Blog" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog</a>
         <a class="moon" data-word="Guide" href="#writing">Agentic guide</a>
       </div>
-      <p class="hint quiet">Point at a link and the swarm spells it.</p>
+      <p class="hint quiet">Plan. Build. Test. Ship.</p>
     </div>
     <div class="copy">
-      <p class="kicker">Principal software engineer · AI enablement</p>
-      <h1 id="about-h">Calvin Ellis</h1>
-      <p class="lead">I build software with AI agents, and I teach engineering teams to do the same.</p>
-      <p>Fifteen years across the stack, from cybersecurity education at Cybrary to a tenfold e-commerce business at Stove &amp; Grill Parts For Less. Today the work is agentic: designing the workflows, the guardrails and the documentation that let AI agents ship real software.</p>
-      <p>I have run company-wide AI enablement training, coached engineers one to one on agentic coding, and documented hundreds of systems so that people and agents can both understand them.</p>
-      <ul class="facts"><li>15+ years</li><li>Front end, back end, DevOps</li><li>Greater Boston · open to opportunities</li></ul>
-      <div class="cta"><a class="btn main" href="#projects">See the projects ↓</a><a class="btn" href="#writing">Read the agentic guide</a></div>
+      <div class="top">
+        <p class="kicker">Product engineer · AI enablement</p>
+        <h1 id="about-h">Calvin Ellis</h1>
+        <p class="lead">I ship products with AI agents, and I teach engineering teams to do the same.</p>
+        <div class="cta"><a class="btn main" href="#shipped">See what shipped ↓</a><a class="btn" href="#how">How I ship</a></div>
+      </div>
+      <div class="rest">
+        <p>Fifteen years across the stack, from cybersecurity education at Cybrary to a tenfold e-commerce business at Stove &amp; Grill Parts For Less. Today the work is agentic: designing the workflows, the guardrails and the documentation that let AI agents ship real software.</p>
+        <p>I have run company-wide AI enablement training, coached engineers one to one on agentic coding, and documented hundreds of systems so that people and agents can both understand them.</p>
+        <ul class="facts"><li>15+ years</li><li>Plan, build, test, release, run</li><li>Greater Boston · open to opportunities</li></ul>
+      </div>
     </div>
   </section>
 
-  <section id="projects" aria-labelledby="projects-h">
+  <section id="shipped" aria-labelledby="shipped-h">
     <div class="scene">
-      <canvas tabindex="0" aria-label="Project gallery. Left and right arrows browse, Enter opens."></canvas>
-      <button class="turn prev" aria-label="Previous projects">‹</button>
-      <button class="turn next" aria-label="Next projects">›</button>
-      <p class="hint quiet">Drag to browse · tap a project to open it</p>
+      <canvas tabindex="0" aria-label="Gallery of shipped work. Left and right arrows browse, Enter opens."></canvas>
+      <button class="turn prev" aria-label="Previous">‹</button>
+      <button class="turn next" aria-label="Next">›</button>
+      <p class="hint quiet">Drag to browse · tap one to open it</p>
     </div>
-    <div class="bar"><div><h2 id="projects-h">Projects</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter projects"></div></div>
+    <div class="bar"><div><h2 id="shipped-h">Shipped</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter by what the work shows"></div></div>
     <article class="detail" aria-live="polite" hidden></article>
   </section>
 
-  <section id="skills" aria-labelledby="skills-h">
+  <section id="how" aria-labelledby="how-h">
     <div class="scene"><canvas aria-hidden="true"></canvas><div class="labels"></div></div>
-    <div class="head"><h2 id="skills-h">Skills</h2><p>What the projects were built with.</p></div>
+    <div class="head"><h2 id="how-h">How I ship</h2><p>Every piece of work clears six gates. The languages are in the small print.</p></div>
     <aside class="panel" aria-live="polite"></aside>
   </section>
 
-  <section id="work" aria-labelledby="work-h">
-    <div class="scene"><iframe title="Work history: a tree that grows through the years" data-src="../career-tree/index.html?embed=1" loading="lazy"></iframe></div>
-    <div class="head"><h2 id="work-h">Work history</h2><p>Drag the years. Each job is a side of the tree.</p></div>
+  <section id="agents" aria-labelledby="agents-h">
+    <div class="say">
+      <p class="kicker">Agentic engineering</p>
+      <h2 id="agents-h">Working with agents</h2>
+      <p class="lead">Agents do the building. I own the plan, the guardrails and the proof that it works.</p>
+      <ul class="proofs">
+        <li style="--hue:#b78cff">Ran company-wide AI enablement training at Cybrary.</li>
+        <li style="--hue:#b78cff">Coached engineers one to one on agentic coding, finding where AI speeds each of them up.</li>
+        <li style="--hue:#b78cff">Wrote the rules and the documentation that let an agent understand a codebase before it changes it.</li>
+      </ul>
+      <p style="margin-top:22px"><a class="btn main" href="https://www.notion.so/Agentic-Software-Development-Enablement-Guide-2c7965a5986780edb657fa92aab449fc?source=copy_link" target="_blank" rel="noopener">Read the enablement guide ↗</a></p>
+    </div>
+    <div class="receipts">
+      <header>Receipts: how this page was built <span class="tally"></span></header>
+      <div class="log"></div>
+      <footer>Directed by me, built by an AI agent. Every change came through a pull request with a written what, why and risk, and went live in about two minutes.</footer>
+    </div>
+  </section>
+
+  <section id="history" aria-labelledby="history-h">
+    <div class="scene"><canvas tabindex="0" aria-label="Release history. Left and right arrows step through the releases."></canvas><div class="labels"></div></div>
+    <div class="head"><h2 id="history-h">Release history</h2><p>Fifteen years as a commit graph. Drag it, or step through the releases.</p></div>
+    <aside class="panel" aria-live="polite"></aside>
   </section>
 
   <section id="writing" aria-labelledby="writing-h">
