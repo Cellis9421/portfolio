@@ -321,10 +321,6 @@
     [
      "The bot",
      "https://github.com/Cellis9421/discord-ai-bot"
-    ],
-    [
-     "The art app",
-     "https://github.com/Cellis9421/paint-it"
     ]
    ],
    "shot": "paint_it.png"
@@ -353,70 +349,185 @@
    "shot": "portfolio.png"
   }
  ],
- "releases": [
+ "eras": [
   {
-   "version": "v1.0",
    "year": 2009,
-   "title": "Game Bot Developer",
-   "org": "Independent",
-   "dates": "January 2009 to May 2012",
-   "notes": [
-    "Built AI bots in Java that automated gameplay and completed complex tasks across multiple video games.",
-    "Used reflection and injection techniques to run scripts on top of or inside native game clients.",
-    "Designed workflows that consumed external APIs to drive bot behavior and in-game actions.",
-    "Developed complex scripts in Java to orchestrate multi-step tasks and objectives within game environments.",
-    "Focused on Java-based tooling, API integration, and script orchestration for automated in-game completion of varied tasks."
-   ]
+   "years": "2009 to 2012",
+   "hue": "#9a7cf5",
+   "title": "Bots that played the game",
+   "role": "Game bot developer, independent",
+   "work": [
+    "Wrote bots in Java that played video games on their own and finished long, multi-step tasks.",
+    "Ran scripts on top of the game client, or inside it, using reflection and injection.",
+    "Fed a bot its next move from outside APIs."
+   ],
+   "side": [],
+   "tools": [
+    "Java",
+    "Reflection",
+    "Injection",
+    "APIs"
+   ],
+   "shipped": [],
+   "links": []
   },
   {
-   "version": "v2.0",
    "year": 2012,
-   "title": "Contract Software Engineer",
-   "org": "Independent",
-   "dates": "May 2012 to January 2017",
-   "notes": [
-    "Built custom CMS platforms and marketing automation tools for small businesses, streamlining internal reporting, task management, and customer engagement.",
-    "Built web applications to improve operational efficiency, integrating CRMs and analytics dashboards based on client-specific needs.",
-    "Worked with clients to find technologies and tools that cost-effectively empower small businesses."
-   ]
+   "years": "2012 to 2017",
+   "hue": "#a488ff",
+   "title": "Systems for small businesses",
+   "role": "Contract software engineer, independent",
+   "work": [
+    "Built custom content systems and marketing automation for small businesses, to run their reporting, their tasks and their customer follow-up.",
+    "Built web apps that tied in each client's CRM and analytics dashboards.",
+    "Chose the technology each business could afford to run."
+   ],
+   "side": [],
+   "tools": [],
+   "shipped": [],
+   "links": []
   },
   {
-   "version": "v3.0",
    "year": 2017,
-   "title": "Lead Software Engineer",
-   "org": "Stove & Grill Parts for Less",
-   "dates": "January 2017 to September 2022",
-   "notes": [
-    "Lead engineering strategy/team, growing revenue from $1M ARR → $10M ARR",
-    "Rewrote core e-commerce site (Shopify CMS, Liquid, JS) with WCAG 2.2 AA accessibility and better IA / design for the industry",
-    "Built sync services to move our catalog, inventory, and sales data between sales channels (Shopify, Amazon, Walmart, eBay, Etsy, Google)",
-    "Built a report / diagnostic server to provide critical insights into the business",
-    "Optimized third-party tools, significantly enhancing the security, reliability, and cost-efficiency. (Fulfillment, IMS, Marketing)",
-    "Implemented CI/CD pipelines for automated deployments of all services and sites (GitHub Actions)",
-    "Helped orchestrate engineering, marketing, and customer success efforts.",
-    "Mentored engineers of all skill levels through rapid growth."
-   ]
+   "years": "2017 to 2022",
+   "hue": "#8f9dff",
+   "title": "A store that grew tenfold",
+   "role": "Lead software engineer, Stove & Grill Parts For Less",
+   "work": [
+    "Led the engineering as revenue grew from $1M to $10M a year.",
+    "Rewrote the store on Shopify, accessible to WCAG 2.2 AA.",
+    "Built sync services that moved catalog, stock and sales between Shopify, Amazon, Walmart, eBay, Etsy and Google.",
+    "Built the reporting and diagnostics server the business ran on.",
+    "Put every service and site on automated deployment."
+   ],
+   "side": [],
+   "tools": [
+    "Shopify",
+    "Liquid",
+    "JavaScript",
+    "GitHub Actions",
+    "Cloud Run"
+   ],
+   "shipped": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "links": []
   },
   {
-   "version": "v4.0",
    "year": 2022,
-   "title": "Principal Software Engineer",
-   "org": "Cybrary",
-   "dates": "September 2022 to February 2026",
-   "notes": [
-    "Rewrote marketing website (Next.js, TS, ISR/SSR, Vercel, Tailwind)",
-    "Rewrote core application (Next.js, TS, Vercel, MaterialUI)",
-    "Multi-tenancy, Configurable RBAC, MSW Demos, Cursor rules",
-    "Organized and led company-wide 'AI Enablement' training sessions",
-    "Documented hundreds of workflows and systems, resulting in faster onboarding and better agentic understanding of our code (Confluence, Miro, READMEs)",
-    "Managed/Maintained a cloud-based complex virtual lab environment (CLAB)",
-    "Orchestrated cross-team projects - often acted as a TPM (JIRA, Trello)",
-    "Trained engineers on team/org with 1:1 agentic coding sessions, helping them find where AI can improve DX and velocity",
-    "Mentored interns, helping them complete required work and personal goals"
+   "years": "2022 to 2026",
+   "hue": "#6fb8ff",
+   "title": "A platform for whole companies",
+   "role": "Principal software engineer, Cybrary",
+   "work": [
+    "Rewrote the marketing site and the core application in Next.js and TypeScript.",
+    "Built multi-tenancy, configurable role-based access, and a sales demo mode on mocked APIs.",
+    "Ran cross-team projects, often as the technical project manager.",
+    "Kept a cloud-based virtual lab environment running."
+   ],
+   "side": [],
+   "tools": [
+    "Next.js",
+    "TypeScript",
+    "Vercel",
+    "Tailwind",
+    "Material UI",
+    "Mock Service Worker"
+   ],
+   "shipped": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "links": []
+  },
+  {
+   "year": 2023,
+   "years": "2023 onward",
+   "hue": "#5cc8ff",
+   "title": "Code with an assistant",
+   "role": "AI enablement, at Cybrary and on the side",
+   "work": [
+    "Wrote the rules and the documentation that let a coding assistant understand a codebase before it changes it.",
+    "Organised and led company-wide AI enablement training.",
+    "Coached engineers one to one, finding where AI speeds each of them up."
+   ],
+   "side": [
+    {
+     "text": "A Discord bot that writes text and makes images.",
+     "url": "https://github.com/Cellis9421/discord-ai-bot"
+    },
+    {
+     "text": "An app that makes art from a prompt.",
+     "url": null
+    },
+    {
+     "text": "Wrote up what AI programming assistants are good at.",
+     "url": "https://blog.calvinellis.io/2024/09/ai-programming-assistants-are-good-at.html"
+    }
+   ],
+   "tools": [
+    "Cursor",
+    "OpenAI",
+    "DALL-E",
+    "Confluence",
+    "Miro"
+   ],
+   "shipped": [
+    10
+   ],
+   "links": []
+  },
+  {
+   "year": 2026,
+   "years": "Now",
+   "hue": "#ffd54a",
+   "title": "Agents write the code",
+   "role": "Product engineer",
+   "work": [
+    "Agents write the code and manage it. I decide what gets built, and what counts as done.",
+    "Wrote rule packs that tell coding agents how to work, and a command-line tool to manage them.",
+    "Had an agent build this page: 11 pull requests, each with a written what, why and risk."
+   ],
+   "side": [],
+   "tools": [
+    "AI agents",
+    "Rule packs",
+    "Pull requests",
+    "CI/CD"
+   ],
+   "shipped": [
+    11
+   ],
+   "links": [
+    [
+     "See how I ship ↓",
+     "#how"
+    ],
+    [
+     "The receipts ↓",
+     "#agents"
+    ],
+    [
+     "The rule packs ↗",
+     "https://github.com/Cellis9421/rule-manager"
+    ]
    ]
   }
  ],
  "receipts": [
+  {
+   "number": 13,
+   "title": "show how I ship as a loop and group shipped work",
+   "kind": "feat",
+   "merged": "2026-11-12"
+  },
   {
    "number": 12,
    "title": "add section bubbles to the hero and keep its word readable",

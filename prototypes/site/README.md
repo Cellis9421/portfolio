@@ -1,12 +1,13 @@
 # Sectioned page prototype
 
-One scrolling page that presents a product engineer: how he ships, the agentic work, and
-what shipped, with languages in the small print. Each section is its own 3D piece. It
+One scrolling page built round a timeline: what he was working on from 2009 to now, then
+how he ships, the agentic work and what shipped. Each section is its own 3D piece. It
 reads the site's own project and work history config, so the content is real. It is a
 prototype and is not wired into the site.
 
 - [Look at it](#look-at-it)
 - [The sections](#the-sections)
+- [The timeline](#the-timeline)
 - [The loop](#the-loop)
 - [Shipped is a dozen bodies of work](#shipped-is-a-dozen-bodies-of-work)
 - [Speed and phones](#speed-and-phones)
@@ -36,12 +37,40 @@ python -m http.server 4173
 | Section | The 3D piece | What you do with it |
 |---|---|---|
 | About | A swarm of particles with seven bubbles in orbit: four shortcuts to sections and three social links | Left alone it spells plan, test, build, ship, learn. Point at a bubble and it spells that. On a phone it fills the first screen |
+| Timeline | One figure per era, drawn in points, each standing straighter than the last. They stand in a row, then close up into one walker | Scroll. The walker stays in view and changes with the era whose card is passing. A year label jumps to its era |
 | How I ship | Work going round a loop of five stations, with agents at each | Pick a station to see what the agents do there, what he does, and the proof. Then send that filter down to the gallery |
 | Working with agents | None: words and a log | Read what he does with agents, and the pull requests that built this page |
 | Shipped | A curved wall of 12 bodies of work, with their screenshots | Drag or use the arrows, filter by station, open one for its proof, story and links |
-| Release history | The career as a commit graph | Drag it or step through. Each job is a tagged release with its notes |
 | Writing | One book for the guide, drawn in CSS 3D, and the blog's latest posts | Tap the book or a post. Each is a plain link, with no canvas, so it is effortless on a phone |
 | Closing | The swarm again, spelling "Let's talk" | Get in touch, and see where he studied |
+
+## The timeline
+
+Owner, 2026-11-12: build the page round a timeline of what he was doing, from about 2010, in
+the manner of the march of progress picture. It should show him solving problems with the
+tools of each time, by hand and then with agents, without the page saying so in words.
+
+`ERAS` in `build-data.mjs` holds six eras, oldest first.
+
+| Era | Opens | Its facts come from |
+|---|---|---|
+| Bots that played the game | 2009 | Work history |
+| Systems for small businesses | 2012 | Work history |
+| A store that grew tenfold | 2017 | Work history, project list |
+| A platform for whole companies | 2022 | Work history, project list |
+| Code with an assistant | 2023 | Work history, his first public AI repository, the blog |
+| Agents write the code | 2026 | His public rule packs for coding agents, this page's receipts |
+
+- **An era that opens with a job reads its years from the work history**, and a job that
+  opens no era fails the build.
+- **A card has up to four parts**: working on, on the side, tools of the time, shipped then.
+  A part with no fact behind it is left off, never filled in.
+- **The walker is `march.js`.** A body is 18 joints and the capsules between them. Its points
+  ride the joints in the shader, so a pose costs a few numbers a frame. `POSE` is the table of
+  how the body is held from first era to last: lean, squat, reach, bulk, stride.
+- **One companion joins in the assistant era, and a crew with its work in the last.** These
+  are the same small lights that mean agents in the loop.
+- **On a phone the walker is pinned across the top** and the cards pass under it.
 
 ## The loop
 
@@ -94,6 +123,10 @@ the CPU slowed four times. It is an emulation, not a real phone.
 | Phone profile: stalls in total | 6,163 ms | 1,138 ms |
 | Phone profile: lowest frame rate in any section | 16 | 58 |
 
+The timeline's walker, measured the same way on 2026-11-12: 60 frames a second on the desktop
+in every section, and 54 to 57 on the phone profile while the walker is in view. The longest
+stall was 313 ms on the desktop and 537 ms on the phone profile, on a busy machine.
+
 The loop replaced the line on 2026-11-12. On a busy machine, three rounds each, its settled
 frame rate on the phone profile matched the line's: 59 against 59, 36 against 34, 60 against 54.
 
@@ -117,15 +150,15 @@ How it stays quick:
 | `index.html` | The page: every section's words and styles |
 | `main.js` | Loads the data and starts each scene when its section comes near the screen |
 | `stage.js` | One small WebGL stage per section, with the tiers and the resolution trade |
-| `hero.js`, `projects.js`, `ship.js`, `releases.js` | One scene each. `hero.js` also draws the closing section |
-| `build-data.mjs` | Builds `data.json`: the loop's stations, the bodies of work filed under them, the releases, the receipts, the education and the blog's latest posts |
+| `hero.js`, `march.js`, `ship.js`, `projects.js` | One scene each. `hero.js` also draws the closing section |
+| `build-data.mjs` | Builds `data.json`: the eras, the loop's stations, the bodies of work filed under them, the receipts, the education and the blog's latest posts |
 | `data.json` | The built data, committed so the page runs without a build |
 | `assets/` | The gallery's screenshots, written by `../build-assets.py` |
 | `shoot.py`, `shots/` | The capture script and its stills |
 
 ## What is real and what is placeholder
 
-- **Real:** the proof under each station, the release notes, the screenshots, the social
+- **Real:** every line in an era, the proof under each station, the screenshots, the social
   links, the guide, the blog's latest posts read from its feed, the education, and the pull
   requests in the receipts.
 - **Written by hand:** the 12 bodies of work, in `build-data.mjs`: the title, the line of
@@ -136,6 +169,9 @@ How it stays quick:
 ## What it still needs
 
 - The owner's read of each section. They are independent, so any one can be swapped.
+- His own words for the timeline. Only he knows what he was doing on the side in each era,
+  and what he built with from 2012 to 2017, where the work history names no tool. Those
+  parts are left off until he says.
 - His agentic work. The page says what he does with agents and shows this page's own
   receipts. His private projects are not on it. The ideas for showing them are in
   [the plan](../../plans/3d-portfolio-concepts.md#ideas-for-showing-the-agentic-work).
