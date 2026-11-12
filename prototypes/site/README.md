@@ -1,13 +1,14 @@
 # Sectioned page prototype
 
-One scrolling page that presents a product engineer: what shipped, how it ships, and the
-agentic work, with languages in the small print. Each section is its own 3D piece. It
+One scrolling page that presents a product engineer: how he ships, the agentic work, and
+what shipped, with languages in the small print. Each section is its own 3D piece. It
 reads the site's own project and work history config, so the content is real. It is a
 prototype and is not wired into the site.
 
 - [Look at it](#look-at-it)
 - [The sections](#the-sections)
-- [The six gates](#the-six-gates)
+- [The loop](#the-loop)
+- [Shipped is a dozen bodies of work](#shipped-is-a-dozen-bodies-of-work)
 - [Speed and phones](#speed-and-phones)
 - [Layout](#layout)
 - [What is real and what is placeholder](#what-is-real-and-what-is-placeholder)
@@ -34,33 +35,51 @@ python -m http.server 4173
 
 | Section | The 3D piece | What you do with it |
 |---|---|---|
-| About | A swarm of particles with seven bubbles in orbit: four shortcuts to sections and three social links | Left alone it spells plan, build, test, ship. Point at a bubble and it spells that. On a phone it fills the first screen |
-| Shipped | A curved wall of the 26 projects, with their screenshots | Drag or use the arrows, filter by gate, open one for its proof, story and links |
-| How I ship | Work moving down a line through six gates | Pick a gate for its proof, then send that filter up to the gallery |
+| About | A swarm of particles with seven bubbles in orbit: four shortcuts to sections and three social links | Left alone it spells plan, test, build, ship, learn. Point at a bubble and it spells that. On a phone it fills the first screen |
+| How I ship | Work going round a loop of five stations, with agents at each | Pick a station to see what the agents do there, what he does, and the proof. Then send that filter down to the gallery |
 | Working with agents | None: words and a log | Read what he does with agents, and the pull requests that built this page |
+| Shipped | A curved wall of 12 bodies of work, with their screenshots | Drag or use the arrows, filter by station, open one for its proof, story and links |
 | Release history | The career as a commit graph | Drag it or step through. Each job is a tagged release with its notes |
 | Writing | One book for the guide, drawn in CSS 3D, and the blog's latest posts | Tap the book or a post. Each is a plain link, with no canvas, so it is effortless on a phone |
 | Closing | The swarm again, spelling "Let's talk" | Get in touch, and see where he studied |
 
-## The six gates
+## The loop
 
-The page is organised by what a product engineer does, not by language. `build-data.mjs`
-holds the model: six gates in the order work moves through them, each with a line on what
-it is for, the proof, and the tools.
+The page is organised by how the work gets done, not by language. Owner, 2026-11-12: how he
+ships matters more than what shipped, and a line of gates was missing its feedback loop.
+`build-data.mjs` holds the model: five stations, in the order work goes round them.
 
-| Gate | Shows |
-|---|---|
-| Plan | Project management |
-| Build | Maintainability |
-| Test | Testability |
-| Assure | Quality assurance |
-| Release | CI/CD |
-| Run | Operations |
+| Station | Shows | In the scene |
+|---|---|---|
+| Plan | Deciding what to build from what production says | Telemetry arrives here. The owner's diamond |
+| Build | Test-driven development | Work laps a small ring twice, red then green, before it moves on |
+| Assure | End-to-end tests in staging | A dashed box round the station. The owner's diamond |
+| Release | CI/CD | No diamond: green checks merge it, and a merge deploys it |
+| Run | Observability | Work leaves as telemetry, down a dashed line back to Plan. The owner's diamond |
 
-- **Every project is filed under the gates it shows**, with one line of proof. A project
-  that is not filed fails the build, so a new one cannot be forgotten.
+- **Small dots round a station are agents at work.** A station's panel says what the agents
+  do there and what the owner does.
+- **A diamond marks where the owner steps in**: Plan, Assure and Run. Build and Release are
+  hands off.
+- **The number in the middle is the pull requests that built this page**, and links to them.
 - **Every line of proof is a fact the current site already states.** Nothing is invented.
-- **Tools appear last**, as "Built with" on a card and "Done with" under a gate.
+- **Tools appear last**, as "Built with" on a card and "Done with" under a station.
+
+## Shipped is a dozen bodies of work
+
+The site's config lists 26 projects at the grain of a feature: a checkout, a profile page.
+Owner, 2026-11-12: far too granular. `SHIPPED` in `build-data.mjs` holds 12 entries in
+plain words, and each names the config projects it stands for.
+
+- **A config project that is neither placed nor in `LEFT_OUT` fails the build**, so a new
+  one cannot be forgotten.
+- **Folded in:** Multi-Tenancy, with the enterprise hub and the dashboards, into the
+  training platform. User Profiles, Guided Onboarding and Forums into the courses. The
+  Contentful scripts and the Webflow move into the marketing site.
+- **Left out:** User Checkout.
+- **One entry comes from the work history, not the project list**: the sync between six
+  sales channels.
+- **A card with no screenshot shows its claim, set large.**
 
 ## Speed and phones
 
@@ -74,6 +93,9 @@ the CPU slowed four times. It is an emulation, not a real phone.
 | Phone profile: longest stall | 2,562 ms | 226 ms |
 | Phone profile: stalls in total | 6,163 ms | 1,138 ms |
 | Phone profile: lowest frame rate in any section | 16 | 58 |
+
+The loop replaced the line on 2026-11-12. On a busy machine, three rounds each, its settled
+frame rate on the phone profile matched the line's: 59 against 59, 36 against 34, 60 against 54.
 
 How it stays quick:
 
@@ -96,18 +118,19 @@ How it stays quick:
 | `main.js` | Loads the data and starts each scene when its section comes near the screen |
 | `stage.js` | One small WebGL stage per section, with the tiers and the resolution trade |
 | `hero.js`, `projects.js`, `ship.js`, `releases.js` | One scene each. `hero.js` also draws the closing section |
-| `build-data.mjs` | Builds `data.json`: the gates, the projects filed under them, the releases, the receipts, the education and the blog's latest posts |
+| `build-data.mjs` | Builds `data.json`: the loop's stations, the bodies of work filed under them, the releases, the receipts, the education and the blog's latest posts |
 | `data.json` | The built data, committed so the page runs without a build |
 | `assets/` | The gallery's screenshots, written by `../build-assets.py` |
 | `shoot.py`, `shots/` | The capture script and its stills |
 
 ## What is real and what is placeholder
 
-- **Real:** all 26 projects with their descriptions and links, the proof under each gate,
-  the release notes, the 20 screenshots, the social links, the guide, the blog's latest
-  posts read from its feed, the education, and the pull requests in the receipts.
-- **Filed by hand:** which gates a project shows, its line of proof, and its screenshot,
-  all in `build-data.mjs`.
+- **Real:** the proof under each station, the release notes, the screenshots, the social
+  links, the guide, the blog's latest posts read from its feed, the education, and the pull
+  requests in the receipts.
+- **Written by hand:** the 12 bodies of work, in `build-data.mjs`: the title, the line of
+  proof, the story, the stations and the screenshot. Each is drawn from the config projects
+  it names. So is what the agents and the owner do at each station.
 - **Placeholder:** nothing. The shelf of pale placeholder books is gone.
 
 ## What it still needs

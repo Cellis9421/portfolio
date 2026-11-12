@@ -36,6 +36,8 @@
   .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
   .labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
   .head { position: absolute; left: var(--pad); top: 40px; z-index: 3; max-width: 480px; pointer-events: none; }
+  #how .head { max-width: 400px; }
+  #how .panel { top: 96px; max-height: calc(100vh - 176px); }
   .head p { margin: 12px 0 0; color: var(--soft); }
   .hint { position: absolute; z-index: 3; margin: 0; pointer-events: none; }
   .panel { position: absolute; right: var(--pad); top: 120px; z-index: 3; width: 400px; max-height: calc(100vh - 240px); overflow: auto; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
@@ -82,7 +84,26 @@
   .stop b { display: block; font-size: 17px; color: var(--hue); }
   .stop span { font-size: 12px; color: var(--soft); white-space: nowrap; }
   .stop:hover, .stop[data-state="on"] { border-color: var(--hue); }
-  .stop[data-state="dim"] { opacity: .5; }
+  .stop[data-state="dim"] { opacity: .72; }
+  .mini { position: absolute; left: 0; top: 0; font-size: 12.5px; color: var(--soft); white-space: nowrap; will-change: transform; }
+  .mini i { font-style: normal; font-weight: 600; } .mini .bad { color: #ff8a8a; } .mini .good { color: #7ef0c0; } .mini .tele { color: #ff8fa6; }
+  .hub { position: absolute; left: 0; top: 0; pointer-events: auto; text-align: center; text-decoration: none; padding: 8px 12px; border-radius: 12px; will-change: transform; }
+  .hub b { display: block; font: 600 48px/1 "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+  .hub span { display: block; margin-top: 4px; font-size: 12px; line-height: 1.35; color: var(--soft); }
+  .hub:hover span, .hub:focus-visible span { color: var(--ink); }
+  .who { margin: 16px 0 0; display: grid; gap: 8px; }
+  .who div { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, .04); }
+  .who dt { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+  .who dd { margin: 4px 0 0; font-size: 14.5px; color: #dfe5f0; }
+  .key { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; font-size: 14px; color: #dfe5f0; }
+  .key li { display: flex; align-items: center; gap: 8px; }
+  .head .key { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--soft); }
+  .dot, .gem, .red, .green, .dash { flex: none; display: inline-block; }
+  .dot { width: 8px; height: 8px; margin: 0 4px; border-radius: 50%; background: #dfe8ff; box-shadow: 0 0 8px #9fc0ff; }
+  .gem { width: 10px; height: 10px; margin: 0 3px; background: #fff; transform: rotate(45deg); }
+  .red, .green { width: 12px; height: 8px; border-radius: 2px; background: #ff6b6b; }
+  .green { background: #7ef0c0; margin-left: -4px; }
+  .dash { width: 16px; border-top: 2px dashed #ff6b8a; }
   .proofs, .changes { list-style: none; padding: 0; margin: 14px 0 0; font-size: 14.5px; }
   .proofs li { position: relative; padding: 0 0 0 20px; margin-top: 10px; color: #dfe5f0; }
   .proofs li::before { content: "✓"; position: absolute; left: 0; color: var(--hue); font-weight: 700; }
@@ -174,7 +195,8 @@
     .turn { top: auto; bottom: 14px; } .turn.prev { left: 14px; } .turn.next { right: 14px; }
     #shipped .hint { bottom: 28px; font-size: 12px; }
     .stop { min-width: 0; text-align: left; padding: 6px 10px; } .stop b { font-size: 15px; }
-    #how .scene { height: 70vh; height: 70svh; }
+    #how .scene { height: 76vh; height: 76svh; }
+    .hub b { font-size: 40px; }
     #agents { grid-template-columns: 1fr; gap: 28px; padding: 44px var(--pad); }
     .log a { grid-template-columns: 30px 40px 1fr; font-size: 12.5px; padding: 10px 14px; } .log .d { display: none; }
     #history .scene { height: 44vh; height: 44svh; }
@@ -196,9 +218,9 @@
 <body>
 <nav aria-label="Sections">
   <a class="me" href="#about">Calvin Ellis</a>
-  <a class="tab" href="#shipped">Shipped</a>
   <a class="tab" href="#how">How I ship</a>
   <a class="tab" href="#agents">Agents</a>
+  <a class="tab" href="#shipped">Shipped</a>
   <a class="tab" href="#history">History</a>
   <a class="tab" href="#writing">Writing</a>
   <a class="tab" href="#close">Contact</a>
@@ -218,37 +240,27 @@
         <a class="moon" data-word="Blog" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog</a>
         <a class="moon here" data-word="Guide" href="#writing">Agentic guide</a>
       </div>
-      <p class="hint quiet">Plan. Build. Test. Ship.</p>
+      <p class="hint quiet">Plan. Test. Build. Ship. Learn.</p>
     </div>
     <div class="copy">
       <div class="top">
         <p class="kicker">Product engineer · AI enablement</p>
         <h1 id="about-h">Calvin Ellis</h1>
         <p class="lead">I ship products with AI agents, and I teach engineering teams to do the same.</p>
-        <div class="cta"><a class="btn main" href="#shipped">See what shipped ↓</a><a class="btn" href="#how">How I ship</a></div>
+        <div class="cta"><a class="btn main" href="#how">See how I ship ↓</a><a class="btn" href="#shipped">What shipped</a></div>
       </div>
       <div class="rest">
         <p>Fifteen years across the stack, from cybersecurity education at Cybrary to a tenfold e-commerce business at Stove &amp; Grill Parts For Less. Today the work is agentic: designing the workflows, the guardrails and the documentation that let AI agents ship real software.</p>
         <p>I have run company-wide AI enablement training, coached engineers one to one on agentic coding, and documented hundreds of systems so that people and agents can both understand them.</p>
-        <ul class="facts"><li>15+ years</li><li>Plan, build, test, release, run</li><li>Greater Boston · open to opportunities</li></ul>
+        <ul class="facts"><li>15+ years</li><li>Test first, with AI agents</li><li>Greater Boston · open to opportunities</li></ul>
       </div>
     </div>
   </section>
 
-  <section id="shipped" aria-labelledby="shipped-h">
-    <div class="scene">
-      <canvas tabindex="0" aria-label="Gallery of shipped work. Left and right arrows browse, Enter opens."></canvas>
-      <button class="turn prev" aria-label="Previous">‹</button>
-      <button class="turn next" aria-label="Next">›</button>
-      <p class="hint quiet">Drag to browse · tap one to open it</p>
-    </div>
-    <div class="bar"><div><h2 id="shipped-h">Shipped</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter by what the work shows"></div></div>
-    <article class="detail" aria-live="polite" hidden></article>
-  </section>
-
   <section id="how" aria-labelledby="how-h">
     <div class="scene"><canvas aria-hidden="true"></canvas><div class="labels"></div></div>
-    <div class="head"><h2 id="how-h">How I ship</h2><p>Every piece of work clears six gates. The languages are in the small print.</p></div>
+    <div class="head"><h2 id="how-h">How I ship</h2><p>A loop, not a line. Agents do the work at every station. I decide what goes round, and what counts as done.</p>
+      <ul class="key"><li><i class="dot"></i>Agents at work</li><li><i class="gem"></i>Where I step in</li><li><i class="red"></i><i class="green"></i>A test, failing then passing</li><li><i class="dash"></i>Telemetry</li></ul></div>
     <aside class="panel" aria-live="polite"></aside>
   </section>
 
@@ -269,6 +281,17 @@
       <div class="log"></div>
       <footer>Directed by me, built by an AI agent. Every change came through a pull request with a written what, why and risk, and went live in about two minutes.</footer>
     </div>
+  </section>
+
+  <section id="shipped" aria-labelledby="shipped-h">
+    <div class="scene">
+      <canvas tabindex="0" aria-label="Gallery of shipped work. Left and right arrows browse, Enter opens."></canvas>
+      <button class="turn prev" aria-label="Previous">‹</button>
+      <button class="turn next" aria-label="Next">›</button>
+      <p class="hint quiet">Drag to browse · tap one to open it</p>
+    </div>
+    <div class="bar"><div><h2 id="shipped-h">Shipped</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter by what the work shows"></div></div>
+    <article class="detail" aria-live="polite" hidden></article>
   </section>
 
   <section id="history" aria-labelledby="history-h">

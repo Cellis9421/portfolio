@@ -92,7 +92,7 @@ export default function hero(canvas, anchors, opts = {}) {
 
   let to = ball, mixing = true, held = -1, back = 0, spin = 0, orbit = 0, wide = true;
   // Left alone, the swarm spells the loop a product engineer runs. It is the page's message, and a phone has no hover to find it.
-  const loop = (opts.words ?? ['Plan', 'Build', 'Test', 'Ship']).map((w) => ({ w, shape: null }));
+  const loop = (opts.words ?? ['Plan', 'Test', 'Build', 'Ship', 'Learn']).map((w) => ({ w, shape: null }));
   let beat = 0, wait = opts.first ?? 2.4;
   function form(target) {
     if (target === to) return;
@@ -155,7 +155,7 @@ export default function hero(canvas, anchors, opts = {}) {
       // The label hangs on the outside of the ring: right of its dot on the left side, left of it on the right, above it in between.
       // It slides from one to the other, so it never jumps and never runs off the edge.
       const k = wide ? clamp(-Math.cos(a) * 1.7, -1, 1) : 0, lift = wide ? (1 - Math.abs(k)) * 30 : 34;
-      mn.el.style.transform = `translate(${(wide ? p.x : clamp(p.x, 64, canvas.clientWidth - 64)).toFixed(1)}px, ${p.y.toFixed(1)}px) translate(calc(-50% + ${k.toFixed(3)} * (50% + 18px)), calc(-50% - ${lift.toFixed(1)}px))`;
+      mn.el.style.transform = `translate(${(wide ? Math.min(p.x, canvas.clientWidth - 28) : clamp(p.x, 64, canvas.clientWidth - 64)).toFixed(1)}px, ${p.y.toFixed(1)}px) translate(calc(-50% + ${k.toFixed(3)} * (50% + 18px)), calc(-50% - ${lift.toFixed(1)}px))`;
       mn.el.style.opacity = (0.55 + front * 0.45).toFixed(2);
       mn.m.scale.setScalar(j === held ? 1.6 : 1);
     });
