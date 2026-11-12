@@ -54,6 +54,9 @@
   .moon { position: absolute; left: 0; top: 0; pointer-events: auto; text-decoration: none; font-weight: 700; font-size: 15px; min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); white-space: nowrap; will-change: transform; }
   .moon:hover, .moon:focus-visible { background: var(--ink); color: #0a0c11; }
   .moon small { font-weight: 500; opacity: .7; margin-left: 6px; }
+  .moon::after { content: "↗"; margin-left: 7px; font-weight: 500; opacity: .6; }  /* leaves the page */
+  .moon.here { border-color: rgba(255, 255, 255, .34); }
+  .moon.here::after { content: "↓"; }  /* a section further down */
   #about .hint { right: var(--pad); bottom: 34px; }
 
   #shipped .bar { position: absolute; left: var(--pad); right: var(--pad); top: 40px; z-index: 3; display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; pointer-events: none; }
@@ -207,10 +210,13 @@
     <div class="scene">
       <canvas aria-hidden="true"></canvas>
       <div class="moons">
+        <a class="moon here" data-word="Projects" href="#shipped">Projects</a>
         <a class="moon" data-word="GitHub" href="https://github.com/Cellis9421" target="_blank" rel="noopener">GitHub<small>cellis9421</small></a>
+        <a class="moon here" data-word="Agents" href="#agents">Agents</a>
         <a class="moon" data-word="LinkedIn" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="moon here" data-word="History" href="#history">History</a>
         <a class="moon" data-word="Blog" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog</a>
-        <a class="moon" data-word="Guide" href="#writing">Agentic guide</a>
+        <a class="moon here" data-word="Guide" href="#writing">Agentic guide</a>
       </div>
       <p class="hint quiet">Plan. Build. Test. Ship.</p>
     </div>

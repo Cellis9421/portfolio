@@ -47,12 +47,12 @@ export default function hero(canvas, anchors, opts = {}) {
   geo.setAttribute('aA', new THREE.BufferAttribute(A, 3));
   geo.setAttribute('aB', new THREE.BufferAttribute(B, 3));
   geo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
-  const uniforms = { uMix: { value: 0 }, uTime: { value: 0 }, uSize: { value: 60 }, uGain: { value: 0.55 }, uPointer: { value: new THREE.Vector3(99, 99, 0) } };
+  const uniforms = { uMix: { value: 0 }, uTime: { value: 0 }, uSize: { value: 60 }, uGain: { value: 0.55 }, uWord: { value: 0 }, uThin: { value: 0.62 }, uDim: { value: 0.55 }, uPointer: { value: new THREE.Vector3(99, 99, 0) } };
   const swarm = new THREE.Points(geo, new THREE.ShaderMaterial({
     uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     vertexShader: `
       attribute vec3 aA; attribute vec3 aB; attribute float aSeed;
-      uniform float uMix, uTime, uSize; uniform vec3 uPointer;
+      uniform float uMix, uTime, uSize, uWord, uThin; uniform vec3 uPointer;
       varying float vSeed;
       void main() {
         float m = smoothstep(0.0, 1.0, clamp(uMix * 1.4 - aSeed * 0.4, 0.0, 1.0));
@@ -62,17 +62,17 @@ export default function hero(canvas, anchors, opts = {}) {
         p.xy += normalize(away + 1e-4) * 0.95 * exp(-dot(away, away) * 0.9);
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = uSize * (0.55 + aSeed * 0.9) / -mv.z;
+        gl_PointSize = uSize * (0.55 + aSeed * 0.9) / -mv.z * mix(1.0, uThin, uWord);  // finer points while spelling, so the letters stay sharp
         vSeed = aSeed;
       }`,
     fragmentShader: `
-      varying float vSeed; uniform float uGain;
+      varying float vSeed; uniform float uGain, uWord, uDim;
       void main() {
         float d = length(gl_PointCoord - 0.5);
         float a = smoothstep(0.5, 0.05, d);
         vec3 c = mix(vec3(0.36, 0.78, 1.0), vec3(0.72, 0.55, 1.0), vSeed);
         if (fract(vSeed * 17.0) > 0.93) c = vec3(1.0, 0.84, 0.29);
-        gl_FragColor = vec4(c * a * uGain, a);
+        gl_FragColor = vec4(c * a * uGain * mix(1.0, uDim, uWord), a);  // and dimmer: a word packs every point into a small space
       }`,
   }));
   swarm.frustumCulled = false;
@@ -120,6 +120,8 @@ export default function hero(canvas, anchors, opts = {}) {
     group.scale.setScalar(wide ? 1 : clamp((w / h) * 1.25, 0.5, 1));
     uniforms.uSize.value = h * 0.075 * s.renderer.getPixelRatio() * (tier === 'low' ? 1.5 : 1) * (wide ? 1 : 0.5);
     uniforms.uGain.value = wide ? 0.55 : 0.34;
+    uniforms.uThin.value = wide ? 0.62 : 0.85;  // a phone already draws the swarm small and dim, so it gives up less
+    uniforms.uDim.value = wide ? 0.55 : 0.9;
   });
 
   const ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), hit = new THREE.Vector3(), tmp = new THREE.Vector3();
@@ -127,6 +129,7 @@ export default function hero(canvas, anchors, opts = {}) {
     uniforms.uTime.value = t;
     if (mixing) { uniforms.uMix.value = Math.min(1, uniforms.uMix.value + dt / 1.5); if (uniforms.uMix.value >= 1) mixing = false; }
     const round = to === ball;
+    uniforms.uWord.value = lerp(uniforms.uWord.value, round ? 0 : 1, 0.07);
     if (round) spin += dt * (calm ? 0.04 : 0.16); else spin = lerp(spin, Math.round(spin / 6.2832) * 6.2832, 0.08);
     swarm.rotation.y = spin;
     swarm.rotation.x = round ? Math.sin(t * 0.21) * 0.18 : lerp(swarm.rotation.x, 0, 0.08);
@@ -146,9 +149,13 @@ export default function hero(canvas, anchors, opts = {}) {
     if (held < 0) orbit += dt * (calm ? 0.05 : 0.2);
     moons.forEach((mn, j) => {
       const a = orbit + mn.phase;
-      mn.m.position.set(Math.cos(a) * (wide ? 4.9 : 2.3), Math.sin(a + j * 1.3) * (wide ? 1.5 : 2.6), Math.sin(a) * (wide ? 2.6 : 1.5));
+      // An even ring, so the bubbles never pile up: wide and tilted on a desktop, tall on a phone.
+      mn.m.position.set(Math.cos(a) * (wide ? 5.0 : 2.3), Math.sin(a) * (wide ? 2.1 : 2.9), Math.sin(a) * (wide ? 2.4 : 1.2));
       const p = s.project(mn.m.getWorldPosition(tmp)), front = clamp(0.5 + mn.m.position.z / 5.2, 0, 1);
-      mn.el.style.transform = `translate(${(wide ? p.x : clamp(p.x, 64, canvas.clientWidth - 64)).toFixed(1)}px, ${p.y.toFixed(1)}px) ${wide ? 'translate(18px, -50%)' : 'translate(-50%, -150%)'}`;
+      // The label hangs on the outside of the ring: right of its dot on the left side, left of it on the right, above it in between.
+      // It slides from one to the other, so it never jumps and never runs off the edge.
+      const k = wide ? clamp(-Math.cos(a) * 1.7, -1, 1) : 0, lift = wide ? (1 - Math.abs(k)) * 30 : 34;
+      mn.el.style.transform = `translate(${(wide ? p.x : clamp(p.x, 64, canvas.clientWidth - 64)).toFixed(1)}px, ${p.y.toFixed(1)}px) translate(calc(-50% + ${k.toFixed(3)} * (50% + 18px)), calc(-50% - ${lift.toFixed(1)}px))`;
       mn.el.style.opacity = (0.55 + front * 0.45).toFixed(2);
       mn.m.scale.setScalar(j === held ? 1.6 : 1);
     });

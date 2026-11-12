@@ -84,7 +84,7 @@ Ideas 2 to 4 need facts from his private projects. Nothing from them is on the p
 
 | Section | What it does |
 |---|---|
-| About | Product engineer copy. A particle swarm that spells plan, build, test, ship, with the social links in orbit. On a phone it fills the first screen |
+| About | Product engineer copy. A particle swarm that spells plan, build, test, ship, with section shortcuts and the social links in orbit. On a phone it fills the first screen |
 | Shipped | The 26 projects on a curved wall with their screenshots, filtered by gate. Each card leads with its proof |
 | How I ship | Work moving down a line through the six gates. A gate opens its proof and the projects that show it |
 | Working with agents | What he does with agents, and the receipts |
