@@ -25,12 +25,14 @@ SIZE = (1600, 900)
 # section id, file name, what to do before the picture
 SECTIONS = [
     ("about", "01-about", None),
-    ("how", "02-how", "window.__demo.cap('build')"),
-    ("agents", "03-agents", None),
-    ("shipped", "04-shipped", "window.__demo.pick(5)"),
-    ("history", "05-history", "window.__demo.release(2)"),
-    ("writing", "06-writing", None),
-    ("close", "07-close", None),
+    ("timeline", "02-march", "window.__demo.era(-1)"),
+    ("timeline", "03-era", "window.__demo.era(2)"),
+    ("timeline", "04-now", "window.__demo.era(5)"),
+    ("how", "05-how", "window.__demo.cap('build')"),
+    ("agents", "06-agents", None),
+    ("shipped", "07-shipped", "window.__demo.pick(5)"),
+    ("writing", "08-writing", None),
+    ("close", "09-close", None),
 ]
 
 

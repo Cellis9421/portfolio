@@ -107,7 +107,7 @@ const SHIPPED = [
     proof: 'A Discord bot and an art app, on generative AI',
     description: 'A Discord bot that generates text and images, an app that makes art from a prompt, a process manager that restarts what crashes, and a site builder that works from one JSON file.',
     from: ['Discord AI Bot', 'pAInt it', 'Process Manager', 'Website Builder'], tags: ['Python', 'OpenAI', 'Next.js'],
-    links: [['The bot', 'https://github.com/Cellis9421/discord-ai-bot'], ['The art app', 'https://github.com/Cellis9421/paint-it']] },
+    links: [['The bot', 'https://github.com/Cellis9421/discord-ai-bot']] },
   { title: 'This portfolio', group: 'Personal', caps: ['release', 'build'], shot: 'portfolio.png',
     proof: 'Open source, static, and live on every merge',
     description: 'The site you are on: static, open source and deployed on every merge. The page you are reading was built by an AI agent under direction, one pull request at a time.',
@@ -115,6 +115,35 @@ const SHIPPED = [
 ];
 // In the config, on purpose not on the page. A feature, not a body of work.
 const LEFT_OUT = ['User Checkout'];
+
+// The timeline: what he was doing, era by era, and what there was to do it with. `job` names the work
+// history entry an era opens with, and its years are read from there. The two AI eras sit inside or after
+// the last job, so they carry their own year: 2023 is his first public AI project, 2026 the public rule packs.
+// Every line is a fact from the work history, the project list, his public GitHub or his blog.
+const ERAS = [
+  { job: 'Game Bot Developer', hue: '#9a7cf5', title: 'Bots that played the game', role: 'Game bot developer, independent',
+    work: ['Wrote bots in Java that played video games on their own and finished long, multi-step tasks.', 'Ran scripts on top of the game client, or inside it, using reflection and injection.', 'Fed a bot its next move from outside APIs.'],
+    side: [], tools: ['Java', 'Reflection', 'Injection', 'APIs'], shows: () => false, links: [] },
+  { job: 'Contract Software Engineer', hue: '#a488ff', title: 'Systems for small businesses', role: 'Contract software engineer, independent',
+    work: ['Built custom content systems and marketing automation for small businesses, to run their reporting, their tasks and their customer follow-up.', "Built web apps that tied in each client's CRM and analytics dashboards.", 'Chose the technology each business could afford to run.'],
+    side: [], tools: [], shows: () => false, links: [] },
+  { job: 'Lead Software Engineer', hue: '#8f9dff', title: 'A store that grew tenfold', role: 'Lead software engineer, Stove & Grill Parts For Less',
+    work: ['Led the engineering as revenue grew from $1M to $10M a year.', 'Rewrote the store on Shopify, accessible to WCAG 2.2 AA.', 'Built sync services that moved catalog, stock and sales between Shopify, Amazon, Walmart, eBay, Etsy and Google.',
+      'Built the reporting and diagnostics server the business ran on.', 'Put every service and site on automated deployment.'],
+    side: [], tools: ['Shopify', 'Liquid', 'JavaScript', 'GitHub Actions', 'Cloud Run'], shows: (p) => p.group === 'Stove & Grill Parts', links: [] },
+  { job: 'Principal Software Engineer', hue: '#6fb8ff', title: 'A platform for whole companies', role: 'Principal software engineer, Cybrary',
+    work: ['Rewrote the marketing site and the core application in Next.js and TypeScript.', 'Built multi-tenancy, configurable role-based access, and a sales demo mode on mocked APIs.', 'Ran cross-team projects, often as the technical project manager.',
+      'Kept a cloud-based virtual lab environment running.'],
+    side: [], tools: ['Next.js', 'TypeScript', 'Vercel', 'Tailwind', 'Material UI', 'Mock Service Worker'], shows: (p) => p.group === 'Cybrary', links: [] },
+  { year: 2023, years: '2023 onward', hue: '#5cc8ff', title: 'Code with an assistant', role: 'AI enablement, at Cybrary and on the side',
+    work: ['Wrote the rules and the documentation that let a coding assistant understand a codebase before it changes it.', 'Organised and led company-wide AI enablement training.', 'Coached engineers one to one, finding where AI speeds each of them up.'],
+    side: [{ text: 'A Discord bot that writes text and makes images.', url: 'https://github.com/Cellis9421/discord-ai-bot' }, { text: 'An app that makes art from a prompt.' }, { text: 'Wrote up what AI programming assistants are good at.', post: 'AI Programming Assistants' }],
+    tools: ['Cursor', 'OpenAI', 'DALL-E', 'Confluence', 'Miro'], shows: (p) => p.title === 'Side projects', links: [] },
+  { year: 2026, years: 'Now', hue: '#ffd54a', title: 'Agents write the code', role: 'Product engineer',
+    work: ['Agents write the code and manage it. I decide what gets built, and what counts as done.', 'Wrote rule packs that tell coding agents how to work, and a command-line tool to manage them.', (d) => `Had an agent build this page: ${d.receipts} pull requests, each with a written what, why and risk.`],
+    side: [], tools: ['AI agents', 'Rule packs', 'Pull requests', 'CI/CD'], shows: (p) => p.title === 'This portfolio',
+    links: [['See how I ship ↓', '#how'], ['The receipts ↓', '#agents'], ['The rule packs ↗', 'https://github.com/Cellis9421/rule-manager']] },
+];
 
 const config = load('PROJECTS.tsx', 'PROJECTS').map((p) => p.title);
 const placed = new Set([...SHIPPED.flatMap((sh) => sh.from), ...LEFT_OUT]);
@@ -126,11 +155,7 @@ const projects = SHIPPED.map((sh, id) => {
   return { id, title: sh.title, group: sh.group, proof: sh.proof, description: sh.description, caps: sh.caps, tags: sh.tags, links: sh.links, shot: sh.shot };
 });
 
-// The career as releases, oldest first.
-const short = (company) => company.replace(/\s*\(.*\)$/, '');
-const releases = load('WORK_HISTORY.tsx', 'WORK_HISTORY').reverse().map((job, i) => ({
-  version: `v${i + 1}.0`, year: Number(job.dates.match(/\d{4}/)[0]), title: job.title, org: short(job.company), dates: job.dates.replace('→', 'to'), notes: job.bullets,
-}));
+const jobs = load('WORK_HISTORY.tsx', 'WORK_HISTORY');
 const education = load('EDUCATION.tsx', 'EDUCATION');
 const last = () => { try { return JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')); } catch { return {}; } };
 
@@ -149,5 +174,21 @@ try {
     when: new Date(e.published.$t).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) }));
 } catch { posts = last().posts ?? []; }
 
-writeFileSync(join(here, 'data.json'), `${JSON.stringify({ caps: CAPS, projects, releases, receipts, education, posts }, null, 1)}\n`);
-console.log(`[build-data] ${projects.length} bodies of work from ${config.length} config projects, ${CAPS.length} stations, ${releases.length} releases, ${receipts.length} receipts, ${posts.length} posts`);
+// The eras, oldest first. One that opens with a job takes its years from the work history, so the two cannot drift.
+for (const job of jobs) if (!ERAS.some((e) => e.job === job.title)) throw new Error(`"${job.title}" is in the work history but opens no era.`);
+const eras = ERAS.map((e) => {
+  let { year, years } = e;
+  if (e.job) {
+    const job = jobs.find((j) => j.title === e.job);
+    if (!job) throw new Error(`no "${e.job}" in the work history`);
+    const [from, to] = job.dates.match(/\d{4}/g).map(Number);
+    year = from; years = `${from} to ${to}`;
+  }
+  const side = e.side.map((sd) => ({ text: sd.text, url: sd.url ?? posts.find((p) => sd.post && p.title.startsWith(sd.post))?.url ?? null }));
+  const work = e.work.map((w) => (typeof w === 'function' ? w({ receipts: receipts.length }) : w));
+  return { year, years, hue: e.hue, title: e.title, role: e.role, work, side, tools: e.tools, shipped: projects.filter(e.shows).map((p) => p.id), links: e.links };
+});
+for (let i = 1; i < eras.length; i++) if (eras[i].year < eras[i - 1].year) throw new Error(`era "${eras[i].title}" starts before the one above it`);
+
+writeFileSync(join(here, 'data.json'), `${JSON.stringify({ caps: CAPS, projects, eras, receipts, education, posts }, null, 1)}\n`);
+console.log(`[build-data] ${eras.length} eras from ${jobs.length} jobs, ${projects.length} bodies of work from ${config.length} config projects, ${CAPS.length} stations, ${receipts.length} receipts, ${posts.length} posts`);

@@ -35,6 +35,14 @@ Owner, 2026-11-11, in the order he said it.
 - **A product engineer, not a list of languages.** See the next section.
 - **How he ships outranks what shipped**, 2026-11-12. The page has to show, in pictures, how
   he uses AI to build.
+- **The page is built round a timeline**, 2026-11-12, later the same day. It starts about
+  2010 and shows what he was doing at each time, at work and on the side, not tied to a
+  company or an outcome. The picture is the march of progress: one figure, straighter in
+  each era. The cool pieces stay at the top and the timeline breaks out below them.
+  Mobile first, a full page at a time.
+- **The message is shown, never written**: he solves business problems with an engineering
+  mindset, with whatever tool is most efficient at the time, by hand before AI and with
+  agents now. The page must not say it in words.
 
 ## Product engineer
 
@@ -99,10 +107,10 @@ Ideas 2 to 4 need facts from his private projects. Nothing from them is on the p
 | Section | What it does |
 |---|---|
 | About | Product engineer copy. A particle swarm that spells plan, test, build, ship, learn, with section shortcuts and the social links in orbit. On a phone it fills the first screen |
+| Timeline | Six eras from 2009 to now. One figure per era stands in a row, then they close up into one walker that changes as the eras scroll past. Agents join it at the end |
 | How I ship | Work going round a loop of five stations. A station opens what the agents do, what he does, the proof, and the work that shows it |
 | Working with agents | What he does with agents, and the receipts |
 | Shipped | 12 bodies of work on a curved wall with their screenshots, filtered by station. Each card leads with its proof |
-| Release history | The career as a commit graph: each job a tagged release, each thing shipped a commit |
 | Writing | The guide as one book, and the blog's latest posts, as plain links |
 | Closing | The swarm again, the way to get in touch, and the education |
 
@@ -115,6 +123,8 @@ real, what is placeholder, the measurements and what it still needs are in the
 - **The career tree, 2026-11-11.** One photographic tree that grew as the years were
   dragged, first as the whole site and then as the work history section. The owner really
   did not like it there. The release history replaced it. It is in git history at `beb13db`.
+- **The release history, 2026-11-12.** The career as a commit graph. The timeline tells the
+  same years with more in them, so it replaced it.
 - **The line of six gates, 2026-11-12.** Work moved down a line from Plan to Run and stopped.
   The owner wanted the feedback loop, test-first building and staging in the picture. The
   loop replaced it.

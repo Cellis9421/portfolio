@@ -123,10 +123,33 @@
   .log .n { color: var(--blue); } .log .k { color: #7ef0c0; } .log .d { color: var(--soft); text-align: right; }
   .receipts footer { padding: 14px 18px; color: var(--soft); font-size: 13.5px; }
 
-  .tag-rel { position: absolute; left: 0; top: 0; pointer-events: auto; padding: 6px 12px; text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font-family: var(--mono); will-change: transform; }
-  .tag-rel b { display: block; font-size: 15px; color: var(--hue); }
-  .tag-rel span { font-size: 12px; color: var(--soft); }
-  .tag-rel:hover, .tag-rel[data-state="on"] { border-color: var(--hue); }
+  /* Timeline: the walker stays in view while the eras scroll past it. On a phone it is pinned across the top. */
+  #timeline { overflow: visible; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  .march { position: sticky; top: 56px; height: calc(100vh - 56px); height: calc(100svh - 56px); align-self: start; overflow: hidden; }
+  .march canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; }
+  .when { position: absolute; left: var(--pad); top: 40px; z-index: 3; margin: 0; pointer-events: none; transition: opacity .3s; }
+  .when b { display: block; font: 600 96px/1 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .when span { display: block; margin-top: 8px; font-size: 18px; color: var(--soft); }
+  .when[data-on="false"] { opacity: 0; }
+  .pip { position: absolute; left: 0; top: 0; pointer-events: auto; min-height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); font: 12.5px var(--mono); color: var(--soft); will-change: transform; }
+  .pip:hover { border-color: var(--hue); color: var(--ink); }
+  .pip[data-on="true"] { background: var(--hue); border-color: var(--hue); color: #0a0c11; font-weight: 700; }
+  .eras { padding: 0 var(--pad) 10vh 8px; }
+  .era { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 32px 0; transition: opacity .35s; }
+  .era[data-on="false"] { opacity: .45; }
+  .era.intro p:last-child { color: var(--soft); max-width: 440px; margin: 16px 0 0; }
+  .era .card { padding: 24px; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--hue); border-radius: 18px; }
+  .era .kicker { color: var(--hue); }
+  .era h3 { font: 600 30px/1.12 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; letter-spacing: -.01em; }
+  .era .quiet { margin: 6px 0 0; }
+  .era h4 { margin: 20px 0 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); }
+  .era .changes { margin-top: 4px; }
+  .era .changes li::before { content: "›"; left: 4px; color: var(--hue); font-family: inherit; }
+  .era .changes a { text-underline-offset: 3px; }
+  .era .tags { margin-top: 10px; }
+  .tool { font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); }
+  .tag.jump { min-height: 32px; }
+  .tag.jump::after { content: " ↓"; }
 
   /* Writing: one book and the latest posts. Plain CSS 3D and real links, with no canvas, so a phone gets it for free. */
   #writing { min-height: 0; padding: 104px var(--pad); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 72px; align-items: center; }
@@ -199,7 +222,14 @@
     .hub b { font-size: 40px; }
     #agents { grid-template-columns: 1fr; gap: 28px; padding: 44px var(--pad); }
     .log a { grid-template-columns: 30px 40px 1fr; font-size: 12.5px; padding: 10px 14px; } .log .d { display: none; }
-    #history .scene { height: 44vh; height: 44svh; }
+    #timeline { display: block; }
+    .march { height: 44vh; height: 44svh; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+    .when { top: 12px; } .when b { font-size: 44px; } .when span { font-size: 14px; margin-top: 2px; }
+    .eras { padding: 0 16px 6vh; }
+    .era { min-height: 54vh; min-height: 54svh; justify-content: flex-start; padding: 12px 0 28px; }
+    .era.intro { min-height: 40vh; min-height: 40svh; justify-content: center; padding: 0 4px; }
+    .pip { padding: 0 8px; font-size: 12px; }
+    .era .card { padding: 20px; } .era h3 { font-size: 25px; }
     #writing { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 48px var(--pad); }
     .guide { flex-direction: column; align-items: flex-start; gap: 34px; }
     .book { align-self: center; width: 190px; height: 268px; } .book .cover b { font-size: 21px; }
@@ -218,10 +248,10 @@
 <body>
 <nav aria-label="Sections">
   <a class="me" href="#about">Calvin Ellis</a>
+  <a class="tab" href="#timeline">Timeline</a>
   <a class="tab" href="#how">How I ship</a>
   <a class="tab" href="#agents">Agents</a>
   <a class="tab" href="#shipped">Shipped</a>
-  <a class="tab" href="#history">History</a>
   <a class="tab" href="#writing">Writing</a>
   <a class="tab" href="#close">Contact</a>
   <a class="btn main" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener" style="min-height:40px;margin-left:10px">Get in touch</a>
@@ -236,7 +266,7 @@
         <a class="moon" data-word="GitHub" href="https://github.com/Cellis9421" target="_blank" rel="noopener">GitHub<small>cellis9421</small></a>
         <a class="moon here" data-word="Agents" href="#agents">Agents</a>
         <a class="moon" data-word="LinkedIn" href="https://www.linkedin.com/in/calvin-ellis-ma" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="moon here" data-word="History" href="#history">History</a>
+        <a class="moon here" data-word="Timeline" href="#timeline">Timeline</a>
         <a class="moon" data-word="Blog" href="https://blog.calvinellis.io/" target="_blank" rel="noopener">Blog</a>
         <a class="moon here" data-word="Guide" href="#writing">Agentic guide</a>
       </div>
@@ -247,12 +277,27 @@
         <p class="kicker">Product engineer · AI enablement</p>
         <h1 id="about-h">Calvin Ellis</h1>
         <p class="lead">I ship products with AI agents, and I teach engineering teams to do the same.</p>
-        <div class="cta"><a class="btn main" href="#how">See how I ship ↓</a><a class="btn" href="#shipped">What shipped</a></div>
+        <div class="cta"><a class="btn main" href="#timeline">Walk the timeline ↓</a><a class="btn" href="#how">How I ship</a></div>
       </div>
       <div class="rest">
         <p>Fifteen years across the stack, from cybersecurity education at Cybrary to a tenfold e-commerce business at Stove &amp; Grill Parts For Less. Today the work is agentic: designing the workflows, the guardrails and the documentation that let AI agents ship real software.</p>
         <p>I have run company-wide AI enablement training, coached engineers one to one on agentic coding, and documented hundreds of systems so that people and agents can both understand them.</p>
         <ul class="facts"><li>15+ years</li><li>Test first, with AI agents</li><li>Greater Boston · open to opportunities</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline" aria-labelledby="timeline-h">
+    <div class="march">
+      <canvas aria-hidden="true"></canvas>
+      <div class="labels"></div>
+      <p class="when" data-on="false" aria-hidden="true"><b></b><span></span></p>
+    </div>
+    <div class="eras">
+      <div class="era intro">
+        <p class="kicker">Timeline</p>
+        <h2 id="timeline-h">2009 to now</h2>
+        <p>What I was working on, in the order it happened. Scroll to walk through it.</p>
       </div>
     </div>
   </section>
@@ -292,12 +337,6 @@
     </div>
     <div class="bar"><div><h2 id="shipped-h">Shipped</h2><p class="count"></p></div><div class="chips" role="group" aria-label="Filter by what the work shows"></div></div>
     <article class="detail" aria-live="polite" hidden></article>
-  </section>
-
-  <section id="history" aria-labelledby="history-h">
-    <div class="scene"><canvas tabindex="0" aria-label="Release history. Left and right arrows step through the releases."></canvas><div class="labels"></div></div>
-    <div class="head"><h2 id="history-h">Release history</h2><p>Fifteen years as a commit graph. Drag it, or step through the releases.</p></div>
-    <aside class="panel" aria-live="polite"></aside>
   </section>
 
   <section id="writing" aria-labelledby="writing-h">

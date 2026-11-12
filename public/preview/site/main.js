@@ -13,6 +13,54 @@ near($('#about'), async () => {
   (await import('./hero.js')).default($('#about canvas'), [...document.querySelectorAll('#about .moon')]);
 });
 
+// ------------------------------------------------------------ timeline: the eras, and the walker that follows the one in view
+const eras = data.eras, stageEl = $('#timeline .march'), eraBox = $('#timeline .eras'), when = $('#timeline .when');
+const li = (items) => items.map((x) => `<li>${x}</li>`).join('');
+const mid = (lo, x, hi) => Math.max(lo, Math.min(hi, x));
+eraBox.insertAdjacentHTML('beforeend', eras.map((e, i) => `<article class="era" id="era-${i}" style="--hue:${e.hue}"><div class="card">
+    <p class="kicker mono">${e.years}</p><h3>${e.title}</h3><p class="quiet">${e.role}</p>
+    <h4>Working on</h4><ul class="changes">${li(e.work)}</ul>
+    ${e.side.length ? `<h4>On the side</h4><ul class="changes">${li(e.side.map((sd) => (sd.url ? `<a href="${sd.url}" target="_blank" rel="noopener">${sd.text} ↗</a>` : sd.text)))}</ul>` : ''}
+    ${e.tools.length ? `<h4>Tools of the time</h4><div class="tags">${e.tools.map((t) => `<span class="tool">${t}</span>`).join('')}</div>` : ''}
+    ${e.shipped.length ? `<h4>Shipped then</h4><div class="tags">${e.shipped.map((id) => `<button class="tag jump" data-id="${id}">${data.projects[id].title}</button>`).join('')}</div>` : ''}
+    ${e.links.length ? `<div class="go">${e.links.map(([label, url], k) => `<a class="btn${k ? '' : ' main'}" href="${url}"${url.startsWith('#') ? '' : ' target="_blank" rel="noopener"'}>${label}</a>`).join('')}</div>` : ''}
+  </div></article>`).join(''));
+eraBox.querySelectorAll('.jump').forEach((b) => b.addEventListener('click', () => toShipped(null, Number(b.dataset.id))));
+
+// Where the reader is: -1 while the row of figures stands, then 0 to the last era. An era is in view when its
+// card reaches the middle of the room left for it: the screen on a desktop, the part under the walker on a phone.
+const blocks = [...eraBox.children], narrow = matchMedia('(max-width: 900px)');
+let centres = [], walker = null, shown = -2, queued = false;
+const roomTop = () => (narrow.matches ? 56 + stageEl.offsetHeight : 56);
+const focusAt = () => (roomTop() + innerHeight) / 2;
+function follow() {
+  queued = false;
+  const focus = scrollY + focusAt();
+  let k = 0;
+  while (k < centres.length - 2 && focus > centres[k + 1]) k++;
+  const p = mid(0, k + (focus - centres[k]) / (centres[k + 1] - centres[k]), centres.length - 1) - 1;
+  walker?.set(p);
+  const f = mid(0, p, eras.length - 1), a = Math.floor(f), b = Math.min(eras.length - 1, a + 1), i = p < -0.5 ? -1 : Math.round(f);
+  when.firstElementChild.textContent = Math.round(eras[a].year + (eras[b].year - eras[a].year) * (f - a));   // the year ticks over between eras
+  if (i === shown) return;
+  shown = i;
+  blocks.forEach((bl, j) => { bl.dataset.on = String(j - 1 === i); });
+  when.dataset.on = String(i >= 0);
+  if (i >= 0) when.lastElementChild.textContent = eras[i].title;
+}
+// A card taller than the room left for it is in view once its top clears the walker, not at its middle.
+const measure = () => { const room = innerHeight - roomTop(); centres = blocks.map((bl) => { const r = bl.getBoundingClientRect(); return r.top + scrollY + Math.min(r.height, room) / 2; }); follow(); };
+const go = (i, how = 'smooth') => scrollTo({ top: centres[i + 1] - focusAt(), behavior: how });
+new ResizeObserver(measure).observe(eraBox);
+addEventListener('resize', measure);
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(follow); } }, { passive: true });
+measure();
+demo.era = (i) => go(i, 'instant');
+near($('#timeline'), async () => {
+  walker = (await import('./march.js')).default($('#timeline canvas'), $('#timeline .labels'), eras, { onGo: go });
+  follow();
+});
+
 // ------------------------------------------------------------ shipped: a dozen bodies of work, filed by the station they show
 const state = { cap: null };
 const match = (p) => !state.cap || p.caps.includes(state.cap);
@@ -87,22 +135,6 @@ near($('#how'), async () => {
 const log = $('#agents .log');
 log.innerHTML = data.receipts.map((r) => `<a href="https://github.com/Cellis9421/portfolio/pull/${r.number}" target="_blank" rel="noopener"><span class="n">#${r.number}</span><span class="k">${r.kind}</span><span class="t">${r.title}</span><span class="d">${r.merged}</span></a>`).join('');
 $('#agents .tally').textContent = `${data.receipts.length} pull requests`;
-
-// ------------------------------------------------------------ release history
-const notes = $('#history .panel');
-let graph = null;
-function release(r, i) {
-  notes.innerHTML = `<p class="kicker mono">${r.version} · ${r.dates}</p><h3>${r.title}</h3><p class="quiet">${r.org}</p>
-    <ul class="changes">${r.notes.map((nt) => `<li>${nt}</li>`).join('')}</ul>
-    <div class="go"><button class="btn" id="older" ${i === 0 ? 'disabled' : ''}>← Earlier</button><button class="btn" id="newer" ${i === data.releases.length - 1 ? 'disabled' : ''}>Later →</button></div>`;
-  $('#older').addEventListener('click', () => graph?.step(-1));
-  $('#newer').addEventListener('click', () => graph?.step(1));
-}
-release(data.releases[data.releases.length - 1], data.releases.length - 1);
-near($('#history'), async () => {
-  graph = (await import('./releases.js')).default($('#history canvas'), $('#history .labels'), data.releases, { onFocus: release });
-  demo.release = (i) => graph.go(i);
-});
 
 // ------------------------------------------------------------ writing: the guide as a book, and the latest posts
 $('#writing .list').innerHTML = data.posts.map((p) => `<a class="post" href="${p.url}" target="_blank" rel="noopener"><b>${p.title}</b><span>${p.when}</span><i aria-hidden="true">↗</i></a>`).join('');
