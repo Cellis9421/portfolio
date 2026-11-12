@@ -34,7 +34,7 @@ python -m http.server 4173
 
 | Section | The 3D piece | What you do with it |
 |---|---|---|
-| About | A swarm of particles with the social links in orbit | Left alone it spells plan, build, test, ship. Point at a link and it spells that. On a phone it fills the first screen |
+| About | A swarm of particles with seven bubbles in orbit: four shortcuts to sections and three social links | Left alone it spells plan, build, test, ship. Point at a bubble and it spells that. On a phone it fills the first screen |
 | Shipped | A curved wall of the 26 projects, with their screenshots | Drag or use the arrows, filter by gate, open one for its proof, story and links |
 | How I ship | Work moving down a line through six gates | Pick a gate for its proof, then send that filter up to the gallery |
 | Working with agents | None: words and a log | Read what he does with agents, and the pull requests that built this page |
