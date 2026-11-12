@@ -1,4 +1,4 @@
-// Projects: a curved wall of project screens, with their real screenshots, over a dark glass floor.
+// Shipped: a curved wall of screens, one per body of work, with their real screenshots, over a dark glass floor.
 import { THREE, stage, tier, canvasTexture, clamp, lerp } from './stage.js';
 
 export const HUE = { Cybrary: '#5cc8ff', 'Stove & Grill Parts': '#ff8f3a', Personal: '#b78cff' };
@@ -29,19 +29,27 @@ export default function projects(canvas, list, ui) {
       const bg = g.createLinearGradient(0, 0, w, top);
       bg.addColorStop(0, '#1a2233'); bg.addColorStop(1, hue);
       g.fillStyle = bg; g.fillRect(0, 0, w, top);
-      g.globalAlpha = 0.16; g.fillStyle = '#fff'; g.font = '800 230px "Segoe UI", Arial';
-      g.fillText(p.title.split(' ').map((x) => x[0]).join('').slice(0, 3), 26, 250);
-      g.globalAlpha = 1; g.font = '600 26px "Segoe UI", Arial'; g.fillText('No screenshot yet', 30, top - 28);
+      // no screenshot to wait for: the cover is the claim itself, set large
+      g.fillStyle = 'rgba(10, 12, 17, .45)'; g.fillRect(0, 0, w, top);
+      g.fillStyle = '#fff'; g.font = '600 38px Georgia, "Times New Roman", serif';
+      const lines = [];
+      for (const word of (p.shot ? '' : p.proof ?? p.title).split(' ')) {
+        const last = lines[lines.length - 1];
+        if (last !== undefined && g.measureText(`${last} ${word}`).width < w - 96) lines[lines.length - 1] = `${last} ${word}`; else lines.push(word);
+      }
+      lines.slice(0, 5).forEach((ln, k) => g.fillText(ln, 48, top / 2 - (Math.min(lines.length, 5) - 1) * 24 + k * 48 + 12));
     }
     g.fillStyle = '#131824'; g.fillRect(0, top, w, h - top);
     g.fillStyle = hue; g.fillRect(0, top, w, 5);
-    g.fillStyle = '#fff'; g.font = '700 31px "Segoe UI", Arial';
-    let title = p.title;
+    g.fillStyle = '#fff';
+    let title = p.title, px = 31;
+    g.font = `700 ${px}px "Segoe UI", Arial`;
+    while (g.measureText(title).width > w - 60 && px > 25) g.font = `700 ${--px}px "Segoe UI", Arial`;   // shrink first, then cut
     while (g.measureText(title).width > w - 60 && title.length > 4) title = `${title.slice(0, -2).trimEnd()}…`;
     g.fillText(title, 28, top + 50);
     g.fillStyle = hue; g.beginPath(); g.arc(36, top + 82, 6, 0, 7); g.fill();
     g.fillStyle = '#9aa6bd'; g.font = '500 21px "Segoe UI", Arial';
-    let under = p.proof ?? p.group;
+    let under = p.shot ? (p.proof ?? p.group) : p.group;
     while (g.measureText(under).width > w - 84 && under.length > 4) under = `${under.slice(0, -2).trimEnd()}…`;
     g.fillText(under, 52, top + 89);
     g.restore();

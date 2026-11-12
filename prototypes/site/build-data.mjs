@@ -1,6 +1,6 @@
 // Builds data.json for the prototype from the site's own config files, so the prototype
-// and the live site tell the same story. The page is organised by what a product engineer
-// does, not by language: every project is filed under the capabilities it shows.
+// and the live site tell the same story. The page is organised by how the work gets done,
+// not by language or by feature.
 // Run from the repo root: node prototypes/site/build-data.mjs
 import { execSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -19,87 +19,111 @@ function load(file, name) {
   return new Function(src)();
 }
 
-// The six things the page is organised round, in the order work moves through them.
-// Every line of evidence is a fact the current site already states.
+// The loop: five stations in the order work goes round them. The last feeds the first.
+// `agents` and `me` say who does what. `evidence` is facts the current site already states.
 const CAPS = [
-  { id: 'plan', name: 'Plan', role: 'Project management', hue: '#b78cff',
-    line: 'Decide what is worth building, cut it into pieces that can ship, and keep several teams pointed the same way.',
+  { id: 'plan', name: 'Plan', role: 'From what production says', hue: '#b78cff',
+    line: 'Decide what is worth building next, from evidence, and write it down so an agent can run with it.',
+    agents: 'Read the code and the telemetry first, then break the brief into pieces small enough to ship.',
+    me: 'I choose what goes round the loop, and write the brief: the outcome, the limits, and how we will know it worked.',
     evidence: ['Ran cross-team projects at Cybrary, often as the technical project manager.', 'Led engineering strategy and the team at Stove & Grill Parts as revenue grew from $1M to $10M.',
-      'Wrote the migration plan and the test plan for moving checkout from Chargebee to Paddle.', 'Moved 1,000+ pages off Webflow with the URLs kept.'],
+      'Wrote the migration plan and the test plan for moving checkout from Chargebee to Paddle.'],
     tools: ['Jira', 'Trello', 'Confluence', 'Miro'] },
-  { id: 'build', name: 'Build', role: 'Maintainability', hue: '#5cc8ff',
-    line: 'Build it so the next person, or the next agent, can change it without fear.',
-    evidence: ['Rewrote the Cybrary core application and its marketing site.', 'API clients generated from OpenAPI specs, so a backend change reaches the front-end types on its own.',
-      'A form system driven by JSON config and Zod schemas, with 22+ field types.', 'Documented hundreds of workflows and systems, for faster onboarding and for agents to read.'],
-    tools: ['TypeScript', 'Next.js', 'React', 'OpenAPI', 'Zod'] },
-  { id: 'test', name: 'Test', role: 'Testability', hue: '#7ef0c0',
-    line: 'Make it cheap to prove a change works before anyone else has to find out.',
-    evidence: ['The form system ships with 65 tests and 100% coverage.', 'The app runs in the browser against deterministic mocked APIs, with no backend.',
-      'Type-safe clients and query hooks stay intact under the mocks, so they exercise the real code path.'],
-    tools: ['Mock Service Worker', 'TanStack Query', 'TypeScript'] },
-  { id: 'assure', name: 'Assure', role: 'Quality assurance', hue: '#ffd54a',
-    line: 'Hold a standard and keep holding it: accessibility, permissions, and data that stays right.',
-    evidence: ['Took an e-commerce platform to WCAG 2.2 AA: a full audit, the fixes, and a plan to stay compliant.', 'A diagnostics server that watches prices, stock and order status, and says what to fix.',
-      'Configurable role-based access across multi-tenant teams.', 'A marketing site that holds 90+ Lighthouse scores.'],
+  { id: 'build', name: 'Build', role: 'Test first', hue: '#5cc8ff',
+    line: 'Test-driven. The failing test is written before the code, so every change arrives with its own proof.',
+    agents: 'Write the failing test, then the code that passes it, then tidy. One piece of work, one branch.',
+    me: 'Hands off. The rules they build by are written down before they start, and I answer only what they cannot decide.',
+    evidence: ['A form system that ships with 65 tests and 100% coverage.', 'API clients generated from OpenAPI specs, so a backend change reaches the front-end types on its own.',
+      'The app runs in the browser against deterministic mocked APIs, with no backend.'],
+    tools: ['TypeScript', 'Next.js', 'React', 'Zod', 'Mock Service Worker'] },
+  { id: 'assure', name: 'Assure', role: 'End to end, in staging', hue: '#ffd54a',
+    line: 'Prove it does the thing it is supposed to do, end to end, in a safe copy of production before it goes near the real one.',
+    agents: 'Run the end-to-end tests against staging, and fix what fails before anyone else sees it.',
+    me: 'I own the standard: what has to be true before anything ships.',
+    evidence: ['Took an e-commerce platform to WCAG 2.2 AA: a full audit, the fixes, and a plan to stay compliant.', 'Configurable role-based access across multi-tenant teams.',
+      'A marketing site that holds 90+ Lighthouse scores.'],
     tools: ['WAVE', 'Lighthouse', 'RBAC'] },
   { id: 'release', name: 'Release', role: 'CI/CD', hue: '#ff8f3a',
-    line: 'Make shipping boring: a merge is a deploy, and nobody presses a button.',
+    line: 'Make shipping boring: green checks merge it, and a merge deploys it.',
+    agents: 'Nobody presses a button. The pipeline does it, the same way every time.',
+    me: 'Hands off. What counts as green was decided long before.',
     evidence: ['Built CI/CD pipelines that deploy every service and site at Stove & Grill Parts.', 'Scripts that keep code and CMS in step, cutting 95% of manual Contentful setup.',
-      'Reporting, diagnostics and label services on Cloud Run, on a schedule.', 'This page deploys on every merge, in about two minutes.'],
+      'This page deploys on every merge, in about two minutes.'],
     tools: ['GitHub Actions', 'Cloud Run', 'Cloud Scheduler', 'Vercel'] },
-  { id: 'run', name: 'Run', role: 'Operations', hue: '#ff6b8a',
-    line: 'Stay with it after launch: the data keeps moving and the cost stays sane.',
-    evidence: ['Sync services moving catalog, stock and sales between six sales channels.', 'Reports delivered as CSV, PDF, email and Google Sheets.',
-      'Ran a cloud-based virtual lab environment for hands-on training.', 'Reworked third-party tools for security, reliability and cost.'],
+  { id: 'run', name: 'Run', role: 'Observability', hue: '#ff6b8a',
+    line: 'Watch it in production. What the telemetry says becomes the next plan, and the loop closes.',
+    agents: 'Turn telemetry and alerts from production into new work, already sorted.',
+    me: 'I read what production says, and choose what goes round next.',
+    evidence: ['A monitoring server that watches prices, stock and order status, and says what to fix.', 'Sync services moving catalog, stock and sales between six sales channels.',
+      'Reports delivered as CSV, PDF, email and Google Sheets.'],
     tools: ['GCP', 'Shopify', 'Finale Inventory'] },
 ];
 
-// Which capabilities each project shows, and the one fact that proves it. Facts come from the project's own description.
-const FILE = {
-  'Enterprise Hub Platform': [['build', 'assure'], 'One dashboard for team owners across several products, with role-based permissions'],
-  'Type-Safe API Client Generator': [['build', 'test', 'release'], 'A backend schema change reaches the front-end types on its own'],
-  'Dynamic Form System': [['build', 'test', 'assure'], '22+ field types, 65 tests, 100% coverage, WCAG AA'],
-  'Multi-Tenancy': [['build'], 'Team selection that persists, validates and scopes every request'],
-  'User Checkout': [['plan', 'test', 'release'], 'Payments moved from Chargebee to Paddle, with a migration plan and a test plan'],
-  'Immersive LX': [['build', 'run'], 'Video, text, quizzes and hands-on labs for free, paid and enterprise learners'],
-  'Enterprise Dashboards': [['build', 'assure'], 'Configurable role-based access and licence management'],
-  'User Profiles': [['build'], 'Account settings, visibility and shareable progress'],
-  Forums: [['build'], null],
-  'Guided Onboarding': [['build', 'plan'], 'New users guided to the part of the product that fits them'],
-  'Sales Demos': [['build', 'plan'], 'Sales can show any access level, the reports and the team tools'],
-  'Demo Mocks (MSW)': [['test', 'build'], 'The app runs in the browser on deterministic mocked APIs'],
-  'Marketing Website (Headless CMS)': [['build', 'assure', 'release'], '35+ reusable blocks and 90+ Lighthouse scores'],
-  'Contentful Automation Scripts': [['release', 'build'], '95% of manual CMS setup removed'],
-  'Webflow Migration (1000+ Pages)': [['plan', 'release'], '1,000+ pages and images moved by script, URLs kept'],
-  'E-commerce Website': [['build', 'assure', 'run'], 'The store a business grew on, from $1M to $10M'],
-  'Reporting Server': [['run', 'release'], 'Reports as CSV, PDF, email and Google Sheets, on a schedule'],
-  'Diagnostics Server': [['assure', 'run'], 'Watches prices, stock and orders, and says what to fix'],
-  CMS: [['build', 'run'], 'One editor over catalog data from two systems'],
-  'Accessibility Compliance': [['assure', 'plan'], 'WCAG 2.2 AA: the audit, the fixes, and a plan to stay there'],
-  'Label Generation Server': [['run', 'release'], 'From product pick to a printed shelf label'],
-  'My Portfolio': [['release', 'build'], 'Static, open source, deploys on every merge'],
-  'Discord AI Bot': [['build'], 'Text and image generation inside Discord'],
-  'pAInt it': [['build'], 'Art from a text prompt'],
-  'Process Manager': [['run'], 'Starts long-running processes and restarts the ones that crash'],
-  'Website Builder': [['build'], 'A static site from one JSON file'],
-};
-const SHOTS = {
-  'Enterprise Hub Platform': 'cybrary_dashboard_hub.png', 'User Checkout': 'cybrary_checkout.png', 'Immersive LX': 'cybrary_immersive.png',
-  'Enterprise Dashboards': 'cybrary_dashboard.png', 'User Profiles': 'cybrary_profile.png', Forums: 'cybrary_forums.png',
-  'Guided Onboarding': 'cybrary_onboarding.png', 'Sales Demos': 'cybrary_sales_demo.png', 'Demo Mocks (MSW)': 'cybrary_msw_demo.png',
-  'E-commerce Website': 'sgpfl_homepage.png', 'Reporting Server': 'sgpfl_ac2_reports.png', 'Diagnostics Server': 'sgpfl_ac2_diagnostics.png',
-  CMS: 'sgpfl_ac2_app.png', 'Accessibility Compliance': 'sgpfl_homepage_wave.png', 'Label Generation Server': 'sgpfl_label_pdf.png',
-  'My Portfolio': 'portfolio.png', 'Discord AI Bot': 'discord_ai_bot.png', 'pAInt it': 'paint_it.png', 'Process Manager': 'process_manager.png',
-  'Website Builder': 'website_builder.png',
-};
+// Shipped: a dozen bodies of work, in plain words. The site's config lists 26 feature-level projects,
+// which is too fine a grain for this page, so each entry here names the config projects it stands for.
+// `history` marks one that comes from the work history, not the project list.
+const SHIPPED = [
+  { title: 'A training platform for whole companies', group: 'Cybrary', caps: ['build', 'assure'], shot: 'cybrary_dashboard_hub.png',
+    proof: 'Manage people, assign learning, read the results',
+    description: 'The dashboard a team owner works in: manage users, assign learning and view reports across several products. Teams sit inside groups inside organisations, each with its own roles, permissions and licences.',
+    from: ['Enterprise Hub Platform', 'Enterprise Dashboards', 'Multi-Tenancy'], tags: ['Next.js', 'TypeScript', 'Material-UI', 'TanStack Query'], links: [['Open it live', 'https://app.cybrary.it/']] },
+  { title: 'Courses with hands-on labs', group: 'Cybrary', caps: ['build', 'run'], shot: 'cybrary_immersive.png',
+    proof: 'Video, quizzes and live virtual labs',
+    description: 'The learning experience itself: video and text lessons, assessments and hands-on virtual labs, with progress tracking, certificates and recommendations. Onboarding, profiles and forums sit round it.',
+    from: ['Immersive LX', 'User Profiles', 'Forums', 'Guided Onboarding'], tags: ['React', 'TypeScript'], links: [['Open it live', 'https://app.cybrary.it/']] },
+  { title: 'A marketing site the marketers run', group: 'Cybrary', caps: ['plan', 'build', 'assure', 'release'], shot: null,
+    proof: '35+ building blocks, 90+ Lighthouse scores, and 1,000+ pages moved over by script',
+    description: 'The marketing site rebuilt on a headless CMS, so pages are assembled from blocks without an engineer. Scripts keep the code and the CMS in step, which removed 95% of the manual setup, and moved 1,000+ pages and images off Webflow with the URLs kept.',
+    from: ['Marketing Website (Headless CMS)', 'Contentful Automation Scripts', 'Webflow Migration (1000+ Pages)'], tags: ['Next.js', 'Contentful', 'TypeScript'], links: [] },
+  { title: 'A demo mode for sales', group: 'Cybrary', caps: ['build', 'plan'], shot: 'cybrary_sales_demo.png',
+    proof: 'Any role, report or tool, on data that never changes',
+    description: 'A way for sales to show the product to a prospect: any access level, the reporting and the team tools. It runs in the browser on mocked APIs with deterministic data, while the real clients and queries stay intact underneath.',
+    from: ['Sales Demos', 'Demo Mocks (MSW)'], tags: ['Mock Service Worker', 'TanStack Query', 'TypeScript'], links: [] },
+  { title: 'Building blocks for a product team', group: 'Cybrary', caps: ['build'], shot: null,
+    proof: 'Type-safe API clients, and a form system with 65 tests and 100% coverage',
+    description: 'The shared pieces other engineers build on. API clients are generated from the OpenAPI specs, so a backend change reaches the front-end types on its own. Forms are built from JSON config and Zod schemas, with 22+ field types, accessible to WCAG AA.',
+    from: ['Type-Safe API Client Generator', 'Dynamic Form System'], tags: ['OpenAPI', 'TypeScript', 'Zod', 'React Hook Form'], links: [] },
+  { title: 'An online store that grew tenfold', group: 'Stove & Grill Parts', caps: ['build', 'assure', 'run'], shot: 'sgpfl_homepage.png',
+    proof: 'From $1M to $10M, accessible to WCAG 2.2 AA',
+    description: "A custom storefront on Shopify's checkout, with a funnel that cuts wrong orders and product pages built to convert. It was audited and fixed to WCAG 2.2 AA, with a plan to stay there.",
+    from: ['E-commerce Website', 'Accessibility Compliance'], tags: ['Shopify', 'Liquid', 'WCAG 2.2 AA'], links: [['Open it live', 'https://pellet-stove-parts-4less.com/']] },
+  { title: 'Reports the business runs on', group: 'Stove & Grill Parts', caps: ['run', 'release'], shot: 'sgpfl_ac2_reports.png',
+    proof: 'CSV, PDF, email and Google Sheets, on a schedule',
+    description: 'A reporting server that pulls from Shopify, the inventory system and other services, with filtering, sorting and custom formulas. Reports arrive by email, by download or straight into Google Sheets.',
+    from: ['Reporting Server'], tags: ['GCP', 'Cloud Run', 'Shopify', 'Finale Inventory'], links: [] },
+  { title: 'Monitoring that catches it first', group: 'Stove & Grill Parts', caps: ['run', 'assure'], shot: 'sgpfl_ac2_diagnostics.png',
+    proof: 'Flags price, stock and order problems to fix',
+    description: 'A monitoring server for the health of the catalog. It checks prices, stock levels and order status, and surfaces each problem in a way that is easy to fix.',
+    from: ['Diagnostics Server'], tags: ['GCP', 'Cloud Run', 'Shopify'], links: [] },
+  { title: 'Six sales channels kept in step', group: 'Stove & Grill Parts', caps: ['run', 'release'], shot: null, history: true,
+    proof: 'Catalog, stock and sales moving between six channels',
+    description: 'Sync services that move the catalog, the inventory and the sales between Shopify, Amazon, Walmart, eBay, Etsy and Google.',
+    from: [], tags: ['Shopify', 'Amazon', 'Walmart', 'eBay', 'Etsy', 'Google'], links: [] },
+  { title: 'Catalog and warehouse tools', group: 'Stove & Grill Parts', caps: ['build', 'run'], shot: 'sgpfl_ac2_app.png',
+    proof: 'One editor over two systems. Labels, pick to print',
+    description: 'A product editor that extends catalog data held in two systems, and a label server that takes a product pick to a printed shelf label in the warehouse.',
+    from: ['CMS', 'Label Generation Server'], tags: ['Shopify', 'Finale Inventory', 'GCP'], links: [] },
+  { title: 'Side projects', group: 'Personal', caps: ['build'], shot: 'paint_it.png',
+    proof: 'A Discord bot and an art app, on generative AI',
+    description: 'A Discord bot that generates text and images, an app that makes art from a prompt, a process manager that restarts what crashes, and a site builder that works from one JSON file.',
+    from: ['Discord AI Bot', 'pAInt it', 'Process Manager', 'Website Builder'], tags: ['Python', 'OpenAI', 'Next.js'],
+    links: [['The bot', 'https://github.com/Cellis9421/discord-ai-bot'], ['The art app', 'https://github.com/Cellis9421/paint-it']] },
+  { title: 'This portfolio', group: 'Personal', caps: ['release', 'build'], shot: 'portfolio.png',
+    proof: 'Open source, static, and live on every merge',
+    description: 'The site you are on: static, open source and deployed on every merge. The page you are reading was built by an AI agent under direction, one pull request at a time.',
+    from: ['My Portfolio'], tags: ['Next.js', 'TypeScript', 'three.js'], links: [['Read the code', 'https://github.com/Cellis9421/portfolio']] },
+];
+// In the config, on purpose not on the page. A feature, not a body of work.
+const LEFT_OUT = ['User Checkout'];
 
-const projects = load('PROJECTS.tsx', 'PROJECTS').map((p, id) => {
-  const filed = FILE[p.title];
-  if (!filed) throw new Error(`"${p.title}" is not filed under any capability. Add it to FILE.`);
-  const group = p.subtitle.startsWith('Cybrary') ? 'Cybrary' : p.subtitle.startsWith('Stove') ? 'Stove & Grill Parts' : 'Personal';
-  const shot = SHOTS[p.title];
-  if (shot && !existsSync(join(root, 'public', 'img', 'screenshots', shot))) throw new Error(`missing screenshot ${shot}`);
-  return { id, title: p.title, group, description: p.description, caps: filed[0], proof: filed[1], tags: p.tags ?? [], view: p.viewLink ?? null, code: p.codeLink ?? null, shot: shot ?? null };
+const config = load('PROJECTS.tsx', 'PROJECTS').map((p) => p.title);
+const placed = new Set([...SHIPPED.flatMap((sh) => sh.from), ...LEFT_OUT]);
+for (const t of config) if (!placed.has(t)) throw new Error(`"${t}" is in the site's config but not placed. Add it to an entry's "from", or to LEFT_OUT.`);
+for (const t of placed) if (!config.includes(t)) throw new Error(`"${t}" is named here but is not in the site's config.`);
+const projects = SHIPPED.map((sh, id) => {
+  if (sh.shot && !existsSync(join(root, 'public', 'img', 'screenshots', sh.shot))) throw new Error(`missing screenshot ${sh.shot}`);
+  for (const c of sh.caps) if (!CAPS.some((cap) => cap.id === c)) throw new Error(`"${sh.title}" names a station that does not exist: ${c}`);
+  return { id, title: sh.title, group: sh.group, proof: sh.proof, description: sh.description, caps: sh.caps, tags: sh.tags, links: sh.links, shot: sh.shot };
 });
 
 // The career as releases, oldest first.
@@ -107,17 +131,15 @@ const short = (company) => company.replace(/\s*\(.*\)$/, '');
 const releases = load('WORK_HISTORY.tsx', 'WORK_HISTORY').reverse().map((job, i) => ({
   version: `v${i + 1}.0`, year: Number(job.dates.match(/\d{4}/)[0]), title: job.title, org: short(job.company), dates: job.dates.replace('→', 'to'), notes: job.bullets,
 }));
+const education = load('EDUCATION.tsx', 'EDUCATION');
+const last = () => { try { return JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')); } catch { return {}; } };
 
 // Receipts: the pull requests that built this page. Kept from the last run when the GitHub CLI is not to hand.
 let receipts = [];
 try {
-  const raw = execSync('gh pr list --repo Cellis9421/portfolio --state merged --limit 40 --json number,title,mergedAt', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  const raw = execSync('gh pr list --repo Cellis9421/portfolio --state merged --limit 60 --json number,title,mergedAt', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
   receipts = JSON.parse(raw).filter((pr) => pr.number >= 3).map((pr) => ({ number: pr.number, title: pr.title.replace(/^\w+: /, ''), kind: pr.title.split(':')[0], merged: pr.mergedAt.slice(0, 10) }));
-} catch {
-  try { receipts = JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')).receipts ?? []; } catch { /* first run without the CLI: no receipts */ }
-}
-
-const education = load('EDUCATION.tsx', 'EDUCATION');
+} catch { receipts = last().receipts ?? []; }
 
 // The blog's latest posts, from its own feed. Kept from the last run when the feed cannot be reached.
 let posts = [];
@@ -125,9 +147,7 @@ try {
   const feed = await (await fetch('https://blog.calvinellis.io/feeds/posts/default?alt=json&max-results=3')).json();
   posts = feed.feed.entry.map((e) => ({ title: e.title.$t, url: e.link.find((l) => l.rel === 'alternate').href,
     when: new Date(e.published.$t).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) }));
-} catch {
-  try { posts = JSON.parse(readFileSync(join(here, 'data.json'), 'utf8')).posts ?? []; } catch { /* first run offline: no posts */ }
-}
+} catch { posts = last().posts ?? []; }
 
 writeFileSync(join(here, 'data.json'), `${JSON.stringify({ caps: CAPS, projects, releases, receipts, education, posts }, null, 1)}\n`);
-console.log(`[build-data] ${projects.length} projects, ${CAPS.length} capabilities, ${releases.length} releases, ${receipts.length} receipts, ${posts.length} posts`);
+console.log(`[build-data] ${projects.length} bodies of work from ${config.length} config projects, ${CAPS.length} stations, ${releases.length} releases, ${receipts.length} receipts, ${posts.length} posts`);

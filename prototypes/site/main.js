@@ -13,7 +13,7 @@ near($('#about'), async () => {
   (await import('./hero.js')).default($('#about canvas'), [...document.querySelectorAll('#about .moon')]);
 });
 
-// ------------------------------------------------------------ shipped: the projects, filed by what they prove
+// ------------------------------------------------------------ shipped: a dozen bodies of work, filed by the station they show
 const state = { cap: null };
 const match = (p) => !state.cap || p.caps.includes(state.cap);
 let gallery = null, line = null;
@@ -28,7 +28,7 @@ function refresh() {
     chips.appendChild(b);
   });
   const shown = data.projects.filter(match).length;
-  $('#shipped .count').textContent = state.cap ? `${shown} of ${data.projects.length} show ${capOf[state.cap].role.toLowerCase()}` : `${shown} things shipped`;
+  $('#shipped .count').textContent = state.cap ? `${shown} of ${data.projects.length} show the ${capOf[state.cap].name.toLowerCase()} station` : `${shown} bodies of work`;
   gallery?.filter(match);
   if (card.dataset.id && !match(data.projects[card.dataset.id])) card.hidden = true;
 }
@@ -40,7 +40,7 @@ function show(p) {
     ${p.proof ? `<p class="proof">${p.proof}.</p>` : ''}<p>${p.description}</p>
     <div class="tags">${p.caps.map((id) => `<button class="tag cap" data-id="${id}" style="--hue:${capOf[id].hue}">${capOf[id].name}</button>`).join('')}</div>
     <p class="made">Built with ${p.tags.join(', ')}.</p>
-    <div class="go">${p.view ? `<a class="btn main" href="${p.view}" target="_blank" rel="noopener">Open it live ↗</a>` : ''}${p.code ? `<a class="btn" href="${p.code}" target="_blank" rel="noopener">Read the code ↗</a>` : ''}${!p.view && !p.code ? '<span class="quiet">Internal work. No public link.</span>' : ''}</div>`;
+    <div class="go">${p.links.map(([label, url], i) => `<a class="btn${i ? '' : ' main'}" href="${url}" target="_blank" rel="noopener">${label} ↗</a>`).join('') || '<span class="quiet">Internal work. No public link.</span>'}</div>`;
   card.hidden = false;
   $('.x', card).addEventListener('click', () => { card.hidden = true; });
   card.querySelectorAll('.cap').forEach((b) => b.addEventListener('click', () => { state.cap = b.dataset.id; refresh(); }));
@@ -60,25 +60,26 @@ function toShipped(cap, id) {
   if (id !== undefined) setTimeout(() => gallery?.pick(id), 700);
 }
 
-// ------------------------------------------------------------ how I ship: the six capabilities, with the proof for each
+// ------------------------------------------------------------ how I ship: the loop, with who does what at each station
 const how = $('#how .panel');
 function capPanel(c) {
   if (!c) {
-    how.innerHTML = `<h3>Six gates, in the order work moves</h3>
-      <p>A piece of work is planned, built, tested, held to a standard, released and then run. Languages and tools are how each gate gets done. They are not the point.</p>
-      <p class="quiet">Pick a gate to see the proof.</p>`;
+    how.innerHTML = `<h3>One loop, five stations</h3>
+      <p>Building starts with a failing test. Nothing is released until it passes end to end in staging. What production says comes back as the next plan.</p>
+      <p class="quiet">Pick a station to see who does what, and the proof.</p>`;
     return;
   }
   const used = data.projects.filter((p) => p.caps.includes(c.id));
   how.innerHTML = `<p class="kicker" style="color:${c.hue}">${c.role}</p><h3>${c.name}</h3><p>${c.line}</p>
+    <dl class="who"><div><dt><i class="dot"></i>Agents</dt><dd>${c.agents}</dd></div><div><dt><i class="gem"></i>Me</dt><dd>${c.me}</dd></div></dl>
     <ul class="proofs">${c.evidence.map((e) => `<li style="--hue:${c.hue}">${e}</li>`).join('')}</ul>
     <p class="made">Done with ${c.tools.join(', ')}.</p>
-    <button class="btn main" id="see">See the ${used.length} projects that show it ↑</button>`;
+    <button class="btn main" id="see">See the ${used.length} bodies of work that show it ↓</button>`;
   $('#see').addEventListener('click', () => toShipped(c.id));
 }
 capPanel(null);
 near($('#how'), async () => {
-  line = (await import('./ship.js')).default($('#how canvas'), $('#how .labels'), data.caps, { onPick: capPanel });
+  line = (await import('./ship.js')).default($('#how canvas'), $('#how .labels'), data.caps, { onPick: capPanel }, { rounds: data.receipts.length });
   demo.cap = (id) => line.choose(id);
 });
 

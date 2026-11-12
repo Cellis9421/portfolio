@@ -2,8 +2,8 @@
 
 Brainstorm for remaking calvinellis.io as a 3D experience. **The current direction is the
 sectioned page**, a working prototype in [../prototypes/site/](../prototypes/site/), live at
-<https://calvinellis.io/preview/site/>. It presents a product engineer: what shipped, how it
-ships, and the agentic work, with languages in the small print. Round two, further down, is
+<https://calvinellis.io/preview/site/>. It presents a product engineer: how he ships, the
+agentic work, and what shipped, with languages in the small print. Round two, further down, is
 six earlier ways to show a lot of projects. Its pictures are rough live mockups in three.js,
 in [concept-mockups/](concept-mockups/).
 
@@ -33,6 +33,8 @@ Owner, 2026-11-11, in the order he said it.
 - **Keep the current site's sections**, each as its own 3D piece. Projects are the biggest.
 - **It must not freeze the browser, and it must work on a phone.**
 - **A product engineer, not a list of languages.** See the next section.
+- **How he ships outranks what shipped**, 2026-11-12. The page has to show, in pictures, how
+  he uses AI to build.
 
 ## Product engineer
 
@@ -42,20 +44,32 @@ shipped, with examples, and the work round the code: CI/CD, quality assurance, t
 maintainability and project management. Languages can be peppered in. He loved the text and
 the direction, did not like the tree, and found the first screen on a phone underwhelming.
 
-So the page is organised by six gates, in the order work moves through them. Every line of
-proof under a gate is a fact the current site already states.
+Owner, 2026-11-12, after the six gates were live as a line. Something was still off. How
+he ships matters more than what shipped, and the line had no feedback loop. In his words:
 
-| Gate | What it shows | Proof it leads with |
+- **Building and testing are one step.** He works test first, and a visitor has to see that.
+- **Assure** runs the end-to-end tests in a safe staging environment.
+- **Run needs observability.** Telemetry from production goes back into planning, which
+  closes the cycle.
+- **Shipped was far too granular.** It should be high-level categories in approachable
+  words. Multi-Tenancy, User Profiles, Guided Onboarding, User Checkout and the Contentful
+  scripts do not belong as entries. The enterprise hub and the dashboards are one thing.
+
+So the page is organised by a loop of five stations. Every line of proof under a station is
+a fact the current site already states.
+
+| Station | What it shows | Proof it leads with |
 |---|---|---|
-| Plan | Project management | Cross-team projects run as technical project manager; the checkout migration plan |
-| Build | Maintainability | Type-safe API clients generated from the spec; documentation people and agents can both read |
-| Test | Testability | 65 tests at 100% coverage on the form system; the app running on mocked APIs |
-| Assure | Quality assurance | WCAG 2.2 AA; a diagnostics server; role-based access |
+| Plan | Deciding what to build from what production says | Cross-team projects run as technical project manager; the checkout migration plan |
+| Build | Test-driven development | 65 tests at 100% coverage on the form system; type-safe API clients; the app running on mocked APIs |
+| Assure | End-to-end tests in staging | WCAG 2.2 AA; role-based access; 90+ Lighthouse scores |
 | Release | CI/CD | Pipelines deploying every service; 95% of manual CMS setup removed |
-| Run | Operations | Sync between six sales channels; scheduled reporting |
+| Run | Observability | A monitoring server; sync between six sales channels; scheduled reporting |
 
-Each project is filed under the gates it shows, and its card leads with one line of proof.
-The tools sit at the foot of a card as "Built with".
+The scene shows who does what. Agents are dots at every station. A diamond marks where he
+steps in: Plan, Assure and Run. Shipped is 12 bodies of work, each filed under the stations
+it shows. The list and what was folded into it are in the
+[prototype's README](../prototypes/site/README.md#shipped-is-a-dozen-bodies-of-work).
 
 ## Ideas for showing the agentic work
 
@@ -84,10 +98,10 @@ Ideas 2 to 4 need facts from his private projects. Nothing from them is on the p
 
 | Section | What it does |
 |---|---|
-| About | Product engineer copy. A particle swarm that spells plan, build, test, ship, with section shortcuts and the social links in orbit. On a phone it fills the first screen |
-| Shipped | The 26 projects on a curved wall with their screenshots, filtered by gate. Each card leads with its proof |
-| How I ship | Work moving down a line through the six gates. A gate opens its proof and the projects that show it |
+| About | Product engineer copy. A particle swarm that spells plan, test, build, ship, learn, with section shortcuts and the social links in orbit. On a phone it fills the first screen |
+| How I ship | Work going round a loop of five stations. A station opens what the agents do, what he does, the proof, and the work that shows it |
 | Working with agents | What he does with agents, and the receipts |
+| Shipped | 12 bodies of work on a curved wall with their screenshots, filtered by station. Each card leads with its proof |
 | Release history | The career as a commit graph: each job a tagged release, each thing shipped a commit |
 | Writing | The guide as one book, and the blog's latest posts, as plain links |
 | Closing | The swarm again, the way to get in touch, and the education |
@@ -101,7 +115,12 @@ real, what is placeholder, the measurements and what it still needs are in the
 - **The career tree, 2026-11-11.** One photographic tree that grew as the years were
   dragged, first as the whole site and then as the work history section. The owner really
   did not like it there. The release history replaced it. It is in git history at `beb13db`.
-- **The skills globe, 2026-11-11.** Every language and tool as a dot. The gates replaced it,
+- **The line of six gates, 2026-11-12.** Work moved down a line from Plan to Run and stopped.
+  The owner wanted the feedback loop, test-first building and staging in the picture. The
+  loop replaced it.
+- **The wall of 26 projects, 2026-11-12.** One card per feature. Far too granular. A dozen
+  bodies of work replaced it.
+- **The skills globe, 2026-11-11.** Every language and tool as a dot. The stations replaced it,
   because languages are no longer the point.
 - **The bookshelf, 2026-11-11.** Books on a wooden shelf that came off it when pointed at.
   The owner liked the idea, but it was poor on a phone and there were only two real things
