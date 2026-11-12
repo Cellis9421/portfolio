@@ -187,7 +187,6 @@ const PROJECTS: IProject[] = [
     subtitle: 'Personal Project',
     description:
       'Created a web app to generate art using AI. The app could generate art from text. It was a fun project to learn about AI image generation and how to integrate it into a web app. The app was used by a few friends and was a fun project to work on.',
-    codeLink: 'https://github.com/Cellis9421/paint-it',
     tags: ['AI', 'OpenAI', 'React', 'Next.js', 'DALL-E'],
   },
   {
