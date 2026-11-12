@@ -5,8 +5,8 @@ on:
     branches:
       - main
 
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
+  # Allows you to run this workflow manually from the Actions tab, and lets a failed run be run again
+  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -57,7 +57,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # runner: public repository, so hosted minutes are free; this job only publishes the built artifact
     needs: build
     steps:
       - name: Deploy to GitHub Pages
