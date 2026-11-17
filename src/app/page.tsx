@@ -22,18 +22,18 @@ import { TypeAnimation } from 'react-type-animation';
 
 const ABOUT_LINES = [
   <span className="group" key="welcome">
-    Hi there! 👋
+    Hi there!
   </span>,
   ' ',
-  "I'm Calvin Ellis, a Software Engineer and technical leader with over 15 years of experience, currently specializing in agentic solutions—helping teams ship faster and smarter with AI-augmented workflows.",
+  "I'm Calvin Ellis, a software engineer and technical leader with over 15 years of experience building products and helping teams deliver them. My focus lately is agentic AI: designing systems that give agents the context, tools, and feedback to take on meaningful engineering work.",
   ' ',
-  "My experience spans cybersecurity education (Principal at Cybrary), high-growth e-commerce (Lead at Stove & Grill Parts), and contract work with SMBs. I've led engineering strategy, mentored engineers at every level, and run company-wide AI Enablement training so teams can leverage GenTech and agentic coding tools in their day-to-day.",
+  "My background spans cybersecurity education at Cybrary, engineering leadership at Stove & Grill Parts for Less, and custom software for small businesses. I've built applications, APIs, integrations, and cloud infrastructure, while mentoring engineers and guiding technical decisions. That experience shapes how I work with AI today.",
   ' ',
-  "I care a lot about developer experience and velocity: I've run 1:1 agentic coding sessions, documented hundreds of workflows and systems for better agentic understanding of our codebases, and helped engineers find where AI can meaningfully improve how they build. I also love mentoring—from interns to senior folks—and designing systems that scale.",
+  'What started with coding assistance, one-on-one coaching, and company-wide AI training has grown into building and running multi-agent workflows across projects. I develop the orchestration, shared knowledge, and engineering checks that help agents carry work through implementation, testing, and delivery. I care about making those systems dependable and knowing where human judgment belongs.',
   ' ',
-  "Tech-wise, I work across the stack: Next.js, React, TypeScript, Go, Python, Java, and a long list of cloud and DevOps tools. I'm based near Boston and always up for talking shop.",
+  "I'm still a hands-on engineer who enjoys working across the stack, with React, Next.js, TypeScript, Go, Python, Java, SQL, and the infrastructure behind production software. I like connecting the business problem to the technical details, whether I'm writing code, directing agents, or helping another engineer get unstuck. I'm based near Boston and always up for talking shop.",
   ' ',
-  "Let's build something great.",
+  "Let's build something useful.",
   ' ',
   <Link
     href="https://github.com/Cellis9421"
@@ -109,14 +109,14 @@ export default function Home() {
                 <Header as="h3" className="text-center lg:text-left text-xl font-bold text-white">
                   Principal Software Engineer
                 </Header>
-                <p className="text-sm text-editor.tag text-center lg:text-left">Full Stack</p>
+                <p className="text-sm text-editor.tag text-center lg:text-left">Full Stack &amp; Agentic AI</p>
               </div>
               <LetsConnectWidget />
               <div className="flex flex-col gap-1 pt-4 border-t border-editor.backgroundLight/50 w-full">
                 {[
-                  '15+ YOE in Software Engineering',
-                  'Full Stack SWE: FE / BE / DevOps',
-                  'AI Enablement & Agentic Workflow Specialist',
+                  '15+ years in software engineering',
+                  'Frontend, backend, cloud & DevOps',
+                  'AI enablement & multi-agent systems',
                   'Greater Boston · Open to Opportunities',
                   'Hobbies: Hiking, Gaming, and Building PCs',
                 ].map((text) => (
