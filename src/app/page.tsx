@@ -31,7 +31,7 @@ const ABOUT_LINES = [
   ' ',
   'What started with coding assistance, one-on-one coaching, and company-wide AI training has grown into building and running multi-agent workflows across projects. I develop the orchestration, shared knowledge, and engineering checks that help agents carry work through implementation, testing, and delivery. I care about making those systems dependable and knowing where human judgment belongs.',
   ' ',
-  "I'm still a hands-on engineer who enjoys working across the stack, with React, Next.js, TypeScript, Go, Python, Java, SQL, and the infrastructure behind production software. I like connecting the business problem to the technical details, whether I'm writing code, directing agents, or helping another engineer get unstuck. I'm based near Boston and always up for talking shop.",
+  "I'm still a hands-on engineer who enjoys working across the stack. My work centers on AI, agentic pipelines and harnesses, backed by Go, Python, Java, and PostgreSQL. I also work with GCP, AWS, Cloudflare, Next.js, and TypeScript, alongside Docker, Kubernetes, and Terraform. I like connecting the business problem to the technical details, whether I'm writing code, directing agents, or helping another engineer get unstuck. I'm based near Boston and always up for talking shop.",
   ' ',
   "Let's build something useful.",
   ' ',
@@ -64,25 +64,38 @@ const ABOUT_LINES = [
 /* Spacing scale: 16, 24, 32, 48, 64 (Tailwind 4–16). Section rhythm: pt-8 pb-16 md:pt-12 md:pb-24 (half top padding). */
 const SECTION_CLASS = 'w-full pt-8 pb-16 md:pt-12 md:pb-24';
 
-const ABOUT_CHIPS = [
+// Resume skills appear first, in the owner's preferred order.
+const RESUME_SKILLS = [
   'AI',
-  'Next.js',
-  'TypeScript',
+  'Agentic Pipelines',
+  'Agentic Harnesses',
   'Go',
   'Python',
   'Java',
-  'Tailwind',
-  'Kubernetes',
+  'PostgreSQL / SQL',
+  'GCP',
+  'AWS',
+  'Cloudflare',
+  'Next.js',
+  'TypeScript',
+  'Git',
+  'REST',
   'GraphQL',
-  'Cursor',
-  'Hugging Face',
-  'Cybersecurity',
-  'E-commerce',
-  'Mentoring',
+  'Docker',
+  'Kubernetes',
+  'Terraform',
+  'CI/CD',
+  'Google Suite',
+  'Jira',
+  'Localization',
+  'Accessibility',
+  'Shopify',
+  'Figma',
 ];
 
-// Extract unique tags from all projects for Skills section (sorted alphabetically)
+// Keep additional project skills after the resume skills without duplicates.
 const allProjectTags = Array.from(new Set(PROJECTS.flatMap((project) => project.tags ?? []))).sort();
+const allSkills = Array.from(new Set([...RESUME_SKILLS, ...allProjectTags]));
 
 export default function Home() {
   return (
@@ -131,12 +144,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills – all technologies from projects */}
+      {/* Skills in resume priority order, followed by additional project tags */}
       <section id="skills" className={`${SECTION_CLASS} bg-section-gradient`} aria-labelledby="skills-heading">
         <div className="w-full max-w-6xl mx-auto flex flex-col gap-8 px-4">
           <SectionHeader id="skills-heading">Skills</SectionHeader>
-          <SectionDescription>Technologies, frameworks, and tools I work with across all my projects.</SectionDescription>
-          <SkillChips tags={allProjectTags} />
+          <SectionDescription>Skills and tools I work with, starting with AI and agentic systems.</SectionDescription>
+          <SkillChips tags={allSkills} linkedTags={allProjectTags} />
         </div>
       </section>
 

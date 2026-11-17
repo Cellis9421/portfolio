@@ -15,12 +15,34 @@ const CHIP_GRADIENTS: [string, string][] = [
  * Skill/tag chips with gradient backgrounds and optional filtering.
  * Used on: Skills section (main page) and Projects page (tag filters).
  */
-export default function SkillChips({ tags, selectedTag, className = '' }: { tags: string[]; selectedTag?: string | null; className?: string }) {
+export default function SkillChips({
+  tags,
+  linkedTags = tags,
+  selectedTag,
+  className = '',
+}: {
+  tags: string[];
+  linkedTags?: string[];
+  selectedTag?: string | null;
+  className?: string;
+}) {
   return (
     <div className={`flex flex-wrap justify-center gap-2 max-w-4xl mx-auto py-4 ${className}`}>
       {tags.map((tag, index) => {
         const [from, to] = CHIP_GRADIENTS[index % CHIP_GRADIENTS.length];
         const isActive = selectedTag === tag;
+        // Skills without a portfolio project are labels, not empty filter links.
+        if (!linkedTags.includes(tag)) {
+          return (
+            <span
+              key={tag}
+              className="px-4 py-2 md:px-2 md:py-1 text-white text-sm md:text-xs border border-white/40"
+              style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+            >
+              {tag}
+            </span>
+          );
+        }
         return (
           <Link
             key={tag}
